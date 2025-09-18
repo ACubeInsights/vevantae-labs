@@ -2,10 +2,12 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Menu, X, Search } from 'lucide-react'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   const navigation = [
     { name: 'Products', href: '/products' },
@@ -16,33 +18,40 @@ export function Header() {
   ]
 
   return (
-    <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border">
+    <header className="sticky top-0 z-40 bg-white/40 backdrop-blur-3xl backdrop-saturate-200">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
-            <span className="text-xl font-light text-foreground tracking-wide">
+            <span className="text-xl font-light text-gray-900 tracking-wide drop-shadow-lg" style={{textShadow: '0 0 8px rgba(255,255,255,0.8)'}}>
               Vevantae Labs
             </span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-12">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-normal text-foreground hover:text-secondary transition-colors duration-300 uppercase tracking-wider"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navigation.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`text-sm font-normal transition-colors duration-300 uppercase tracking-wider drop-shadow-lg ${
+                    isActive 
+                      ? 'text-blue-600 font-medium' 
+                      : 'text-gray-800 hover:text-blue-600'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )
+            })}
           </nav>
 
           {/* Right side actions */}
           <div className="flex items-center space-x-6">
             {/* Search */}
-            <button className="text-foreground hover:text-secondary transition-colors duration-300">
+            <button className="text-gray-800 hover:text-blue-600 transition-colors duration-300 drop-shadow-lg">
               <Search className="w-5 h-5" />
               <span className="sr-only">Search</span>
             </button>
@@ -50,7 +59,7 @@ export function Header() {
             {/* B2B Inquiry */}
             <Link 
               href="/contact" 
-              className="text-sm font-normal text-foreground hover:text-secondary transition-colors duration-300 uppercase tracking-wider"
+              className="text-sm font-normal text-gray-800 hover:text-blue-600 transition-colors duration-300 uppercase tracking-wider drop-shadow-lg"
             >
               Inquire
             </Link>
@@ -58,7 +67,7 @@ export function Header() {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden text-foreground hover:text-secondary transition-colors duration-300"
+              className="lg:hidden text-gray-800 hover:text-blue-600 transition-colors duration-300 drop-shadow-lg"
             >
               {isMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -72,18 +81,25 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-border">
+          <div className="lg:hidden bg-white/30 backdrop-blur-3xl backdrop-saturate-200">
             <nav className="py-6 space-y-1">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block px-6 py-3 text-sm font-normal text-foreground hover:text-secondary hover:bg-muted/30 transition-colors duration-300 uppercase tracking-wider"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navigation.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`block px-6 py-3 text-sm font-normal transition-colors duration-300 uppercase tracking-wider drop-shadow-lg ${
+                       isActive 
+                         ? 'text-blue-600 font-medium bg-blue-100/40' 
+                         : 'text-gray-800 hover:text-blue-600 hover:bg-white/30'
+                     }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              })}
             </nav>
           </div>
         )}
