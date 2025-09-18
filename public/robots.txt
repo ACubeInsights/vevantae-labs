@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vevantaelabs.com/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /private/
+
+# Allow important pages
+Allow: /products
+Allow: /about
+Allow: /benefits
+Allow: /blog
+Allow: /contact

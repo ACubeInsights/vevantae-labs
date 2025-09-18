@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@layer base {
+  :root {
+    /* Aesop-inspired color palette */
+    --background: #FAF9F6; /* Warm off-white */
+    --foreground: #111111; /* Deep black */
+    --card: #FFFFFF;
+    --card-foreground: #111111;
+    --popover: #FFFFFF;
+    --popover-foreground: #111111;
+    --primary: #111111; /* Deep black */
+    --primary-foreground: #FFFFFF;
+    --secondary: #666666; /* Medium gray */
+    --secondary-foreground: #FFFFFF;
+    --muted: #E8E6E0; /* Light warm gray */
+    --muted-foreground: #666666;
+    --accent: #8B7355; /* Warm brown */
+    --accent-foreground: #FFFFFF;
+    --destructive: #DC2626;
+    --destructive-foreground: #FFFFFF;
+    --border: #E8E6E0;
+    --input: #E8E6E0;
+    --ring: #111111;
+    --radius: 0.125rem; /* 2px - minimal rounded corners */
+  }
+
+  .dark {
+    --background: #111111;
+    --foreground: #FAF9F6;
+    --card: #111111;
+    --card-foreground: #FAF9F6;
+    --popover: #111111;
+    --popover-foreground: #FAF9F6;
+    --primary: #FAF9F6;
+    --primary-foreground: #111111;
+    --secondary: #999999;
+    --secondary-foreground: #111111;
+    --muted: #262626;
+    --muted-foreground: #999999;
+    --accent: #A68B5B;
+    --accent-foreground: #FAF9F6;
+    --destructive: #EF4444;
+    --destructive-foreground: #FAF9F6;
+    --border: #262626;
+    --input: #262626;
+    --ring: #FAF9F6;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
