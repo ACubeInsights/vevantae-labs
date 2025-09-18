@@ -258,7 +258,7 @@ export default function ProductsPage() {
                   className={`flex items-center gap-2 px-4 py-2 border transition-all duration-300 ${
                     showFilters || activeFiltersCount > 0
                       ? 'bg-[#111111] text-[#FAF9F6] border-[#111111]'
-                      : 'bg-[#FAF9F6] text-[#111111] border-[#E5E5E0] hover:border-[#111111]'
+                  : 'bg-[#FAF9F6] text-[#111111] border-[#E5E5E0] hover:border-[#111111]'
                   }`}
                 >
                   <SlidersHorizontal className="w-4 h-4" />
@@ -277,7 +277,7 @@ export default function ProductsPage() {
                     className={`p-2 transition-all duration-300 ${
                       viewMode === 'grid'
                         ? 'bg-[#FAF9F6] text-[#111111]'
-                        : 'text-[#333333] hover:text-[#111111]'
+                  : 'text-[#333333] hover:text-[#111111]'
                     }`}
                   >
                     <Grid className="w-4 h-4" />
@@ -287,7 +287,7 @@ export default function ProductsPage() {
                     className={`p-2 transition-all duration-300 ${
                       viewMode === 'list'
                         ? 'bg-[#FAF9F6] text-[#111111]'
-                        : 'text-[#333333] hover:text-[#111111]'
+                  : 'text-[#333333] hover:text-[#111111]'
                     }`}
                   >
                     <List className="w-4 h-4" />
@@ -337,7 +337,7 @@ export default function ProductsPage() {
                           className={`px-4 py-2 text-sm transition-all duration-300 border ${
                             selectedCategory === category
                               ? 'bg-[#111111] text-[#FAF9F6] border-[#111111]'
-                              : 'bg-[#FAF9F6] text-[#333333] border-[#E5E5E0] hover:bg-[#DADAD3] hover:text-[#111111]'
+                  : 'bg-[#FAF9F6] text-[#333333] border-[#E5E5E0] hover:bg-[#DADAD3] hover:text-[#111111]'
                           }`}
                         >
                           {category}
@@ -356,8 +356,8 @@ export default function ProductsPage() {
                           onClick={() => setSelectedAgeGroup(ageGroup)}
                           className={`px-4 py-2 text-sm transition-all duration-300 border ${
                             selectedAgeGroup === ageGroup
-                              ? 'bg-[#111111] text-[#FAF9F6] border-[#111111]'
-                              : 'bg-[#FAF9F6] text-[#333333] border-[#E5E5E0] hover:bg-[#DADAD3] hover:text-[#111111]'
+                              ? 'bg-[#8B7355] text-[#FAF9F6] border-[#8B7355]'
+                  : 'bg-[#FAF9F6] text-[#A0896B] border-[#E5E5E0] hover:bg-[#DADAD3] hover:text-[#8B7355]'
                           }`}
                         >
                           {ageGroup}
@@ -369,7 +369,7 @@ export default function ProductsPage() {
                   {/* Benefits */}
                   {availableBenefits.length > 0 && (
                     <div className="flex-1">
-                      <h3 className="font-bold text-[#111111] mb-3 uppercase text-sm">Benefits</h3>
+                      <h3 className="font-bold text-[#8B7355] mb-3 uppercase text-sm">Benefits</h3>
                       <div className="max-h-32 overflow-y-auto">
                         <div className="flex flex-wrap gap-2">
                           {availableBenefits.slice(0, 10).map((benefit) => (
@@ -378,8 +378,8 @@ export default function ProductsPage() {
                               onClick={() => toggleBenefit(benefit)}
                               className={`px-3 py-1 text-sm transition-all duration-300 border ${
                                 selectedBenefits.includes(benefit)
-                                  ? 'bg-[#111111] text-[#FAF9F6] border-[#111111]'
-                                  : 'bg-[#FAF9F6] text-[#333333] border-[#E5E5E0] hover:bg-[#DADAD3] hover:text-[#111111]'
+                                  ? 'bg-[#8B7355] text-[#FAF9F6] border-[#8B7355]'
+                  : 'bg-[#FAF9F6] text-[#A0896B] border-[#E5E5E0] hover:bg-[#DADAD3] hover:text-[#8B7355]'
                               }`}
                             >
                               {benefit}
@@ -396,7 +396,7 @@ export default function ProductsPage() {
                   <div className="mt-6 pt-4 border-t border-[#E5E5E0]">
                     <button
                       onClick={clearAllFilters}
-                      className="text-sm text-[#333333] hover:text-[#111111] transition-colors duration-300 uppercase"
+                      className="text-sm text-[#A0896B] hover:text-[#8B7355] transition-colors duration-300 uppercase"
                     >
                       Clear all filters ({activeFiltersCount})
                     </button>
