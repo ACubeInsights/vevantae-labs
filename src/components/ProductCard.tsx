@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Product } from '@/lib/supabase'
-import { formatPrice } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 
 // Custom arrow components
@@ -44,15 +43,14 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
   const currentImage = images.length > 0 ? images[currentImageIndex] : 'https://via.placeholder.com/340x340/F8F6F3/8B7355?text=No+Image'
   
   return (
-    <div className={`group cursor-pointer ${className}`}>
+    <div className={`group cursor-pointer h-full flex flex-col ${className}`}>
       <Link href={`/products/${product.id}`} className="block">
-        <div className="relative overflow-hidden bg-white">
+        <div className="relative aspect-[4/5] overflow-hidden bg-white">
           <Image
             src={currentImage}
             alt={product.name || 'Product'}
-            width={340}
-            height={340}
-            className="w-full h-[340px] object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
           
@@ -98,7 +96,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
           </div>
         </div>
         
-        <div className="pt-6 space-y-2">
+        <div className="pt-6 space-y-2 flex-1 flex flex-col">
           <h3 className="text-lg font-semibold text-primary group-hover:text-secondary transition-colors duration-200">
             {product.name}
           </h3>
@@ -120,17 +118,17 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
             </div>
           )}
           
-          <div className="flex items-center justify-between pt-4">
-            <span className="text-xl font-semibold text-primary">
-              {product.price ? formatPrice(product.price) : 'Price not available'}
-            </span>
+          <div className="pt-4 mt-auto">
+            <div className="text-sm text-secondary mb-2">
+              Premium B2B Wellness Solution
+            </div>
             
             <Button 
               variant="outline" 
               size="sm"
-              className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 w-full"
             >
-              View Details
+              Learn More & Inquire
             </Button>
           </div>
         </div>

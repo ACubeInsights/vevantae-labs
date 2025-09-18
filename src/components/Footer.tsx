@@ -17,11 +17,11 @@ export function Footer() {
       { name: 'Blog', href: '/blog' },
       { name: 'About Us', href: '/about' },
     ],
-    'Support': [
+    'Partnership': [
       { name: 'Contact Us', href: '/contact' },
-      { name: 'FAQ', href: '/faq' },
-      { name: 'Shipping Info', href: '/shipping' },
-      { name: 'Returns', href: '/returns' },
+      { name: 'B2B Inquiries', href: '/contact?type=b2b' },
+      { name: 'Quality Standards', href: '/quality' },
+      { name: 'Certifications', href: '/certifications' },
     ],
   }
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { getProducts, Product } from '@/lib/supabase';
 import { formatPrice } from '@/lib/utils';
 
@@ -70,13 +71,17 @@ export default function TestSupabasePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
-            <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <img
-                src={getValidImageUrl(product.images?.[0]) || 'https://via.placeholder.com/300x400/F8F6F3/8B7355?text=Product+Image'}
-                alt={product.name || 'Product'}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
+            <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
+              <div className="relative aspect-[4/5] overflow-hidden">
+                <Image
+                  src={getValidImageUrl(product.images?.[0]) || 'https://via.placeholder.com/300x400/F8F6F3/8B7355?text=Product+Image'}
+                  alt={product.name || 'Product'}
+                  fill
+                  className="object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {product.name || 'Untitled Product'}
                 </h3>

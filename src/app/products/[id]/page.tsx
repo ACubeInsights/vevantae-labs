@@ -4,7 +4,7 @@ import { useState, useEffect, use } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Heart, Share2, ShoppingBag, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Share2, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { getProducts, Product } from '@/lib/supabase';
 import { formatPrice } from '@/lib/utils';
@@ -50,9 +50,7 @@ const getProductById = async (id: string): Promise<Product | null> => {
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const [selectedImage, setSelectedImage] = useState(0);
-  const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
-  const [isFavorite, setIsFavorite] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -73,18 +71,18 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6] pt-20 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#111111]"></div>
+      <div className="min-h-screen bg-background pt-20 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground"></div>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6] pt-20 flex items-center justify-center">
+      <div className="min-h-screen bg-background pt-20 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-light text-[#111111] mb-4">Product Not Found</h1>
-          <Link href="/products" className="text-[#666666] hover:text-[#111111] transition-colors">
+          <h1 className="text-2xl font-light text-foreground mb-4">Product Not Found</h1>
+          <Link href="/products" className="text-secondary hover:text-foreground transition-colors">
             ← Back to Products
           </Link>
         </div>
@@ -93,15 +91,15 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] pt-20">
+    <div className="min-h-screen bg-background pt-20">
       {/* Breadcrumb */}
       <div className="container mx-auto px-6 py-6">
-        <div className="flex items-center gap-2 text-sm text-[#666666]">
-          <Link href="/" className="hover:text-[#111111] transition-colors">Home</Link>
+        <div className="flex items-center gap-2 text-sm text-secondary">
+          <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/products" className="hover:text-[#111111] transition-colors">Products</Link>
+          <Link href="/products" className="hover:text-foreground transition-colors">Products</Link>
           <span>/</span>
-          <span className="text-[#111111]">{product.name}</span>
+          <span className="text-foreground">{product.name}</span>
         </div>
       </div>
 
@@ -156,7 +154,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     key={index}
                     onClick={() => setSelectedImage(index)}
                     className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
-                      selectedImage === index ? 'border-[#111111]' : 'border-transparent'
+                      selectedImage === index ? 'border-foreground' : 'border-transparent'
                     }`}
                   >
                     <Image
@@ -185,85 +183,49 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             {/* Header */}
             <div>
               {product.category && (
-                <div className="text-sm text-[#666666] mb-2">{product.category}</div>
+                <div className="text-sm text-secondary mb-2">{product.category}</div>
               )}
-              <h1 className="text-3xl md:text-4xl font-light text-[#111111] mb-4">
+              <h1 className="text-3xl md:text-4xl font-light text-foreground mb-4">
                 {product.name || 'Untitled Product'}
               </h1>
               
-              <p className="text-lg text-[#666666] mb-6">{product.description || 'No description available'}</p>
+              <p className="text-lg text-secondary mb-6">{product.description || 'No description available'}</p>
             </div>
 
             {/* Product Details */}
             <div className="space-y-3">
               {product.product_ml && (
                 <div className="flex items-center gap-3">
-                  <span className="text-sm text-[#666666]">Volume:</span>
-                  <span className="text-lg font-medium text-[#111111]">{product.product_ml}ml</span>
+                  <span className="text-sm text-secondary">Volume:</span>
+                  <span className="text-lg font-medium text-foreground">{product.product_ml}ml</span>
                 </div>
               )}
               {product.product_weight && (
                 <div className="flex items-center gap-3">
-                  <span className="text-sm text-[#666666]">Weight:</span>
-                  <span className="text-lg font-medium text-[#111111]">{product.product_weight}g</span>
-                </div>
-              )}
-              {product.quantity !== null && (
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-[#666666]">Available:</span>
-                  <span className="text-lg font-medium text-[#111111]">{product.quantity} units</span>
+                  <span className="text-sm text-secondary">Weight:</span>
+                  <span className="text-lg font-medium text-foreground">{product.product_weight}g</span>
                 </div>
               )}
             </div>
 
-            {/* Quantity & Actions */}
+            {/* Brand Actions */}
             <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <label className="text-sm font-medium text-[#111111]">Quantity:</label>
-                <div className="flex items-center border border-[#e0e0e0] rounded-lg">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-3 py-2 hover:bg-[#f5f5f5] transition-colors"
-                  >
-                    -
-                  </button>
-                  <span className="px-4 py-2 border-x border-[#e0e0e0]">{quantity}</span>
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="px-3 py-2 hover:bg-[#f5f5f5] transition-colors"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
               <div className="flex gap-3">
-                <button
-                  className="flex-1 flex items-center justify-center gap-2 py-3 px-6 rounded-lg font-medium transition-all bg-[#111111] text-white hover:bg-[#333333]"
+                <Link
+                  href="/contact"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-6 rounded-lg font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90"
                 >
-                  <ShoppingBag className="w-5 h-5" />
-                  Add to Cart
-                </button>
+                  Learn More & Inquire
+                </Link>
                 
-                <button
-                  onClick={() => setIsFavorite(!isFavorite)}
-                  className={`p-3 rounded-lg border transition-all ${
-                    isFavorite
-                      ? 'border-red-500 bg-red-50 text-red-500'
-                      : 'border-[#e0e0e0] hover:border-[#111111]'
-                  }`}
-                >
-                  <Heart className={`w-5 h-5 ${isFavorite ? 'fill-current' : ''}`} />
-                </button>
-                
-                <button className="p-3 rounded-lg border border-[#e0e0e0] hover:border-[#111111] transition-all">
+                <button className="p-3 rounded-lg border border-border hover:border-foreground transition-all">
                   <Share2 className="w-5 h-5" />
                 </button>
               </div>
             </div>
 
             {/* Product Details Tabs */}
-            <div className="border-t border-[#e0e0e0] pt-6">
+            <div className="border-t border-border pt-6">
               <div className="flex gap-6 mb-6">
                 {['description', 'benefits', 'ingredients', 'usage'].map((tab) => (
                   <button
@@ -271,8 +233,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     onClick={() => setActiveTab(tab)}
                     className={`text-sm font-medium capitalize transition-colors ${
                       activeTab === tab
-                        ? 'text-[#111111] border-b-2 border-[#111111] pb-2'
-                        : 'text-[#666666] hover:text-[#111111]'
+                        ? 'text-foreground border-b-2 border-foreground pb-2'
+                        : 'text-secondary hover:text-foreground'
                     }`}
                   >
                     {tab}
@@ -283,15 +245,15 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               <div className="space-y-4">
                 {activeTab === 'description' && (
                   <div className="prose prose-sm max-w-none">
-                    <p className="text-[#666666] leading-relaxed">
+                    <p className="text-secondary leading-relaxed">
                       {product.detailed_info || product.description || 'No detailed description available.'}
                     </p>
                     {product.lifestyle_problems && product.lifestyle_problems.length > 0 && (
                       <div className="mt-4">
-                        <h4 className="text-sm font-medium text-[#111111] mb-2">Addresses:</h4>
+                        <h4 className="text-sm font-medium text-foreground mb-2">Addresses:</h4>
                         <div className="flex flex-wrap gap-2">
                           {product.lifestyle_problems.map((problem, index) => (
-                            <span key={index} className="text-xs bg-[#f5f5f5] text-[#666666] px-3 py-1 rounded-full">
+                            <span key={index} className="text-xs bg-muted text-secondary px-3 py-1 rounded-full">
                               {problem}
                             </span>
                           ))}
@@ -306,14 +268,14 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     {product.benefits && product.benefits.length > 0 ? (
                       <ul className="space-y-2">
                         {product.benefits.map((benefit: string, index: number) => (
-                          <li key={index} className="flex items-start gap-2 text-[#666666]">
-                            <span className="w-1.5 h-1.5 bg-[#111111] rounded-full mt-2 flex-shrink-0" />
+                          <li key={index} className="flex items-start gap-2 text-secondary">
+                            <span className="w-1.5 h-1.5 bg-foreground rounded-full mt-2 flex-shrink-0" />
                             {benefit}
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-[#666666]">No benefits information available.</p>
+                      <p className="text-secondary">No benefits information available.</p>
                     )}
                   </div>
                 )}
@@ -323,14 +285,14 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     {product.key_ingredients && product.key_ingredients.length > 0 ? (
                       <ul className="space-y-2">
                         {product.key_ingredients.map((ingredient: string, index: number) => (
-                          <li key={index} className="flex items-start gap-2 text-[#666666]">
-                            <span className="w-1.5 h-1.5 bg-[#111111] rounded-full mt-2 flex-shrink-0" />
+                          <li key={index} className="flex items-start gap-2 text-secondary">
+                            <span className="w-1.5 h-1.5 bg-foreground rounded-full mt-2 flex-shrink-0" />
                             {ingredient}
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-[#666666]">No ingredient information available.</p>
+                      <p className="text-secondary">No ingredient information available.</p>
                     )}
                   </div>
                 )}
@@ -340,8 +302,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     {product.usage_instructions && product.usage_instructions.length > 0 ? (
                       <ol className="space-y-2">
                         {product.usage_instructions.map((instruction: string, index: number) => (
-                          <li key={index} className="flex items-start gap-3 text-[#666666]">
-                            <span className="text-sm font-medium text-[#111111] bg-[#f5f5f5] w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
+                          <li key={index} className="flex items-start gap-3 text-secondary">
+                            <span className="text-sm font-medium text-foreground bg-muted w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
                               {index + 1}
                             </span>
                             {instruction}
@@ -349,7 +311,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                         ))}
                       </ol>
                     ) : (
-                      <p className="text-[#666666]">No usage instructions available.</p>
+                      <p className="text-secondary">No usage instructions available.</p>
                     )}
                   </div>
                 )}
@@ -360,15 +322,17 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
         {/* Related Products */}
         <section className="mt-20">
-          <h2 className="text-2xl font-light text-[#111111] mb-8">You might also like</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <h2 className="text-2xl font-light text-foreground mb-8">You might also like</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Placeholder for related products */}
             {[1, 2, 3].map((item) => (
-              <div key={item} className="bg-white rounded-lg p-6 text-center">
-                <div className="aspect-square bg-[#f5f5f5] rounded-lg mb-4"></div>
-                <h3 className="font-medium text-[#111111] mb-2">Related Product {item}</h3>
-                <p className="text-[#666666] text-sm mb-3">Product description</p>
-                <p className="text-lg font-medium text-[#111111]">₹3,500</p>
+              <div key={item} className="bg-card rounded-lg p-6 text-center">
+                <div className="aspect-[4/5] bg-muted rounded-lg mb-4"></div>
+                <h3 className="font-medium text-foreground mb-2">Related Product {item}</h3>
+                <p className="text-secondary text-sm mb-3">Luxury wellness product</p>
+                <Link href="/contact" className="text-sm text-primary hover:text-primary/80 transition-colors">
+                  Learn More
+                </Link>
               </div>
             ))}
           </div>

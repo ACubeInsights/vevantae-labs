@@ -7,6 +7,8 @@ import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 interface FormData {
   name: string;
   email: string;
+  company: string;
+  inquiryType: string;
   subject: string;
   message: string;
 }
@@ -15,13 +17,15 @@ export default function ContactPage() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
+    company: '',
+    inquiryType: 'general',
     subject: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -42,53 +46,70 @@ export default function ContactPage() {
     // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', company: '', inquiryType: 'general', subject: '', message: '' });
     }, 3000);
   };
 
   const contactInfo = [
     {
       icon: Mail,
-      title: 'Email Us',
-      details: 'hello@vevantaelabs.com',
-      description: 'Send us an email anytime'
+      title: 'B2B Partnerships',
+      details: 'partnerships@vevantaelabs.com',
+      description: 'For bulk orders and business inquiries'
     },
     {
       icon: Phone,
-      title: 'Call Us',
-      details: '+1 (555) 123-4567',
-      description: 'Mon-Fri from 9am to 6pm EST'
+      title: 'Business Line',
+      details: '+91 96713 00080',
+      description: 'Mon-Fri from 9am to 6pm IST'
     },
     {
       icon: MapPin,
-      title: 'Visit Us',
-      details: '123 Wellness Street, Natural City, NC 12345',
-      description: 'Our headquarters and research facility'
+      title: 'Corporate Office',
+      details: 'India - Research & Development Center',
+      description: 'Our headquarters and manufacturing facility'
     },
     {
       icon: Clock,
       title: 'Business Hours',
-      details: 'Monday - Friday: 9:00 AM - 6:00 PM EST',
-      description: 'We\'re here to help during business hours'
+      details: 'Monday - Friday: 9:00 AM - 6:00 PM IST',
+      description: 'Dedicated support for business clients'
     }
+  ];
+
+  const inquiryTypes = [
+    { value: 'general', label: 'General Inquiry' },
+    { value: 'b2b', label: 'B2B Partnership' },
+    { value: 'bulk', label: 'Bulk Orders (500+ units)' },
+    { value: 'private-label', label: 'Private Label Manufacturing' },
+    { value: 'distribution', label: 'Distribution Partnership' },
+    { value: 'research', label: 'Research Collaboration' }
   ];
 
   const faqs = [
     {
-      question: 'How long does shipping take?',
-      answer: 'We offer free standard shipping (5-7 business days) and expedited shipping (2-3 business days) options.'
+      question: 'What is the minimum order quantity for bulk purchases?',
+      answer: 'Our bulk order program starts at 500 units per product. We offer tiered pricing with better rates for larger volumes (1000+, 5000+, 10000+ units).'
     },
     {
-      question: 'Are your products organic and natural?',
-      answer: 'Yes, all our products are made with certified organic ingredients and follow traditional Ayurvedic formulations.'
+      question: 'Do you offer private label manufacturing?',
+      answer: 'Yes, we provide comprehensive private label services including custom formulations, packaging design, and regulatory compliance support for businesses looking to launch their own wellness product lines.'
     },
     {
-      question: 'Do you offer international shipping?',
-      answer: 'Currently, we ship within the United States and Canada. International shipping will be available soon.'
+      question: 'What certifications do your manufacturing facilities have?',
+      answer: 'Our facilities are GMP certified, ISO 22000 compliant, and follow FSSAI guidelines. We maintain the highest quality standards for all B2B partnerships.'
     },
     {
-      question: 'What is your return policy?',
-      answer: 'We offer a 30-day satisfaction guarantee. If you\'re not completely satisfied, you can return products for a full refund.'
+      question: 'How long does it take to fulfill bulk orders?',
+      answer: 'Standard bulk orders (500-2000 units) typically take 2-3 weeks. Larger orders or custom formulations may require 4-6 weeks. We provide detailed timelines during the quotation process.'
+    },
+    {
+      question: 'Do you offer distribution partnerships?',
+      answer: 'Yes, we work with qualified distributors globally. We provide marketing support, training materials, and competitive wholesale pricing for our distribution partners.'
+    },
+    {
+      question: 'Can you develop custom formulations for our brand?',
+      answer: 'Absolutely. Our R&D team can develop custom ayurvedic and nutraceutical formulations based on your specifications, target market, and regulatory requirements.'
     }
   ];
 
@@ -104,10 +125,10 @@ export default function ContactPage() {
             className="text-center mb-16"
           >
             <h1 className="text-5xl md:text-6xl font-light text-[#111111] mb-6">
-              Get in Touch
+              Partner With Us
             </h1>
             <p className="text-xl text-[#666666] max-w-3xl mx-auto leading-relaxed">
-              We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+              Ready to explore B2B partnerships, bulk orders, or custom wellness solutions? Let's discuss how we can support your business needs.
             </p>
           </motion.div>
         </div>
@@ -125,7 +146,7 @@ export default function ContactPage() {
               viewport={{ once: true }}
             >
               <div className="bg-white rounded-2xl p-8 shadow-sm">
-                <h2 className="text-3xl font-light text-[#111111] mb-8">Send us a Message</h2>
+                <h2 className="text-3xl font-light text-[#111111] mb-8">Business Inquiry Form</h2>
                 
                 {isSubmitted ? (
                   <motion.div
@@ -158,7 +179,7 @@ export default function ContactPage() {
                       
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium text-[#111111] mb-2">
-                          Email Address *
+                          Business Email *
                         </label>
                         <input
                           type="email"
@@ -168,8 +189,46 @@ export default function ContactPage() {
                           onChange={handleInputChange}
                           required
                           className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#111111] focus:border-transparent transition-all"
-                          placeholder="your.email@example.com"
+                          placeholder="your.email@company.com"
                         />
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="company" className="block text-sm font-medium text-[#111111] mb-2">
+                          Company Name *
+                        </label>
+                        <input
+                          type="text"
+                          id="company"
+                          name="company"
+                          value={formData.company}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#111111] focus:border-transparent transition-all"
+                          placeholder="Your company name"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="inquiryType" className="block text-sm font-medium text-[#111111] mb-2">
+                          Inquiry Type *
+                        </label>
+                        <select
+                          id="inquiryType"
+                          name="inquiryType"
+                          value={formData.inquiryType}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#111111] focus:border-transparent transition-all"
+                        >
+                          {inquiryTypes.map((type) => (
+                            <option key={type.value} value={type.value}>
+                              {type.label}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                     
@@ -201,7 +260,7 @@ export default function ContactPage() {
                         required
                         rows={6}
                         className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#111111] focus:border-transparent transition-all resize-none"
-                        placeholder="Tell us more about your inquiry..."
+                        placeholder="Please provide details about your business needs, expected volumes, timeline, and any specific requirements..."
                       />
                     </div>
                     
@@ -278,9 +337,9 @@ export default function ContactPage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-light text-[#111111] mb-6">Frequently Asked Questions</h2>
+            <h2 className="text-4xl font-light text-[#111111] mb-6">B2B Partnership FAQs</h2>
             <p className="text-lg text-[#666666] max-w-2xl mx-auto">
-              Find answers to common questions about our products and services.
+              Common questions about bulk orders, partnerships, and custom manufacturing services.
             </p>
           </motion.div>
 
@@ -312,9 +371,9 @@ export default function ContactPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl font-light text-[#111111] mb-6">Visit Our Location</h2>
+            <h2 className="text-4xl font-light text-[#111111] mb-6">Manufacturing Facility</h2>
             <p className="text-lg text-[#666666] max-w-2xl mx-auto">
-              Come visit our headquarters and research facility to learn more about our mission and products.
+              Visit our state-of-the-art manufacturing and R&D facility to see our quality processes and discuss partnership opportunities.
             </p>
           </motion.div>
 
@@ -329,7 +388,7 @@ export default function ContactPage() {
               <MapPin className="w-16 h-16 text-[#666666] mx-auto mb-4" />
               <p className="text-lg text-[#666666]">Interactive Map Coming Soon</p>
               <p className="text-sm text-[#999999] mt-2">
-                123 Wellness Street, Natural City, NC 12345
+                India - Research & Development Center
               </p>
             </div>
           </motion.div>

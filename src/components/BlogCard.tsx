@@ -12,15 +12,14 @@ interface BlogCardProps {
 
 export function BlogCard({ post, className = '' }: BlogCardProps) {
   return (
-    <article className={`group cursor-pointer ${className}`}>
+    <article className={`group cursor-pointer h-full flex flex-col ${className}`}>
       <Link href={`/blog/${post.slug}`} className="block">
-        <div className="relative overflow-hidden bg-white">
+        <div className="relative aspect-[4/5] overflow-hidden bg-white">
           <Image
             src={post.image_url}
             alt={post.title}
-            width={400}
-            height={250}
-            className="w-full h-[250px] object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
           
@@ -32,7 +31,7 @@ export function BlogCard({ post, className = '' }: BlogCardProps) {
           </div>
         </div>
         
-        <div className="pt-6 space-y-3">
+        <div className="pt-6 space-y-3 flex-1 flex flex-col">
           <div className="flex items-center gap-4 text-xs text-secondary uppercase tracking-wider">
             <span>{formatDate(post.published_at)}</span>
             <span>•</span>
@@ -60,7 +59,7 @@ export function BlogCard({ post, className = '' }: BlogCardProps) {
             </div>
           )}
           
-          <div className="pt-4">
+          <div className="pt-4 mt-auto">
             <span className="text-sm font-semibold text-primary uppercase tracking-wider group-hover:text-secondary transition-colors duration-200">
               Read More →
             </span>

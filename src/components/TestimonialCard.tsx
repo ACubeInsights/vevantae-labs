@@ -10,8 +10,8 @@ interface TestimonialCardProps {
 
 export function TestimonialCard({ testimonial, className = '' }: TestimonialCardProps) {
   return (
-    <div className={`bg-white p-8 border border-border ${className}`}>
-      <div className="space-y-4">
+    <div className={`bg-white p-8 border border-border h-full flex flex-col ${className}`}>
+      <div className="flex-1 flex flex-col justify-between">
         {/* Star rating */}
         <div className="flex items-center gap-1">
           {Array.from({ length: 5 }).map((_, index) => (
