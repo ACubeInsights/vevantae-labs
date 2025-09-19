@@ -8,23 +8,41 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 // Types for our database tables
 export interface Product {
   id: string
-  name: string | null
+  sku: string
+  slug: string | null
+  name: string
   description: string | null
-  detailed_info: string | null
-  quantity: number | null
-  product_ml: number | null
-  product_weight: number | null
-  price: number | null
-  images: string[] | null
-  lifestyle_problems: string[] | null
-  is_featured: boolean | null
-  created_at: string | null
-  category: string | null
+  short_description: string | null
+  category: string
+  product_type: string | null
+  net_quantity: string | null
+  serving_info: string | null
+  mrp: number | null
+  selling_price: number
   age_group: string | null
+  gender: string | null
+  health_benefits: string[] | null
+  health_conditions: string[] | null
   key_ingredients: string[] | null
-  benefits: string[] | null
-  usage_instructions: string[] | null
+  dosha: string | null
+  how_to_use: string | null
+  duration: string | null
+  precautions: string | null
+  certifications: string[] | null
+  images: string[] | null
+  main_image: string | null
+  meta_title: string | null
+  meta_description: string | null
+  tags: string[] | null
+  stock_quantity: number | null
+  in_stock: boolean | null
   status: string | null
+  is_featured: boolean | null
+  is_bestseller: boolean | null
+  average_rating: number | null
+  total_reviews: number | null
+  created_at: string | null
+  updated_at: string | null
 }
 
 export interface BlogPost {
@@ -55,11 +73,15 @@ export interface Testimonial {
 export const getProducts = async (filters?: {
   category?: string
   age_group?: string
-  lifestyle_problem?: string
+  health_benefit?: string
+  health_condition?: string
   search?: string
   is_featured?: boolean
+  is_bestseller?: boolean
+  gender?: string
+  dosha?: string
 }) => {
-  let query = supabase.from('products_01').select('*')
+  let query = supabase.from('products03').select('*')
 
   if (filters?.category) {
     query = query.eq('category', filters.category)
@@ -69,20 +91,36 @@ export const getProducts = async (filters?: {
     query = query.eq('age_group', filters.age_group)
   }
 
-  if (filters?.lifestyle_problem) {
-    query = query.contains('lifestyle_problems', [filters.lifestyle_problem])
+  if (filters?.gender) {
+    query = query.eq('gender', filters.gender)
+  }
+
+  if (filters?.dosha) {
+    query = query.eq('dosha', filters.dosha)
+  }
+
+  if (filters?.health_benefit) {
+    query = query.contains('health_benefits', [filters.health_benefit])
+  }
+
+  if (filters?.health_condition) {
+    query = query.contains('health_conditions', [filters.health_condition])
   }
 
   if (filters?.search) {
-    query = query.or(`name.ilike.%${filters.search}%,description.ilike.%${filters.search}%`)
+    query = query.or(`name.ilike.%${filters.search}%,description.ilike.%${filters.search}%,short_description.ilike.%${filters.search}%`)
   }
 
   if (filters?.is_featured !== undefined) {
     query = query.eq('is_featured', filters.is_featured)
   }
 
-  // Only show active products
-  query = query.eq('status', 'Active')
+  if (filters?.is_bestseller !== undefined) {
+    query = query.eq('is_bestseller', filters.is_bestseller)
+  }
+
+  // Only show active products that are in stock
+  query = query.eq('status', 'active').eq('in_stock', true)
 
   const { data, error } = await query.order('created_at', { ascending: false })
 
@@ -96,16 +134,34 @@ export const getProducts = async (filters?: {
 
 export const getProduct = async (id: string) => {
   const { data, error } = await supabase
-    .from('products_01')
+    .from('products03')
     .select('*')
     .eq('id', id)
+    .eq('status', 'active')
     .single()
 
   if (error) {
     console.error('Error fetching product:', error)
     return null
   }
-  return data as Product
+
+  return data
+}
+
+export const getProductBySlug = async (slug: string) => {
+  const { data, error } = await supabase
+    .from('products03')
+    .select('*')
+    .eq('slug', slug)
+    .eq('status', 'active')
+    .single()
+
+  if (error) {
+    console.error('Error fetching product by slug:', error)
+    return null
+  }
+
+  return data
 }
 
 export const getBlogPosts = async (limit?: number) => {

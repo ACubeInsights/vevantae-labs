@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -36,6 +37,8 @@ function getValidImageUrl(imageUrl: string | undefined): string | null {
 }
 
 export default function ProductsPage() {
+  const searchParams = useSearchParams();
+  
   // State management
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,7 +46,10 @@ export default function ProductsPage() {
   
   // Filter states
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    const categoryParam = searchParams.get('category');
+    return categoryParam && categories.includes(categoryParam) ? categoryParam : 'All';
+  });
   const [selectedAgeGroup, setSelectedAgeGroup] = useState('All Ages');
   const [selectedBenefits, setSelectedBenefits] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState('name');
@@ -57,7 +63,7 @@ export default function ProductsPage() {
   const availableBenefits = useMemo(() => {
     const benefits = new Set<string>();
     products.forEach(product => {
-      product.benefits?.forEach(benefit => benefits.add(benefit));
+      product.health_benefits?.forEach(benefit => benefits.add(benefit));
     });
     return Array.from(benefits).sort();
   }, [products]);
@@ -65,9 +71,15 @@ export default function ProductsPage() {
   // Filtered and sorted products
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products.filter(product => {
-      // Category filter
-      if (selectedCategory !== 'All' && product.category !== selectedCategory) {
-        return false;
+      // Category filter with case-insensitive matching
+      if (selectedCategory !== 'All') {
+        const productCategory = product.category?.toLowerCase() || '';
+        const filterCategory = selectedCategory.toLowerCase();
+        
+        // Check for exact match or partial match (e.g., 'nutraceutical' matches 'Nutraceuticals')
+        if (!productCategory.includes(filterCategory) && !filterCategory.includes(productCategory)) {
+          return false;
+        }
       }
       
       // Age group filter
@@ -78,7 +90,7 @@ export default function ProductsPage() {
       // Benefits filter
       if (selectedBenefits.length > 0) {
         const hasSelectedBenefit = selectedBenefits.some(benefit => 
-          product.benefits?.includes(benefit)
+          product.health_benefits?.includes(benefit)
         );
         if (!hasSelectedBenefit) return false;
       }
@@ -88,7 +100,7 @@ export default function ProductsPage() {
         const query = searchQuery.toLowerCase();
         const matchesName = product.name?.toLowerCase().includes(query);
         const matchesDescription = product.description?.toLowerCase().includes(query);
-        const matchesBenefits = product.benefits?.some(benefit => 
+        const matchesBenefits = product.health_benefits?.some(benefit => 
           benefit.toLowerCase().includes(query)
         );
         const matchesIngredients = product.key_ingredients?.some(ingredient => 
@@ -495,42 +507,44 @@ export default function ProductsPage() {
 
                         {/* Product Info */}
                         <div className="p-6 flex-1 flex flex-col">
-                          <div className="flex-1">
-                            <h3 className="text-lg font-bold text-[#111111] mb-2 group-hover:text-[#A36F40] transition-colors duration-300 line-clamp-2">
+                          <div className="flex-1 min-h-0">
+                            <h3 className="text-lg font-bold text-[#111111] mb-2 group-hover:text-[#A36F40] transition-colors duration-300 line-clamp-2 h-14">
                               {product.name}
                             </h3>
-                            <p className="text-sm text-[#333333] mb-4 line-clamp-3 leading-relaxed">
+                            <p className="text-sm text-[#333333] mb-4 line-clamp-3 leading-relaxed h-16">
                               {product.description}
                             </p>
                             
                             {/* Benefits */}
-                            {product.benefits && product.benefits.length > 0 && (
-                              <div className="flex flex-wrap gap-1.5 mb-4">
-                                {product.benefits.slice(0, 3).map((benefit: string, idx: number) => (
-                                  <span
-                                    key={idx}
-                                    className="text-xs bg-[#A36F40]/10 text-[#A36F40] px-2.5 py-1 font-bold border border-[#A36F40]/20"
-                                  >
-                                    {benefit}
-                                  </span>
-                                ))}
-                                {product.benefits.length > 3 && (
-                                  <span className="text-xs text-[#333333] px-2.5 py-1 font-medium">
-                                    +{product.benefits.length - 3} more
-                                  </span>
-                                )}
-                              </div>
-                            )}
+                            <div className="h-16 mb-4">
+                              {product.health_benefits && product.health_benefits.length > 0 && (
+                                <div className="flex flex-wrap gap-1.5">
+                                  {product.health_benefits.slice(0, 3).map((benefit: string, idx: number) => (
+                                    <span
+                                      key={idx}
+                                      className="text-xs bg-[#A36F40]/10 text-[#A36F40] px-2.5 py-1 font-bold border border-[#A36F40]/20"
+                                    >
+                                      {benefit}
+                                    </span>
+                                  ))}
+                                  {product.health_benefits.length > 3 && (
+                                    <span className="text-xs text-[#333333] px-2.5 py-1 font-medium">
+                                      +{product.health_benefits.length - 3} more
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                            </div>
                           </div>
 
                           {/* Age Group */}
-                          {product.age_group && (
-                            <div className="mt-auto pt-4 border-t border-border/50">
+                          <div className="mt-auto pt-4 border-t border-border/50 h-8">
+                            {product.age_group && (
                               <span className="text-xs text-[#333333] uppercase tracking-wider font-medium">
                                 For {product.age_group}
                               </span>
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
                       </div>
                     ) : (
@@ -570,9 +584,9 @@ export default function ProductsPage() {
                             </p>
                             
                             {/* Benefits */}
-                            {product.benefits && product.benefits.length > 0 && (
+                            {product.health_benefits && product.health_benefits.length > 0 && (
                               <div className="flex flex-wrap gap-2 mb-4">
-                                {product.benefits.slice(0, 4).map((benefit: string, idx: number) => (
+                                {product.health_benefits.slice(0, 4).map((benefit: string, idx: number) => (
                                   <span
                                     key={idx}
                                     className="text-xs bg-[#A36F40]/10 text-[#A36F40] px-3 py-1.5 font-bold border border-[#A36F40]/20"
@@ -580,9 +594,9 @@ export default function ProductsPage() {
                                     {benefit}
                                   </span>
                                 ))}
-                                {product.benefits.length > 4 && (
+                                {product.health_benefits.length > 4 && (
                                   <span className="text-xs text-[#333333] px-3 py-1.5 font-medium">
-                                    +{product.benefits.length - 4} more benefits
+                                    +{product.health_benefits.length - 4} more benefits
                                   </span>
                                 )}
                               </div>
@@ -685,6 +699,11 @@ export default function ProductsPage() {
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
+          )}
+
+          {/* Spacing when no pagination */}
+          {totalPages <= 1 && (
+            <div className="mt-12 mb-8"></div>
           )}
         </div>
       </section>

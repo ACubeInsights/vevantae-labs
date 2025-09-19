@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { ArrowRight, Plus } from 'lucide-react'
+import { ArrowRight, Plus, Zap, Shield, Heart, Brain, Battery, Moon } from 'lucide-react'
 import { getProducts, Product } from '@/lib/supabase'
 
 // Helper function to validate and fix image URLs
@@ -114,14 +114,14 @@ export default function Home() {
           />
         </div>
 
-        <div className="container mx-auto px-6 lg:px-12 relative z-20">
-           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 min-h-screen">
+        <div className="relative z-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 min-h-screen max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
              {/* Left Content */}
              <motion.div
                initial={{ opacity: 0, y: 50 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-               className="lg:col-span-5 flex flex-col justify-center py-20 lg:py-32 lg:pr-16 relative z-30"
+               className="lg:col-span-12 xl:col-span-12 flex flex-col justify-center py-16 sm:py-20 lg:py-32 lg:pr-8 xl:pr-16 relative z-30 order-2 lg:order-1 lg:max-w-2xl"
              >
               <div className="space-y-16">
                 <div className="space-y-10">
@@ -139,7 +139,7 @@ export default function Home() {
                     </motion.div>
                     
                     <motion.h1 
-                      className="text-6xl lg:text-8xl font-extralight text-foreground leading-[0.85] tracking-tight"
+                      className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight text-foreground leading-[0.85] tracking-tight"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 1.5, delay: 0.5 }}
@@ -178,7 +178,7 @@ export default function Home() {
                   </div>
                   
                   <motion.p 
-                    className="text-xl font-light text-secondary leading-relaxed max-w-lg tracking-wide"
+                    className="text-lg sm:text-xl font-light text-secondary leading-relaxed max-w-lg tracking-wide"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1.3 }}
@@ -225,73 +225,74 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Right Visual */}
-             <motion.div
-               initial={{ opacity: 0, x: 50 }}
-               animate={{ opacity: 1, x: 0 }}
-               transition={{ duration: 1.4, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-               className="lg:col-span-7 relative flex items-center justify-center z-10"
-             >
-               <div className="relative h-full min-h-[70vh] lg:min-h-screen w-full">
-                 {/* Background Layers */}
-                 <motion.div 
-                   className="absolute inset-0 bg-gradient-to-br from-muted/30 to-accent/10 rounded-sm"
-                   animate={{ 
-                     background: [
-                       "linear-gradient(135deg, rgba(232, 230, 224, 0.3) 0%, rgba(139, 115, 85, 0.1) 100%)",
-                       "linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(232, 230, 224, 0.3) 100%)",
-                       "linear-gradient(135deg, rgba(232, 230, 224, 0.3) 0%, rgba(139, 115, 85, 0.1) 100%)"
-                     ]
-                   }}
-                   transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                 />
-                 
-                 {/* Main Image Container */}
-                  <div className="absolute inset-0 flex items-center justify-end pr-0 py-8">
-                   <motion.div 
-                     className="relative w-full h-full group border-2 border-accent/20 rounded-sm overflow-hidden"
-                     whileHover={{ scale: 1.02, borderColor: "rgba(139, 115, 85, 0.4)" }}
-                     transition={{ duration: 0.6, ease: "easeOut" }}
-                   >
-                     <div className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent z-10" />
-                     <div className="absolute inset-0 bg-[#F1E5D4]/50 mix-blend-screen z-10 pointer-events-none" />
-                     <div className="absolute inset-0 bg-[rgba(139,115,85,0.28)] mix-blend-soft-light z-10 pointer-events-none" />
-                     <div className="absolute inset-0 bg-[#F3E8D8]/35 mix-blend-screen z-20 pointer-events-none" />
-                     <Image
-                        src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        alt="Soft beige minimalist texture background"
-                        fill
-                        className="object-cover shadow-2xl opacity-100 brightness-110"
-                        priority
-                      />
-                     
-                     {/* Overlay Effects */}
-                     <motion.div 
-                       className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-all duration-700"
-                       whileHover={{ 
-                         boxShadow: "inset 0 0 0 1px rgba(139, 115, 85, 0.3)"
-                       }}
+            {/* Right Visual - Background Image */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1.4, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="lg:col-span-6 xl:col-span-7 relative flex items-center justify-center z-5 order-1 lg:order-2 lg:absolute lg:inset-0 lg:w-full lg:h-full"
+            >
+              <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-full lg:w-3/5 lg:ml-auto aspect-[4/5] lg:aspect-[3/4] lg:h-4/5 lg:self-center">
+                {/* Background Layers */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-br from-muted/20 to-accent/5 rounded-sm lg:opacity-60"
+                  animate={{ 
+                    background: [
+                      "linear-gradient(135deg, rgba(232, 230, 224, 0.2) 0%, rgba(139, 115, 85, 0.05) 100%)",
+                      "linear-gradient(135deg, rgba(139, 115, 85, 0.05) 0%, rgba(232, 230, 224, 0.2) 100%)",
+                      "linear-gradient(135deg, rgba(232, 230, 224, 0.2) 0%, rgba(139, 115, 85, 0.05) 100%)"
+                    ]
+                  }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                />
+                
+                {/* Main Image Container */}
+                <div className="absolute inset-0 p-2 sm:p-4">
+                  <motion.div 
+                    className="relative w-full h-full group border-2 border-accent/20 rounded-sm overflow-hidden"
+                    whileHover={{ scale: 1.02, borderColor: "rgba(139, 115, 85, 0.4)" }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent z-10" />
+                    <div className="absolute inset-0 bg-[#F1E5D4]/50 mix-blend-screen z-10 pointer-events-none" />
+                    <div className="absolute inset-0 bg-[rgba(139,115,85,0.28)] mix-blend-soft-light z-10 pointer-events-none" />
+                    <div className="absolute inset-0 bg-[#F3E8D8]/35 mix-blend-screen z-20 pointer-events-none" />
+                    <Image
+                       src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                       alt="Soft beige minimalist texture background"
+                       fill
+                       className="object-cover shadow-2xl opacity-100 brightness-110"
+                       priority
+                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
                      />
-                     
-                     {/* Interactive Elements */}
-                     <motion.div
-                       className="absolute top-8 right-8 w-3 h-3 bg-accent rounded-full shadow-lg z-20"
-                       animate={{ 
-                         scale: [1, 1.2, 1],
-                         opacity: [0.7, 1, 0.7]
-                       }}
-                       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                     />
-                     <motion.div
-                       className="absolute bottom-12 left-8 w-2 h-2 bg-accent/60 rounded-full z-20"
-                       animate={{ 
-                         scale: [1, 1.3, 1],
-                         opacity: [0.5, 0.8, 0.5]
-                       }}
-                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-                     />
-                   </motion.div>
-                 </div>
+                    
+                    {/* Overlay Effects */}
+                    <motion.div 
+                      className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-all duration-700"
+                      whileHover={{ 
+                        boxShadow: "inset 0 0 0 1px rgba(139, 115, 85, 0.3)"
+                      }}
+                    />
+                    
+                    {/* Interactive Elements */}
+                    <motion.div
+                      className="absolute top-8 right-8 w-3 h-3 bg-accent rounded-full shadow-lg z-20"
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        opacity: [0.7, 1, 0.7]
+                      }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                    <motion.div
+                      className="absolute bottom-12 left-8 w-2 h-2 bg-accent/60 rounded-full z-20"
+                      animate={{ 
+                        scale: [1, 1.3, 1],
+                        opacity: [0.5, 0.8, 0.5]
+                      }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+                    />
+                  </motion.div>
+                </div>
                 
                 {/* Floating Accent Elements */}
                 <motion.div
@@ -331,15 +332,341 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Featured Products */}
+      {/* Explore Our Collections */}
       <section className="py-24 lg:py-32 bg-background">
-        <div className="container mx-auto px-6 lg:px-12">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="mb-20"
+            className="mb-16 lg:mb-20 text-center"
+          >
+            <div className="space-y-4">
+              <div className="flex items-center justify-center gap-4 mb-6">
+                <div className="w-8 h-px bg-accent" />
+                <p className="text-xs font-medium text-accent uppercase tracking-[0.3em]">
+                  Explore Collections
+                </p>
+                <div className="w-8 h-px bg-accent" />
+              </div>
+              <h2 className="text-4xl lg:text-5xl font-extralight text-foreground tracking-tight">
+                Discover Your Path to
+                <span className="block italic font-light text-accent/80 mt-2">Wellness</span>
+              </h2>
+              <p className="text-lg font-light text-secondary max-w-2xl mx-auto leading-relaxed">
+                Choose from our carefully curated collections, each designed to support your unique wellness journey.
+              </p>
+            </div>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Ayurvedic Solutions Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <Link href="/products?category=ayurvedic" className="group block">
+                <div className="relative h-80 lg:h-96 overflow-hidden bg-gradient-to-br from-muted/50 to-accent/10 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-xl">
+                  {/* Subtle Background Pattern */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-muted/20" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(139,115,85,0.1)_0%,transparent_50%)]" />
+                  
+                  {/* Content */}
+                  <div className="relative h-full flex flex-col justify-between p-8 lg:p-10">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
+                        <div className="w-6 h-6 bg-accent/20 rounded-full" />
+                      </div>
+                      <div className="space-y-2">
+                        <h3 className="text-2xl lg:text-3xl font-extralight text-foreground tracking-tight">
+                          Ayurvedic Solutions
+                        </h3>
+                        <p className="text-secondary font-light leading-relaxed">
+                          Ancient wisdom meets modern science in our traditional formulations.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center text-accent group-hover:text-accent/80 transition-colors">
+                      <span className="text-sm font-medium uppercase tracking-[0.15em]">Explore Collection</span>
+                      <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                  
+                  {/* Hover Effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-accent/0 group-hover:bg-accent/5 transition-all duration-500"
+                    whileHover={{ scale: 1.01 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Nutraceuticals Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <Link href="/products?category=nutraceuticals" className="group block">
+                <div className="relative h-80 lg:h-96 overflow-hidden bg-gradient-to-br from-accent/10 to-muted/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-xl">
+                  {/* Subtle Background Pattern */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-muted/20 to-accent/5" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(139,115,85,0.1)_0%,transparent_50%)]" />
+                  
+                  {/* Content */}
+                  <div className="relative h-full flex flex-col justify-between p-8 lg:p-10">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
+                        <div className="w-6 h-6 bg-accent/20 rounded-full" />
+                      </div>
+                      <div className="space-y-2">
+                        <h3 className="text-2xl lg:text-3xl font-extralight text-foreground tracking-tight">
+                          Nutraceuticals
+                        </h3>
+                        <p className="text-secondary font-light leading-relaxed">
+                          Scientifically-backed supplements for optimal health and vitality.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center text-accent group-hover:text-accent/80 transition-colors">
+                      <span className="text-sm font-medium uppercase tracking-[0.15em]">Explore Collection</span>
+                      <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                  
+                  {/* Hover Effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-accent/0 group-hover:bg-accent/5 transition-all duration-500"
+                    whileHover={{ scale: 1.01 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Shop by Lifestyle */}
+      <section className="py-28 lg:py-36 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, hsl(var(--accent)) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }} />
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16 lg:mb-20"
+          >
+            <div className="space-y-4">
+              <div className="flex items-center justify-center gap-4 mb-6">
+                <div className="w-12 h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
+                <p className="text-xs font-medium text-accent uppercase tracking-[0.3em] px-4 py-2 border border-accent/20 rounded-full bg-accent/5">
+                  Targeted Solutions
+                </p>
+                <div className="w-12 h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
+              </div>
+              <h2 className="text-4xl lg:text-5xl font-extralight text-foreground tracking-tight">
+                Shop by
+                <span className="block italic font-light text-accent/80 mt-2">Lifestyle</span>
+              </h2>
+              <p className="text-lg font-light text-secondary max-w-2xl mx-auto leading-relaxed">
+                Find targeted solutions for your specific health concerns and lifestyle needs.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Full-width Carousel Container */}
+        <div className="relative overflow-hidden py-4">
+          <motion.div
+            className="flex gap-4 lg:gap-6"
+            animate={{
+              x: ["0%", "-50%"]
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear",
+              repeatType: "loop"
+            }}
+            style={{
+              width: "400%"
+            }}
+          >
+            {/* First set of 6 cards */}
+            <Link href="/products?health_conditions=joint-pain" className="group flex-shrink-0">
+              <motion.div
+                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                {/* Subtle hover gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="flex items-center gap-6 relative z-10">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
+                    <Heart className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
+                      Joint Pain
+                    </h3>
+                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
+                      Natural relief & support for joint health
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+
+            <Link href="/products?health_conditions=inflammation" className="group flex-shrink-0">
+              <motion.div
+                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                {/* Subtle hover gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="flex items-center gap-6 relative z-10">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
+                    <Zap className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
+                      Inflammation
+                    </h3>
+                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
+                      Natural reduction & anti-inflammatory support
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+
+            <Link href="/products?health_conditions=low-immunity" className="group flex-shrink-0">
+              <motion.div
+                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                {/* Subtle hover gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="flex items-center gap-6 relative z-10">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
+                    <Shield className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
+                      Low Immunity
+                    </h3>
+                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
+                      Boost defense & strengthen immune system
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+
+            <Link href="/products?health_conditions=stress" className="group flex-shrink-0">
+              <motion.div
+                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                {/* Subtle hover gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="flex items-center gap-6 relative z-10">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
+                    <Brain className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
+                      Stress
+                    </h3>
+                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
+                      Mental calm & stress management solutions
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+
+            <Link href="/products?health_conditions=fatigue" className="group flex-shrink-0">
+              <motion.div
+                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                {/* Subtle hover gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="flex items-center gap-6 relative z-10">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
+                    <Battery className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
+                      Fatigue
+                    </h3>
+                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
+                      Energy boost & vitality enhancement
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+
+            <Link href="/products?health_conditions=sleep-issues" className="group flex-shrink-0">
+              <motion.div
+                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                {/* Subtle hover gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="flex items-center gap-6 relative z-10">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
+                    <Moon className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
+                      Sleep Issues
+                    </h3>
+                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
+                      Better rest & sleep quality improvement
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Featured Products */}
+      <section className="py-24 lg:py-32 bg-background">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="mb-20 px-6 lg:px-12"
           >
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
               <div className="space-y-4">
@@ -367,7 +694,7 @@ export default function Home() {
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 lg:px-12">
               {featuredProducts.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -405,9 +732,9 @@ export default function Home() {
                       <p className="text-sm font-light text-muted-foreground leading-relaxed">
                         {product.description || 'No description available'}
                       </p>
-                      {product.product_ml && (
+                      {product.net_quantity && (
                         <p className="text-lg font-medium text-foreground">
-                          {product.product_ml}ml
+                          {product.net_quantity}
                         </p>
                       )}
                     </div>
@@ -422,13 +749,13 @@ export default function Home() {
 
       {/* Categories */}
       <section className="py-24 lg:py-32 bg-muted/30">
-        <div className="container mx-auto px-6 lg:px-12">
+        <div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-20"
+            className="text-center mb-20 px-6 lg:px-12"
           >
             <h2 className="text-4xl lg:text-5xl font-extralight text-foreground mb-6 tracking-tight">
               Categories
@@ -439,7 +766,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-6 lg:px-12">
             {categories.map((category, index) => (
               <motion.div
                 key={category.name}
@@ -484,8 +811,8 @@ export default function Home() {
 
       {/* Philosophy Section */}
       <section className="py-24 lg:py-32 bg-background">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center px-6 lg:px-12">
             {/* Left Content */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -559,13 +886,13 @@ export default function Home() {
 
       {/* Newsletter */}
       <section className="py-24 lg:py-32 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-6 lg:px-12">
+        <div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center space-y-12"
+            className="max-w-4xl mx-auto text-center space-y-12 px-6 lg:px-12"
           >
             <div className="space-y-6">
               <h2 className="text-4xl lg:text-5xl font-extralight tracking-tight">

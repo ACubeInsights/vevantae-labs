@@ -4,7 +4,7 @@ import { useState, useEffect, use } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Share2, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { getProducts, Product } from '@/lib/supabase';
 import { formatPrice } from '@/lib/utils';
@@ -194,16 +194,38 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
             {/* Product Details */}
             <div className="space-y-3">
-              {product.product_ml && (
+              {product.net_quantity && (
                 <div className="flex items-center gap-3">
-                  <span className="text-sm text-secondary">Volume:</span>
-                  <span className="text-lg font-medium text-foreground">{product.product_ml}ml</span>
+                  <span className="text-sm text-secondary w-24">Net Quantity:</span>
+                  <span className="text-lg font-medium text-foreground">{product.net_quantity}</span>
                 </div>
               )}
-              {product.product_weight && (
+              {product.serving_info && (
                 <div className="flex items-center gap-3">
-                  <span className="text-sm text-secondary">Weight:</span>
-                  <span className="text-lg font-medium text-foreground">{product.product_weight}g</span>
+                  <span className="text-sm text-secondary w-24">Serving Info:</span>
+                  <span className="text-lg font-medium text-foreground">{product.serving_info}</span>
+                </div>
+              )}
+              {product.mrp && product.selling_price && (
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-secondary w-24">Price:</span>
+                  <div className="flex items-center gap-2">
+                    {product.mrp > product.selling_price && (
+                      <span className="text-sm text-secondary line-through">₹{product.mrp}</span>
+                    )}
+                    <span className="text-xl font-semibold text-primary">₹{product.selling_price}</span>
+                  </div>
+                </div>
+              )}
+              {product.average_rating && product.average_rating > 0 && (
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-secondary w-24">Rating:</span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-lg font-medium text-foreground">★ {product.average_rating}</span>
+                    {product.total_reviews && product.total_reviews > 0 && (
+                      <span className="text-sm text-secondary">({product.total_reviews} reviews)</span>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -213,14 +235,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               <div className="flex gap-3">
                 <Link
                   href="/contact"
-                  className="flex-1 flex items-center justify-center gap-2 py-3 px-6 rounded-lg font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-lg font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                   Learn More & Inquire
                 </Link>
-                
-                <button className="p-3 rounded-lg border border-border hover:border-foreground transition-all">
-                  <Share2 className="w-5 h-5" />
-                </button>
               </div>
             </div>
 
@@ -246,15 +264,38 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 {activeTab === 'description' && (
                   <div className="prose prose-sm max-w-none">
                     <p className="text-secondary leading-relaxed">
-                      {product.detailed_info || product.description || 'No detailed description available.'}
+                      {product.description || 'No detailed description available.'}
                     </p>
-                    {product.lifestyle_problems && product.lifestyle_problems.length > 0 && (
+                    {product.short_description && (
+                      <p className="text-secondary leading-relaxed mt-3">
+                        {product.short_description}
+                      </p>
+                    )}
+                    {product.health_conditions && product.health_conditions.length > 0 && (
                       <div className="mt-4">
-                        <h4 className="text-sm font-medium text-foreground mb-2">Addresses:</h4>
+                        <h4 className="text-sm font-medium text-foreground mb-2">Health Conditions:</h4>
                         <div className="flex flex-wrap gap-2">
-                          {product.lifestyle_problems.map((problem, index) => (
+                          {product.health_conditions.map((condition: string, index: number) => (
                             <span key={index} className="text-xs bg-muted text-secondary px-3 py-1 rounded-full">
-                              {problem}
+                              {condition}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {product.dosha && (
+                      <div className="mt-4">
+                        <h4 className="text-sm font-medium text-foreground mb-2">Dosha:</h4>
+                        <span className="text-sm text-secondary">{product.dosha}</span>
+                      </div>
+                    )}
+                    {product.certifications && product.certifications.length > 0 && (
+                      <div className="mt-4">
+                        <h4 className="text-sm font-medium text-foreground mb-2">Certifications:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {product.certifications.map((cert: string, index: number) => (
+                            <span key={index} className="text-xs bg-green-100 text-green-800 px-3 py-1 rounded-full">
+                              {cert}
                             </span>
                           ))}
                         </div>
@@ -265,9 +306,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
                 {activeTab === 'benefits' && (
                   <div className="space-y-3">
-                    {product.benefits && product.benefits.length > 0 ? (
+                    {product.health_benefits && product.health_benefits.length > 0 ? (
                       <ul className="space-y-2">
-                        {product.benefits.map((benefit: string, index: number) => (
+                        {product.health_benefits.map((benefit: string, index: number) => (
                           <li key={index} className="flex items-start gap-2 text-secondary">
                             <span className="w-1.5 h-1.5 bg-foreground rounded-full mt-2 flex-shrink-0" />
                             {benefit}
@@ -283,35 +324,40 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 {activeTab === 'ingredients' && (
                   <div className="space-y-3">
                     {product.key_ingredients && product.key_ingredients.length > 0 ? (
-                      <ul className="space-y-2">
+                      <div className="grid gap-3">
                         {product.key_ingredients.map((ingredient: string, index: number) => (
-                          <li key={index} className="flex items-start gap-2 text-secondary">
-                            <span className="w-1.5 h-1.5 bg-foreground rounded-full mt-2 flex-shrink-0" />
-                            {ingredient}
-                          </li>
+                          <div key={index} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
+                            <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
+                            <span className="text-sm text-secondary">{ingredient}</span>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     ) : (
-                      <p className="text-secondary">No ingredient information available.</p>
+                      <p className="text-secondary text-sm">No ingredients information available.</p>
                     )}
                   </div>
                 )}
 
                 {activeTab === 'usage' && (
                   <div className="space-y-3">
-                    {product.usage_instructions && product.usage_instructions.length > 0 ? (
-                      <ol className="space-y-2">
-                        {product.usage_instructions.map((instruction: string, index: number) => (
-                          <li key={index} className="flex items-start gap-3 text-secondary">
-                            <span className="text-sm font-medium text-foreground bg-muted w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
-                              {index + 1}
-                            </span>
-                            {instruction}
-                          </li>
-                        ))}
-                      </ol>
+                    {product.how_to_use ? (
+                      <div className="text-secondary">
+                        {product.how_to_use}
+                      </div>
                     ) : (
                       <p className="text-secondary">No usage instructions available.</p>
+                    )}
+                    {product.duration && (
+                      <div className="mt-4 p-4 bg-muted rounded-lg">
+                        <h4 className="font-medium text-foreground mb-2">Duration</h4>
+                        <p className="text-secondary">{product.duration}</p>
+                      </div>
+                    )}
+                    {product.precautions && (
+                      <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                        <h4 className="font-medium text-amber-800 mb-2">Precautions</h4>
+                        <p className="text-amber-700">{product.precautions}</p>
+                      </div>
                     )}
                   </div>
                 )}
