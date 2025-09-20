@@ -52,6 +52,18 @@ export default function ProductsPage() {
   });
   const [selectedAgeGroup, setSelectedAgeGroup] = useState('All Ages');
   const [selectedBenefits, setSelectedBenefits] = useState<string[]>([]);
+  const [selectedHealthConditions, setSelectedHealthConditions] = useState<string[]>(() => {
+    const healthConditionsParam = searchParams.get('health_conditions');
+    if (healthConditionsParam) {
+      // Convert kebab-case to proper format (e.g., "joint-pain" -> "Joint Pain")
+      const formattedCondition = healthConditionsParam
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+      return [formattedCondition];
+    }
+    return [];
+  });
   const [sortBy, setSortBy] = useState('name');
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -66,6 +78,15 @@ export default function ProductsPage() {
       product.health_benefits?.forEach(benefit => benefits.add(benefit));
     });
     return Array.from(benefits).sort();
+  }, [products]);
+
+  // Available health conditions for filtering (extracted from products)
+  const availableHealthConditions = useMemo(() => {
+    const conditions = new Set<string>();
+    products.forEach(product => {
+      product.health_conditions?.forEach(condition => conditions.add(condition));
+    });
+    return Array.from(conditions).sort();
   }, [products]);
 
   // Filtered and sorted products
@@ -90,9 +111,30 @@ export default function ProductsPage() {
       // Benefits filter
       if (selectedBenefits.length > 0) {
         const hasSelectedBenefit = selectedBenefits.some(benefit => 
-          product.health_benefits?.includes(benefit)
+          product.health_benefits?.some(productBenefit =>
+            productBenefit.toLowerCase().includes(benefit.toLowerCase()) ||
+            benefit.toLowerCase().includes(productBenefit.toLowerCase())
+          )
         );
         if (!hasSelectedBenefit) return false;
+      }
+      
+      // Health conditions filter
+      if (selectedHealthConditions.length > 0) {
+        const hasSelectedCondition = selectedHealthConditions.some(condition => {
+          // Convert kebab-case to normalized format for flexible matching
+          const normalizedCondition = condition
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ')
+            .toLowerCase();
+          
+          return product.health_conditions?.some(productCondition => 
+            productCondition.toLowerCase().includes(normalizedCondition) ||
+            normalizedCondition.includes(productCondition.toLowerCase())
+          );
+        });
+        if (!hasSelectedCondition) return false;
       }
       
       // Search filter
@@ -100,14 +142,19 @@ export default function ProductsPage() {
         const query = searchQuery.toLowerCase();
         const matchesName = product.name?.toLowerCase().includes(query);
         const matchesDescription = product.description?.toLowerCase().includes(query);
+        const matchesCategory = product.category?.toLowerCase().includes(query);
         const matchesBenefits = product.health_benefits?.some(benefit => 
           benefit.toLowerCase().includes(query)
         );
         const matchesIngredients = product.key_ingredients?.some(ingredient => 
           ingredient.toLowerCase().includes(query)
         );
+        const matchesHealthConditions = product.health_conditions?.some(condition => 
+          condition.toLowerCase().includes(query)
+        );
         
-        if (!matchesName && !matchesDescription && !matchesBenefits && !matchesIngredients) {
+        if (!matchesName && !matchesDescription && !matchesCategory && 
+            !matchesBenefits && !matchesIngredients && !matchesHealthConditions) {
           return false;
         }
       }
@@ -134,7 +181,7 @@ export default function ProductsPage() {
     });
     
     return filtered;
-  }, [products, selectedCategory, selectedAgeGroup, selectedBenefits, searchQuery, sortBy]);
+  }, [products, selectedCategory, selectedAgeGroup, selectedBenefits, selectedHealthConditions, searchQuery, sortBy]);
   
   // Pagination
   const totalPages = Math.ceil(filteredAndSortedProducts.length / ITEMS_PER_PAGE);
@@ -164,7 +211,7 @@ export default function ProductsPage() {
   // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory, selectedAgeGroup, selectedBenefits, searchQuery, sortBy]);
+  }, [selectedCategory, selectedAgeGroup, selectedBenefits, selectedHealthConditions, searchQuery, sortBy]);
 
   // Early returns after all hooks
   if (loading) {
@@ -202,12 +249,21 @@ export default function ProductsPage() {
         : [...prev, benefit]
     );
   };
+
+  const toggleHealthCondition = (condition: string) => {
+    setSelectedHealthConditions(prev => 
+      prev.includes(condition) 
+        ? prev.filter(c => c !== condition)
+        : [...prev, condition]
+    );
+  };
   
   const clearAllFilters = () => {
     setSearchQuery('');
     setSelectedCategory('All');
     setSelectedAgeGroup('All Ages');
     setSelectedBenefits([]);
+    setSelectedHealthConditions([]);
     setSortBy('name');
   };
   
@@ -215,6 +271,7 @@ export default function ProductsPage() {
     selectedCategory !== 'All',
     selectedAgeGroup !== 'All Ages',
     selectedBenefits.length > 0,
+    selectedHealthConditions.length > 0,
     searchQuery.trim() !== ''
   ].filter(Boolean).length;
 
@@ -401,6 +458,30 @@ export default function ProductsPage() {
                       </div>
                     </div>
                   )}
+
+                  {/* Health Conditions */}
+                  {availableHealthConditions.length > 0 && (
+                    <div className="flex-1">
+                      <h3 className="font-bold text-[#8B7355] mb-3 uppercase text-sm">Health Conditions</h3>
+                      <div className="max-h-32 overflow-y-auto">
+                        <div className="flex flex-wrap gap-2">
+                          {availableHealthConditions.slice(0, 10).map((condition) => (
+                            <button
+                              key={condition}
+                              onClick={() => toggleHealthCondition(condition)}
+                              className={`px-3 py-1 text-sm transition-all duration-300 border ${
+                                selectedHealthConditions.includes(condition)
+                                  ? 'bg-[#8B7355] text-[#FAF9F6] border-[#8B7355]'
+                  : 'bg-[#FAF9F6] text-[#A0896B] border-[#E5E5E0] hover:bg-[#DADAD3] hover:text-[#8B7355]'
+                              }`}
+                            >
+                              {condition}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Clear Filters */}
@@ -417,6 +498,8 @@ export default function ProductsPage() {
               </motion.div>
             )}
           </AnimatePresence>
+
+
 
           {/* Results Summary */}
           <div className="flex items-center justify-between mb-8">
