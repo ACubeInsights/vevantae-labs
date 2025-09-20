@@ -494,167 +494,292 @@ export default function Home() {
         </div>
 
         {/* Full-width Carousel Container */}
-        <div className="relative overflow-hidden py-4">
-          <motion.div
-            className="flex gap-4 lg:gap-6"
-            animate={{
-              x: ["0%", "-50%"]
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-              repeatType: "loop"
-            }}
-            style={{
-              width: "400%"
-            }}
-          >
+        <div className="relative overflow-hidden py-6">
+          <div className="flex animate-scroll hover:pause gap-6 lg:gap-8">
             {/* First set of 6 cards */}
             <Link href="/products?health_conditions=joint-pain" className="group flex-shrink-0">
-              <motion.div
-                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              >
-                {/* Subtle hover gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="flex items-center gap-6 relative z-10">
-                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
-                    <Heart className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-6 lg:p-8 text-center">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4 lg:mb-6">
+                    <svg className="w-8 h-8 lg:w-10 lg:h-10 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C10.9 2 10 2.9 10 4V6C8.9 6 8 6.9 8 8V10C6.9 10 6 10.9 6 12C6 13.1 6.9 14 8 14V16C8 17.1 8.9 18 10 18V20C10 21.1 10.9 22 12 22C13.1 22 14 21.1 14 20V18C15.1 18 16 17.1 16 16V14C17.1 14 18 13.1 18 12C18 10.9 17.1 10 16 10V8C16 6.9 15.1 6 14 6V4C14 2.9 13.1 2 12 2Z" opacity="0.8"/>
+                      <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                    </svg>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
-                      Joint Pain
-                    </h3>
-                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
-                      Natural relief & support for joint health
-                    </p>
-                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight mb-2 lg:mb-3">
+                    Joint Pain
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/80 font-medium leading-relaxed">
+                    Natural relief & joint support
+                  </p>
                 </div>
-              </motion.div>
+              </div>
             </Link>
 
             <Link href="/products?health_conditions=inflammation" className="group flex-shrink-0">
-              <motion.div
-                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              >
-                {/* Subtle hover gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="flex items-center gap-6 relative z-10">
-                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
-                    <Zap className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-6 lg:p-8 text-center">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4 lg:mb-6">
+                    <svg className="w-8 h-8 lg:w-10 lg:h-10 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C11.2 2.8 10.5 3.7 10 4.8C9.2 6.4 9 8.1 9.5 9.7C10 11.3 11.1 12.6 12.5 13.3C13.9 14 15.6 14 17 13.3C18.4 12.6 19.5 11.3 20 9.7C20.5 8.1 20.3 6.4 19.5 4.8C19 3.7 18.3 2.8 17.5 2C18.8 3.5 19.5 5.4 19.5 7.5C19.5 11.6 16.1 15 12 15C7.9 15 4.5 11.6 4.5 7.5C4.5 5.4 5.2 3.5 6.5 2Z" opacity="0.9"/>
+                      <path d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z" fill="currentColor"/>
+                    </svg>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
-                      Inflammation
-                    </h3>
-                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
-                      Natural reduction & anti-inflammatory support
-                    </p>
-                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight mb-2 lg:mb-3">
+                    Inflammation
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/80 font-medium leading-relaxed">
+                    Natural anti-inflammatory support
+                  </p>
                 </div>
-              </motion.div>
+              </div>
             </Link>
 
             <Link href="/products?health_conditions=low-immunity" className="group flex-shrink-0">
-              <motion.div
-                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              >
-                {/* Subtle hover gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="flex items-center gap-6 relative z-10">
-                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
-                    <Shield className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-6 lg:p-8 text-center">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4 lg:mb-6">
+                    <svg className="w-8 h-8 lg:w-10 lg:h-10 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z" opacity="0.9"/>
+                    </svg>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
-                      Low Immunity
-                    </h3>
-                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
-                      Boost defense & strengthen immune system
-                    </p>
-                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight mb-2 lg:mb-3">
+                    Low Immunity
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/80 font-medium leading-relaxed">
+                    Boost defense & immune system
+                  </p>
                 </div>
-              </motion.div>
+              </div>
             </Link>
 
             <Link href="/products?health_conditions=stress" className="group flex-shrink-0">
-              <motion.div
-                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              >
-                {/* Subtle hover gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="flex items-center gap-6 relative z-10">
-                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
-                    <Brain className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-6 lg:p-8 text-center">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4 lg:mb-6">
+                    <svg className="w-8 h-8 lg:w-10 lg:h-10 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" opacity="0.8"/>
+                      <path d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z" fill="currentColor"/>
+                      <path d="M12 14C10.9 14 10 14.9 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.9 13.1 14 12 14Z" fill="currentColor"/>
+                      <path d="M12 20C10.9 20 10 20.9 10 22C10 23.1 10.9 24 12 24C13.1 24 14 23.1 14 22C14 20.9 13.1 20 12 20Z" fill="currentColor"/>
+                    </svg>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
-                      Stress
-                    </h3>
-                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
-                      Mental calm & stress management solutions
-                    </p>
-                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight mb-2 lg:mb-3">
+                    Stress
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/80 font-medium leading-relaxed">
+                    Mental calm & stress management
+                  </p>
                 </div>
-              </motion.div>
+              </div>
             </Link>
 
             <Link href="/products?health_conditions=fatigue" className="group flex-shrink-0">
-              <motion.div
-                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              >
-                {/* Subtle hover gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="flex items-center gap-6 relative z-10">
-                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
-                    <Battery className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-6 lg:p-8 text-center">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4 lg:mb-6">
+                    <svg className="w-8 h-8 lg:w-10 lg:h-10 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" opacity="0.3"/>
+                      <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="currentColor"/>
+                    </svg>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
-                      Fatigue
-                    </h3>
-                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
-                      Energy boost & vitality enhancement
-                    </p>
-                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight mb-2 lg:mb-3">
+                    Fatigue
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/80 font-medium leading-relaxed">
+                    Energy boost & vitality support
+                  </p>
                 </div>
-              </motion.div>
+              </div>
             </Link>
 
             <Link href="/products?health_conditions=sleep-issues" className="group flex-shrink-0">
-              <motion.div
-                className="w-80 h-48 lg:w-96 lg:h-56 bg-gradient-to-br from-background via-background to-muted/30 border border-accent/10 flex items-center p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-xl group-hover:shadow-accent/5 backdrop-blur-sm relative overflow-hidden"
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              >
-                {/* Subtle hover gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="flex items-center gap-6 relative z-10">
-                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent/20 group-hover:to-accent/30 transition-all duration-300">
-                    <Moon className="w-8 h-8 lg:w-10 lg:h-10 text-accent" />
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-6 lg:p-8 text-center">
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4 lg:mb-6">
+                    <svg className="w-8 h-8 lg:w-10 lg:h-10 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" opacity="0.4"/>
+                      <path d="M12 7C9.24 7 7 9.24 7 12C7 14.76 9.24 17 12 17C14.76 17 17 14.76 17 12C17 9.24 14.76 7 12 7ZM12 15C10.34 15 9 13.66 9 12C9 10.34 10.34 9 12 9C13.66 9 15 10.34 15 12C15 13.66 13.66 15 12 15Z" fill="currentColor"/>
+                    </svg>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl lg:text-2xl font-light text-foreground tracking-tight mb-2">
-                      Sleep Issues
-                    </h3>
-                    <p className="text-sm lg:text-base text-secondary/80 font-light leading-relaxed">
-                      Better rest & sleep quality improvement
-                    </p>
-                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight mb-2 lg:mb-3">
+                    Sleep Issues
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/80 font-medium leading-relaxed">
+                    Better rest & sleep quality
+                  </p>
                 </div>
-              </motion.div>
+              </div>
             </Link>
-          </motion.div>
+
+            {/* Duplicate cards for infinite scroll */}
+            <Link href="/products?health_conditions=joint-pain" className="group flex-shrink-0">
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6 lg:p-8">
+                  {/* Icon */}
+                  <div className="w-12 h-12 lg:w-14 lg:h-14 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4">
+                    <svg className="w-8 h-8 lg:w-9 lg:h-9 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C10.9 2 10 2.9 10 4V6C8.9 6 8 6.9 8 8V10C6.9 10 6 10.9 6 12C6 13.1 6.9 14 8 14V16C8 17.1 8.9 18 10 18V20C10 21.1 10.9 22 12 22C13.1 22 14 21.1 14 20V18C15.1 18 16 17.1 16 16V14C17.1 14 18 13.1 18 12C18 10.9 17.1 10 16 10V8C16 6.9 15.1 6 14 6V4C14 2.9 13.1 2 12 2ZM12 4V6H14V8H16V10H18V12H16V14H14V16H12V18H10V16H8V14H6V12H8V10H10V8H12V6H10V4H12Z" opacity="0.8"/>
+                      <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-medium text-foreground tracking-tight mb-3">
+                    Joint Pain
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/70 font-light leading-relaxed">
+                    Natural relief & joint support
+                  </p>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=inflammation" className="group flex-shrink-0">
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6 lg:p-8">
+                  {/* Icon */}
+                  <div className="w-12 h-12 lg:w-14 lg:h-14 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4">
+                    <svg className="w-8 h-8 lg:w-9 lg:h-9 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C11.2 2.8 10.5 3.7 10 4.8C9.2 6.4 9 8.1 9.5 9.7C10 11.3 11.1 12.6 12.5 13.3C13.9 14 15.6 14 17 13.3C18.4 12.6 19.5 11.3 20 9.7C20.5 8.1 20.3 6.4 19.5 4.8C19 3.7 18.3 2.8 17.5 2C18.8 3.5 19.5 5.4 19.5 7.5C19.5 11.6 16.1 15 12 15C7.9 15 4.5 11.6 4.5 7.5C4.5 5.4 5.2 3.5 6.5 2C5.7 2.8 5 3.7 4.5 4.8C3.7 6.4 3.5 8.1 4 9.7C4.5 11.3 5.6 12.6 7 13.3C8.4 14 10.1 14 11.5 13.3C10.1 12.6 9 11.3 8.5 9.7C8 8.1 8.2 6.4 9 4.8C9.5 3.7 10.2 2.8 11 2H12Z" opacity="0.9"/>
+                      <path d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-medium text-foreground tracking-tight mb-3">
+                    Inflammation
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/70 font-light leading-relaxed">
+                    Natural anti-inflammatory support
+                  </p>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=low-immunity" className="group flex-shrink-0">
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6 lg:p-8">
+                  {/* Icon */}
+                  <div className="w-12 h-12 lg:w-14 lg:h-14 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4">
+                    <svg className="w-8 h-8 lg:w-9 lg:h-9 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2L13.5 6.5L18 8L13.5 9.5L12 14L10.5 9.5L6 8L10.5 6.5L12 2Z" opacity="0.7"/>
+                      <path d="M8 12C8 10.9 8.9 10 10 10C11.1 10 12 10.9 12 12C12 13.1 11.1 14 10 14C8.9 14 8 13.1 8 12Z" fill="currentColor"/>
+                      <path d="M14 12C14 10.9 14.9 10 16 10C17.1 10 18 10.9 18 12C18 13.1 17.1 14 16 14C14.9 14 14 13.1 14 12Z" fill="currentColor"/>
+                      <path d="M11 16C11 14.9 11.9 14 13 14C14.1 14 15 14.9 15 16C15 17.1 14.1 18 13 18C11.9 18 11 17.1 11 16Z" fill="currentColor"/>
+                      <path d="M5 16C5 14.9 5.9 14 7 14C8.1 14 9 14.9 9 16C9 17.1 8.1 18 7 18C5.9 18 5 17.1 5 16Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-medium text-foreground tracking-tight mb-3">
+                    Low Immunity
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/70 font-light leading-relaxed">
+                    Boost defense & immune system
+                  </p>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=stress" className="group flex-shrink-0">
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6 lg:p-8">
+                  {/* Icon */}
+                  <div className="w-12 h-12 lg:w-14 lg:h-14 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4">
+                    <svg className="w-8 h-8 lg:w-9 lg:h-9 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" opacity="0.8"/>
+                      <path d="M12 8C15.3 8 18 10.7 18 14C18 17.3 15.3 20 12 20C8.7 20 6 17.3 6 14C6 10.7 8.7 8 12 8ZM12 10C9.8 10 8 11.8 8 14C8 16.2 9.8 18 12 18C14.2 18 16 16.2 16 14C16 11.8 14.2 10 12 10Z" fill="currentColor"/>
+                      <circle cx="10" cy="13" r="1" fill="currentColor"/>
+                      <circle cx="14" cy="13" r="1" fill="currentColor"/>
+                      <path d="M10 15.5C10.6 16.3 11.3 16.5 12 16.5C12.7 16.5 13.4 16.3 14 15.5" stroke="currentColor" strokeWidth="1" fill="none" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-medium text-foreground tracking-tight mb-3">
+                    Stress
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/70 font-light leading-relaxed">
+                    Mental calm & stress management
+                  </p>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=fatigue" className="group flex-shrink-0">
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6 lg:p-8">
+                  {/* Icon */}
+                  <div className="w-12 h-12 lg:w-14 lg:h-14 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4">
+                    <svg className="w-8 h-8 lg:w-9 lg:h-9 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2L15.5 8.5L22 9L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9L8.5 8.5L12 2Z" opacity="0.8"/>
+                      <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                      <path d="M12 1V5M12 19V23M4.22 4.22L6.34 6.34M17.66 17.66L19.78 19.78M1 12H5M19 12H23M4.22 19.78L6.34 17.66M17.66 6.34L19.78 4.22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-medium text-foreground tracking-tight mb-3">
+                    Fatigue
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/70 font-light leading-relaxed">
+                    Energy boost & vitality enhancement
+                  </p>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=sleep-issues" className="group flex-shrink-0">
+              <div className="w-56 h-56 lg:w-64 lg:h-64 bg-background/50 border border-accent/20 transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-2xl group-hover:shadow-accent/10 backdrop-blur-sm relative overflow-hidden hover:-translate-y-1 hover:scale-[1.02] rounded-lg">
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6 lg:p-8">
+                  {/* Icon */}
+                  <div className="w-12 h-12 lg:w-14 lg:h-14 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-all duration-300 mb-4">
+                    <svg className="w-8 h-8 lg:w-9 lg:h-9 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M21 12.79A9 9 0 1111.21 3A7 7 0 0021 12.79Z" opacity="0.8"/>
+                      <circle cx="9" cy="9" r="1.5" fill="currentColor"/>
+                      <circle cx="15" cy="9" r="1.5" fill="currentColor"/>
+                      <path d="M8 13C8.5 14 9.5 15 12 15C14.5 15 15.5 14 16 13" stroke="currentColor" strokeWidth="1" fill="none" strokeLinecap="round"/>
+                      <path d="M17 4L19 2M20 7L22 5M17 10L19 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-medium text-foreground tracking-tight mb-3">
+                    Sleep Issues
+                  </h3>
+                  <p className="text-sm lg:text-base text-secondary/70 font-light leading-relaxed">
+                    Better rest & sleep quality
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          <style jsx>{`
+            @keyframes scroll {
+              from {
+                transform: translateX(0);
+              }
+              to {
+                transform: translateX(calc(-100% / 2));
+              }
+            }
+            .animate-scroll {
+              animation: scroll 30s linear infinite;
+              will-change: transform;
+              width: max-content;
+            }
+            .animate-scroll:hover {
+              animation-play-state: paused;
+            }
+          `}</style>
         </div>
       </section>
 
