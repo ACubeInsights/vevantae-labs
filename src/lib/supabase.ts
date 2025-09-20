@@ -47,15 +47,19 @@ export interface Product {
 
 export interface BlogPost {
   id: string
-  title: string
   slug: string
+  title: string
   excerpt: string
   content: string
-  image_url: string
-  author: string
-  published_at: string
+  meta_title: any | null
+  meta_description: any | null
+  featured_image: any | null
   category: string
-  tags?: string[]
+  tags: string[]
+  author: string
+  status: string
+  is_featured: boolean
+  published_at: string
   created_at: string
   updated_at: string
 }
@@ -166,9 +170,9 @@ export const getProductBySlug = async (slug: string) => {
 
 export const getBlogPosts = async (limit?: number) => {
   let query = supabase
-    .from('blog_posts')
+    .from('blogs')
     .select('*')
-    .eq('published', true)
+    .eq('status', 'published')
     .order('published_at', { ascending: false })
 
   if (limit) {
@@ -183,10 +187,10 @@ export const getBlogPosts = async (limit?: number) => {
 
 export const getBlogPost = async (slug: string) => {
   const { data, error } = await supabase
-    .from('blog_posts')
+    .from('blogs')
     .select('*')
     .eq('slug', slug)
-    .eq('published', true)
+    .eq('status', 'published')
     .single()
   
   if (error) throw error

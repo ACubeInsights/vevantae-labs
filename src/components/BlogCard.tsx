@@ -16,7 +16,7 @@ export function BlogCard({ post, className = '' }: BlogCardProps) {
       <Link href={`/blog/${post.slug}`} className="block h-full flex flex-col">
         <div className="relative aspect-[4/5] overflow-hidden bg-gray-100">
           <Image
-            src={post.image_url}
+            src={post.featured_image || 'https://via.placeholder.com/600x400/F8F6F3/8B7355?text=Blog+Post'}
             alt={post.title}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"

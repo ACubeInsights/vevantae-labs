@@ -1,140 +1,42 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Calendar, User, ArrowRight, Clock } from 'lucide-react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { BlogCard } from '@/components/BlogCard'
-
-interface BlogPost {
-  id: string
-  slug: string
-  title: string
-  excerpt: string
-  content: string
-  author: string
-  published_at: string
-  readTime: string
-  category: string
-  image_url: string
-  featured: boolean
-  tags?: string[]
-  created_at: string
-  updated_at: string
-}
-
-const blogPosts: BlogPost[] = [
-  {
-    id: '1',
-    slug: 'science-behind-ayurvedic-skincare',
-    title: 'The Science Behind Ayurvedic Skincare',
-    excerpt: 'Discover how ancient Ayurvedic principles are being validated by modern dermatological research.',
-    content: 'Full article content...',
-    author: 'Dr. Priya Sharma',
-    published_at: '2024-01-15',
-    readTime: '5 min read',
-    category: 'Skincare',
-    image_url: 'https://via.placeholder.com/600x400/F8F6F3/8B7355?text=Blog+Post',
-    featured: true,
-    tags: ['skincare', 'ayurveda', 'research'],
-    created_at: '2024-01-15',
-    updated_at: '2024-01-15'
-  },
-  {
-    id: '2',
-    slug: 'understanding-your-dosha-beginners-guide',
-    title: 'Understanding Your Dosha: A Beginner\'s Guide',
-    excerpt: 'Learn about the three doshas and how understanding your constitution can improve your wellness journey.',
-    content: 'Full article content...',
-    author: 'Rajesh Kumar',
-    published_at: '2024-01-10',
-    readTime: '7 min read',
-    category: 'Wellness',
-    image_url: 'https://via.placeholder.com/600x400/F8F6F3/8B7355?text=Blog+Post',
-    featured: true,
-    tags: ['dosha', 'wellness', 'ayurveda'],
-    created_at: '2024-01-10',
-    updated_at: '2024-01-10'
-  },
-  {
-    id: '3',
-    slug: 'natural-immunity-boosters-modern-life',
-    title: 'Natural Immunity Boosters for Modern Life',
-    excerpt: 'Explore time-tested herbs and practices that can strengthen your immune system naturally.',
-    content: 'Full article content...',
-    author: 'Dr. Priya Sharma',
-    published_at: '2024-01-05',
-    readTime: '6 min read',
-    category: 'Health',
-    image_url: 'https://via.placeholder.com/600x400/F8F6F3/8B7355?text=Blog+Post',
-    featured: false,
-    tags: ['immunity', 'herbs', 'health'],
-    created_at: '2024-01-05',
-    updated_at: '2024-01-05'
-  },
-  {
-    id: '4',
-    slug: 'art-mindful-living-ayurveda',
-    title: 'The Art of Mindful Living with Ayurveda',
-    excerpt: 'How incorporating Ayurvedic principles into daily routines can enhance mental clarity and peace.',
-    content: 'Full article content...',
-    author: 'Anita Desai',
-    published_at: '2023-12-28',
-    readTime: '8 min read',
-    category: 'Lifestyle',
-    image_url: 'https://via.placeholder.com/600x400/F8F6F3/8B7355?text=Blog+Post',
-    featured: false,
-    tags: ['mindfulness', 'lifestyle', 'ayurveda'],
-    created_at: '2023-12-28',
-    updated_at: '2023-12-28'
-  },
-  {
-    id: '5',
-    slug: 'seasonal-wellness-adapting-routine',
-    title: 'Seasonal Wellness: Adapting Your Routine',
-    excerpt: 'Learn how to adjust your wellness practices according to seasonal changes for optimal health.',
-    content: 'Full article content...',
-    author: 'Rajesh Kumar',
-    published_at: '2023-12-20',
-    readTime: '5 min read',
-    category: 'Wellness',
-    image_url: 'https://via.placeholder.com/600x400/F8F6F3/8B7355?text=Blog+Post',
-    featured: false,
-    tags: ['seasonal', 'wellness', 'routine'],
-    created_at: '2023-12-20',
-    updated_at: '2023-12-20'
-  },
-  {
-    id: '6',
-    slug: 'sustainable-beauty-eco-friendly-skincare',
-    title: 'Sustainable Beauty: Eco-Friendly Skincare',
-    excerpt: 'Discover how choosing natural, sustainable beauty products benefits both you and the environment.',
-    content: 'Full article content...',
-    author: 'Anita Desai',
-    published_at: '2023-12-15',
-    readTime: '4 min read',
-    category: 'Skincare',
-    image_url: 'https://via.placeholder.com/600x400/F8F6F3/8B7355?text=Blog+Post',
-    featured: false,
-    tags: ['sustainability', 'skincare', 'eco-friendly'],
-    created_at: '2023-12-15',
-    updated_at: '2023-12-15'
-  }
-]
+import { getBlogPosts, BlogPost } from '@/lib/supabase'
 
 const categories = ['All', 'Wellness', 'Skincare', 'Health', 'Lifestyle']
 
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
+  const [loading, setLoading] = useState(true)
+  
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      try {
+        const posts = await getBlogPosts()
+        setBlogPosts(posts)
+      } catch (error) {
+        console.error('Error fetching blog posts:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    fetchBlogPosts()
+  }, [])
   
   const filteredPosts = selectedCategory === 'All' 
     ? blogPosts 
     : blogPosts.filter(post => post.category === selectedCategory)
   
-  const featuredPosts = blogPosts.filter(post => post.featured)
-  const regularPosts = filteredPosts.filter(post => !post.featured)
+  const featuredPosts = blogPosts.filter(post => post.is_featured)
+  const regularPosts = filteredPosts.filter(post => !post.is_featured)
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
@@ -168,7 +70,15 @@ export default function BlogPage() {
         </section>
 
         {/* Featured Articles */}
-        {featuredPosts.length > 0 && (
+        {loading ? (
+          <section className="py-20">
+            <div className="container mx-auto px-6">
+              <div className="text-center">
+                <p className="text-lg text-[#666666]">Loading articles...</p>
+              </div>
+            </div>
+          </section>
+        ) : featuredPosts.length > 0 && (
           <section className="py-20">
             <div className="container mx-auto px-6">
               <motion.div
