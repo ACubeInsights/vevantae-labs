@@ -6,8 +6,10 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { TestimonialCarousel } from '@/components/TestimonialCarousel'
 import { ArrowRight, Plus, Zap, Shield, Heart, Brain, Battery, Moon } from 'lucide-react'
-import { getProducts, Product } from '@/lib/supabase'
+import { getProducts, Product, getBlogPosts, BlogPost } from '@/lib/supabase'
+import { BlogCard } from '@/components/BlogCard'
 
 // Helper function to validate and fix image URLs
 function getValidImageUrl(imageUrl: string | undefined): string | null {
@@ -24,11 +26,13 @@ function getValidImageUrl(imageUrl: string | undefined): string | null {
 
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchFeaturedProducts = async () => {
+    const fetchData = async () => {
       try {
+        // Fetch featured products
         const products = await getProducts({ is_featured: true });
         // Get first 3 featured products, or fallback to first 3 products
         if (products.length === 0) {
@@ -37,22 +41,21 @@ export default function Home() {
         } else {
           setFeaturedProducts(products.slice(0, 3));
         }
+
+        // Fetch blog posts (limit to 3 for showcase)
+        const posts = await getBlogPosts();
+        setBlogPosts(posts.slice(0, 3));
       } catch (error) {
-        console.error('Error fetching featured products:', error);
+        console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchFeaturedProducts();
+    fetchData();
   }, []);
 
-  const categories = [
-    { name: 'Skin Care', count: '24 products', image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&h=600&fit=crop&auto=format&q=80&ixlib=rb-4.0.3' },
-    { name: 'Hand & Body', count: '18 products', image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=600&fit=crop&auto=format&q=80&ixlib=rb-4.0.3' },
-    { name: 'Fragrance', count: '12 products', image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&h=600&fit=crop&auto=format&q=80&ixlib=rb-4.0.3' },
-    { name: 'Home', count: '8 products', image: 'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=600&h=600&fit=crop&auto=format&q=80&ixlib=rb-4.0.3' }
-  ]
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -1219,67 +1222,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="py-24 lg:py-32 bg-muted/30">
-        <div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-20 px-6 lg:px-12"
-          >
-            <h2 className="text-4xl lg:text-5xl font-extralight text-foreground mb-6 tracking-tight">
-              Categories
-            </h2>
-            <p className="text-lg font-light text-secondary max-w-2xl mx-auto leading-relaxed">
-              Discover our comprehensive range of formulations, 
-              organized by purpose and application.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-6 lg:px-12">
-            {categories.map((category, index) => (
-              <motion.div
-                key={category.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group cursor-pointer"
-              >
-                <Link href={`/products?category=${category.name.toLowerCase().replace(' & ', '-')}`} className="block">
-                  <div className="space-y-6">
-                    <div className="relative aspect-square bg-muted overflow-hidden rounded-sm shadow-sm group-hover:shadow-lg transition-all duration-300">
-                      <Image
-                        src={category.image}
-                        alt={category.name}
-                        fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-out"
-                      />
-                      <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300" />
-                      
-                      {/* Plus Icon */}
-                      <div className="absolute bottom-4 right-4 w-10 h-10 bg-card text-foreground backdrop-blur-sm flex items-center justify-center border border-border/70 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 rounded-sm shadow-sm">
-                        <Plus className="w-5 h-5" />
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <h3 className="text-xl font-light text-foreground group-hover:text-accent transition-colors duration-300">
-                        {category.name}
-                      </h3>
-                      <p className="text-sm font-light text-muted-foreground">
-                        {category.count}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Philosophy Section */}
       <section className="py-24 lg:py-32 bg-background">
@@ -1353,6 +1295,92 @@ export default function Home() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Blog Showcase */}
+      <section className="py-24 lg:py-32 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center space-y-6 mb-16"
+          >
+            <p className="text-xs font-medium text-accent uppercase tracking-[0.2em]">
+              Latest Insights
+            </p>
+            <h2 className="text-4xl lg:text-5xl font-extralight text-foreground leading-tight tracking-tight">
+              From our
+              <br />
+              <span className="italic font-light">knowledge hub</span>
+            </h2>
+            <div className="w-16 h-px bg-accent mx-auto" />
+          </motion.div>
+
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div key={index} className="bg-gray-100 animate-pulse rounded-sm h-96" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {blogPosts.map((post, index) => (
+                <motion.div
+                  key={post.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <BlogCard post={post} />
+                </motion.div>
+              ))}
+            </div>
+          )}
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground text-sm font-medium uppercase tracking-wider hover:bg-primary/90 transition-colors duration-300"
+            >
+              View All Articles
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Testimonials Carousel */}
+      <section className="py-24 lg:py-32 bg-[#FAF9F6]">
+        <div className="container mx-auto px-6 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center space-y-6 mb-16"
+          >
+            <p className="text-xs font-medium text-accent uppercase tracking-[0.2em]">
+              Customer Stories
+            </p>
+            <h2 className="text-4xl lg:text-5xl font-extralight text-foreground leading-tight tracking-tight">
+              What our customers
+              <br />
+              <span className="italic font-light">are saying</span>
+            </h2>
+            <div className="w-16 h-px bg-accent mx-auto" />
+          </motion.div>
+
+          <TestimonialCarousel />
         </div>
       </section>
 
