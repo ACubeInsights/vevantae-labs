@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { TestimonialCarousel } from '@/components/TestimonialCarousel'
 import { ArrowRight, Plus, Zap, Shield, Heart, Brain, Battery, Moon } from 'lucide-react'
 import { getProducts, Product, getBlogPosts, BlogPost } from '@/lib/supabase'
 import { BlogCard } from '@/components/BlogCard'
@@ -1380,7 +1379,10 @@ export default function Home() {
             <div className="w-16 h-px bg-accent mx-auto" />
           </motion.div>
 
-          <TestimonialCarousel />
+          {/* Placeholder for testimonials */}
+          <div className="text-center text-muted-foreground">
+            <p>Customer testimonials coming soon...</p>
+          </div>
         </div>
       </section>
 
