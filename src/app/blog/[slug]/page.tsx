@@ -316,12 +316,7 @@ export default function BlogDetailPage() {
                 transition={{ duration: 0.6, delay: 0.5 }}
                 className="mt-12 pt-8 border-t border-[#E8E6E0]"
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[#8B7355]">
-                    <Share2 className="w-4 h-4" />
-                    <span className="text-sm font-medium uppercase tracking-wider">Share this article</span>
-                  </div>
-                  
+                <div className="flex items-center justify-end gap-6">
                   {/* Copy Link Button */}
                   <button 
                     onClick={handleCopyLink}
