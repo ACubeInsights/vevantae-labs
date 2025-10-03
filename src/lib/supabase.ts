@@ -1,9 +1,77 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// Minimal Supabase Database types used in this project
+// Covers tables referenced: products03, blogs, testimonials, contact_submissions
+type Database = {
+  public: {
+    Tables: {
+      products03: {
+        Row: Product
+        Insert: Partial<Product> & {
+          id?: string
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: Partial<Product>
+      }
+      blogs: {
+        Row: BlogPost
+        Insert: Partial<BlogPost> & { id?: string; created_at?: string; updated_at?: string }
+        Update: Partial<BlogPost>
+      }
+      testimonials: {
+        Row: Testimonial
+        Insert: Partial<Testimonial> & { id?: string; created_at?: string }
+        Update: Partial<Testimonial>
+      }
+      contact_submissions: {
+        Row: {
+          id: string
+          name: string
+          email: string
+          subject: string
+          message: string
+          created_at: string
+        }
+        Insert: {
+          name: string
+          email: string
+          subject: string
+          message: string
+        }
+        Update: Partial<{
+          name: string
+          email: string
+          subject: string
+          message: string
+        }>
+      }
+    }
+    Views: Record<string, never>
+    Functions: Record<string, never>
+    Enums: Record<string, never>
+  }
+}
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Lazy initialize Supabase client to avoid import-time errors during build/prerender
+// Ensures helpful error messages if environment variables are missing
+let supabaseClient: SupabaseClient<Database> | null = null
+
+const getSupabase = () => {
+  if (supabaseClient) return supabaseClient
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error(
+      'Supabase environment variables are missing. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.'
+    )
+  }
+
+  supabaseClient = createClient<Database>(supabaseUrl, supabaseAnonKey)
+  return supabaseClient
+}
 
 // Types for our database tables
 export interface Product {
@@ -85,7 +153,7 @@ export const getProducts = async (filters?: {
   gender?: string
   dosha?: string
 }) => {
-  let query = supabase.from('products03').select('*')
+  let query = getSupabase().from('products03').select('*')
 
   if (filters?.category) {
     query = query.eq('category', filters.category)
@@ -138,7 +206,7 @@ export const getProducts = async (filters?: {
 }
 
 export const getProduct = async (id: string) => {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from('products03')
     .select('*')
     .eq('id', id)
@@ -154,7 +222,7 @@ export const getProduct = async (id: string) => {
 }
 
 export const getProductBySlug = async (slug: string) => {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from('products03')
     .select('*')
     .eq('slug', slug)
@@ -170,7 +238,7 @@ export const getProductBySlug = async (slug: string) => {
 }
 
 export const getBlogPosts = async (limit?: number) => {
-  let query = supabase
+  let query = getSupabase()
     .from('blogs')
     .select('*')
     .eq('status', 'published')
@@ -187,7 +255,7 @@ export const getBlogPosts = async (limit?: number) => {
 }
 
 export const getBlogPost = async (slug: string) => {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from('blogs')
     .select('*')
     .eq('slug', slug)
@@ -199,7 +267,7 @@ export const getBlogPost = async (slug: string) => {
 }
 
 export const getTestimonials = async (limit?: number) => {
-  let query = supabase
+  let query = getSupabase()
     .from('testimonials')
     .select('*')
     .order('created_at', { ascending: false })
@@ -220,9 +288,10 @@ export const submitContactForm = async (formData: {
   subject: string
   message: string
 }) => {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from('contact_submissions')
-    .insert([formData])
+    // Cast to never[] to satisfy generic overload without using `any`
+    .insert([formData] as never[])
   
   if (error) throw error
   return data
