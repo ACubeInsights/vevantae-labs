@@ -66,7 +66,7 @@ export default function ContactPage() {
     {
       icon: MapPin,
       title: 'Corporate Office',
-      details: 'India - Research & Development Center',
+      details: 'India - Research &amp; Development Center',
       description: 'Our headquarters and manufacturing facility'
     },
     {
@@ -128,7 +128,7 @@ export default function ContactPage() {
               Partner With Us
             </h1>
             <p className="text-xl text-[#666666] max-w-3xl mx-auto leading-relaxed">
-              Ready to explore B2B partnerships, bulk orders, or custom wellness solutions? Let's discuss how we can support your business needs.
+              Ready to explore B2B partnerships, bulk orders, or custom wellness solutions? Let&#39;s discuss how we can support your business needs.
             </p>
           </motion.div>
         </div>
@@ -156,7 +156,7 @@ export default function ContactPage() {
                   >
                     <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                     <h3 className="text-2xl font-light text-[#111111] mb-2">Thank You!</h3>
-                    <p className="text-[#666666]">Your message has been sent successfully. We'll get back to you soon.</p>
+                    <p className="text-[#666666]">Your message has been sent successfully. We&#39;ll get back to you soon.</p>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
@@ -244,8 +244,8 @@ export default function ContactPage() {
                         onChange={handleInputChange}
                         required
                         className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#111111] focus:border-transparent transition-all"
-                        placeholder="What's this about?"
-                      />
+                        placeholder="What&apos;s this about?"
+                        />
                     </div>
                     
                     <div>
@@ -388,7 +388,7 @@ export default function ContactPage() {
               <MapPin className="w-16 h-16 text-[#666666] mx-auto mb-4" />
               <p className="text-lg text-[#666666]">Interactive Map Coming Soon</p>
               <p className="text-sm text-[#999999] mt-2">
-                India - Research & Development Center
+                India - Research &amp; Development Center
               </p>
             </div>
           </motion.div>

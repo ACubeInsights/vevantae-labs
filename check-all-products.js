@@ -7,11 +7,11 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function checkAllProducts() {
   try {
-    console.log('🔍 Checking ALL products in products_01 table (no filters)...');
+    console.log('🔍 Checking ALL products in products03 table (no filters)...');
     
     // Get ALL products without any filters
     const { data: allProducts, error } = await supabase
-      .from('products_01')
+      .from('products03')
       .select('*');
     
     if (error) {

@@ -81,11 +81,11 @@ const sampleProducts = [
 ];
 
 async function insertSampleProducts() {
-  console.log('🚀 Inserting sample products into products_01 table...');
+  console.log('🚀 Inserting sample products into products03 table...');
   
   try {
     const { data, error } = await supabase
-      .from('products_01')
+      .from('products03')
       .insert(sampleProducts)
       .select();
     

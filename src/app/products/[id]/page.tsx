@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import { getProducts, Product } from '@/lib/supabase';
-import { formatPrice } from '@/lib/utils';
+import { Product } from '@/lib/supabase';
 
 // Helper function to validate and fix image URLs
 function getValidImageUrl(imageUrl: string | undefined): string | null {
@@ -47,8 +47,8 @@ const getProductById = async (id: string): Promise<Product | null> => {
 };
 
 
-export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = use(params);
+export default function ProductDetailPage() {
+  const { id } = useParams() as { id: string };
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState('description');
   const [product, setProduct] = useState<Product | null>(null);
@@ -57,7 +57,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const fetchedProduct = await getProductById(resolvedParams.id);
+        if (!id) {
+          console.error('Product id param missing');
+          return;
+        }
+        const fetchedProduct = await getProductById(id);
         setProduct(fetchedProduct);
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -67,7 +71,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     };
 
     fetchProduct();
-  }, [resolvedParams.id]);
+  }, [id]);
 
   if (loading) {
     return (

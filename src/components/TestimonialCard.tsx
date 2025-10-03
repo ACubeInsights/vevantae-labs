@@ -28,7 +28,7 @@ export function TestimonialCard({ testimonial, className = '' }: TestimonialCard
         
         {/* Testimonial text */}
         <blockquote className="text-secondary leading-relaxed italic">
-          "{testimonial.comment}"
+          &quot;{testimonial.comment}&quot;
         </blockquote>
         
         {/* Author */}

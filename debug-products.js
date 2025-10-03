@@ -13,12 +13,12 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function debugProducts() {
-  console.log('🔍 Debugging products_01 table...');
+  console.log('🔍 Debugging products03 table...');
   
   try {
     // Test connection
     const { data: connectionTest, error: connectionError } = await supabase
-      .from('products_01')
+      .from('products03')
       .select('count', { count: 'exact', head: true });
     
     if (connectionError) {
@@ -27,11 +27,11 @@ async function debugProducts() {
     }
     
     console.log('✅ Connected to Supabase successfully');
-    console.log(`📊 Total rows in products_01: ${connectionTest?.length || 0}`);
+    console.log(`📊 Total rows in products03: ${connectionTest?.length || 0}`);
     
     // Get all products
     const { data: allProducts, error: allError } = await supabase
-      .from('products_01')
+      .from('products03')
       .select('*');
     
     if (allError) {
@@ -57,17 +57,17 @@ async function debugProducts() {
         console.log(`  ${status}: ${count}`);
       });
     } else {
-      console.log('\n⚠️  No products found in products_01 table');
+      console.log('\n⚠️  No products found in products03 table');
       console.log('\n💡 To add products:');
       console.log('1. Go to your Supabase dashboard');
-      console.log('2. Navigate to the products_01 table');
+      console.log('2. Navigate to the products03 table');
       console.log('3. Insert some sample data');
       console.log('4. Make sure to set status = "Active" for products to appear');
     }
     
     // Test with Active filter
     const { data: activeProducts, error: activeError } = await supabase
-      .from('products_01')
+      .from('products03')
       .select('*')
       .eq('status', 'Active');
     

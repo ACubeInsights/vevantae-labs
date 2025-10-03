@@ -35,7 +35,7 @@ async function fixImageUrls() {
     
     // Get all products with images
     const { data: products, error: fetchError } = await supabase
-      .from('products_01')
+      .from('products03')
       .select('id, name, images')
       .not('images', 'is', null);
 
@@ -62,7 +62,7 @@ async function fixImageUrls() {
         
         if (needsUpdate) {
           const { error: updateError } = await supabase
-            .from('products_01')
+            .from('products03')
             .update({ images: updatedImages })
             .eq('id', product.id);
             

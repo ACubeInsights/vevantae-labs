@@ -1,26 +1,26 @@
--- Add INSERT policy for products_01 table to allow public inserts
+-- Add INSERT policy for products03 table to allow public inserts
 -- Run this in your Supabase SQL Editor
 
--- First, let's check if the products_01 table exists and has RLS enabled
+-- First, let's check if the products03 table exists and has RLS enabled
 SELECT schemaname, tablename, rowsecurity 
 FROM pg_tables 
-WHERE tablename = 'products_01';
+WHERE tablename = 'products03';
 
--- Add INSERT policy for products_01 table
-CREATE POLICY "Allow public insert on products_01" ON products_01
+-- Add INSERT policy for products03 table
+CREATE POLICY "Allow public insert on products03" ON products03
   FOR INSERT WITH CHECK (true);
 
--- Add UPDATE policy for products_01 table (optional, for future use)
-CREATE POLICY "Allow public update on products_01" ON products_01
+-- Add UPDATE policy for products03 table (optional, for future use)
+CREATE POLICY "Allow public update on products03" ON products03
   FOR UPDATE USING (true) WITH CHECK (true);
 
 -- Verify the policies were created
 SELECT schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check
 FROM pg_policies 
-WHERE tablename = 'products_01';
+WHERE tablename = 'products03';
 
 -- Now insert sample products
-INSERT INTO products_01 (
+INSERT INTO products03 (
   name, 
   description, 
   images, 
@@ -108,5 +108,5 @@ INSERT INTO products_01 (
 
 -- Verify the data was inserted
 SELECT id, name, status, is_featured, array_length(images, 1) as image_count
-FROM products_01
+FROM products03
 ORDER BY created_at DESC;

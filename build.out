@@ -1,0 +1,74 @@
+
+> vevantae-02@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.3
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1848ms
+   Linting and checking validity of types ...
+
+Failed to compile.
+
+./src/app/about/page.tsx
+4:47  Warning: 'Award' is defined but never used.  @typescript-eslint/no-unused-vars
+137:38  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+151:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+325:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+365:17  Error: Do not use an `<a>` element to navigate to `/products/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+./src/app/benefits/page.tsx
+14:3  Warning: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+273:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+353:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+444:17  Error: Do not use an `<a>` element to navigate to `/products/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+./src/app/blog/[slug]/page.tsx
+16:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+153:34  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+153:55  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/blog/page.tsx
+4:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+6:10  Warning: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+6:20  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+6:26  Warning: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+6:38  Warning: 'Clock' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/contact/page.tsx
+131:96  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+159:94  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/page.tsx
+9:28  Warning: 'Zap' is defined but never used.  @typescript-eslint/no-unused-vars
+9:33  Warning: 'Shield' is defined but never used.  @typescript-eslint/no-unused-vars
+9:41  Warning: 'Heart' is defined but never used.  @typescript-eslint/no-unused-vars
+9:48  Warning: 'Brain' is defined but never used.  @typescript-eslint/no-unused-vars
+9:55  Warning: 'Battery' is defined but never used.  @typescript-eslint/no-unused-vars
+9:64  Warning: 'Moon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/products/[id]/page.tsx
+8:10  Warning: 'ArrowLeft' is defined but never used.  @typescript-eslint/no-unused-vars
+8:21  Warning: 'Star' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'getProducts' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'formatPrice' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/products/page.tsx
+9:10  Warning: 'formatPrice' is defined but never used.  @typescript-eslint/no-unused-vars
+10:18  Warning: 'Filter' is defined but never used.  @typescript-eslint/no-unused-vars
+10:29  Warning: 'ChevronDown' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/test-supabase/page.tsx
+6:10  Warning: 'formatPrice' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/CrispImage.tsx
+43:5  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/Footer.tsx
+4:10  Warning: 'Newsletter' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/Newsletter.tsx
+23:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules

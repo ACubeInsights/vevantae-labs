@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { 
   Heart, 
@@ -10,8 +12,7 @@ import {
   Moon, 
   Sun, 
   Droplets,
-  CheckCircle,
-  ArrowRight
+  CheckCircle
 } from 'lucide-react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
@@ -269,11 +270,14 @@ export default function BenefitsPage() {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="aspect-[4/5] bg-[#8B7355] rounded-sm overflow-hidden">
-                  <img
+                <div className="relative aspect-[4/5] bg-[#8B7355] rounded-sm overflow-hidden">
+                  <Image
                     src="https://via.placeholder.com/500x600/F8F6F3/8B7355?text=Benefits+Image"
                     alt="Ayurvedic herbs and ingredients"
-                    className="w-full h-full object-cover"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+                    className="object-cover"
                   />
                 </div>
               </motion.div>
@@ -349,11 +353,14 @@ export default function BenefitsPage() {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="aspect-[4/5] bg-[#E8E6E0] rounded-sm overflow-hidden">
-                  <img
+                <div className="relative aspect-[4/5] bg-[#E8E6E0] rounded-sm overflow-hidden">
+                  <Image
                     src="https://via.placeholder.com/500x600/F8F6F3/8B7355?text=Research+Image"
                     alt="Scientific research and testing"
-                    className="w-full h-full object-cover"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+                    className="object-cover"
                   />
                 </div>
               </motion.div>
@@ -441,18 +448,18 @@ export default function BenefitsPage() {
                 naturally-derived formulations.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
+                <Link
                   href="/products"
                   className="px-8 py-3 bg-white text-black text-sm font-medium hover:bg-gray-100 transition-colors uppercase tracking-wider"
                 >
                   Shop Products
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/about"
                   className="px-8 py-3 border border-white text-white text-sm font-medium hover:bg-white hover:text-black transition-colors uppercase tracking-wider"
                 >
                   Learn More
-                </a>
+                </Link>
               </div>
             </motion.div>
           </div>

@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { ArrowRight, Plus, Zap, Shield, Heart, Brain, Battery, Moon } from 'lucide-react'
+import { ArrowRight, Plus } from 'lucide-react'
 import { getProducts, Product, getBlogPosts, BlogPost } from '@/lib/supabase'
 import { BlogCard } from '@/components/BlogCard'
 

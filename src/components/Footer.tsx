@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { Newsletter } from '@/components/Newsletter'
 
 export function Footer() {
   const footerLinks = {

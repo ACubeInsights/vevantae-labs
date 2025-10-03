@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -25,8 +25,12 @@ export const metadata: Metadata = {
     title: "Vevantae Labs - Ancient Wisdom, Modern Wellness",
     description: "Discover premium ayurvedic and nutraceutical products that bridge ancient wisdom with modern science for holistic wellness.",
   },
-  viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

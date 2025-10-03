@@ -34,7 +34,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 async function checkImages() {
   try {
     const { data: products, error } = await supabase
-      .from('products_01')
+      .from('products03')
       .select('id, name, images')
       .eq('status', 'Active')
       .limit(5); // Just check first 5 products

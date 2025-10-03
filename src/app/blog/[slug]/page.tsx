@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -13,7 +13,6 @@ import { formatDate } from '@/lib/utils'
 
 export default function BlogDetailPage() {
   const params = useParams()
-  const router = useRouter()
   const [post, setPost] = useState<BlogPost | null>(null)
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
@@ -150,7 +149,7 @@ export default function BlogDetailPage() {
                 {error || 'Blog post not found'}
               </h1>
               <p className="text-[#666666] mb-8">
-                The blog post you're looking for doesn't exist or has been removed.
+                The blog post you&apos;re looking for doesn&apos;t exist or has been removed.
               </p>
               <Link
                 href="/blog"

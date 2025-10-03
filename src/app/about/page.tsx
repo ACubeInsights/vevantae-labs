@@ -1,7 +1,9 @@
 'use client'
 
+import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Users, Target, Eye, Heart, Calendar, Award } from 'lucide-react'
+import { Users, Target, Eye, Heart, Calendar } from 'lucide-react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 
@@ -134,7 +136,7 @@ export default function AboutPage() {
                   enhance human wellness.
                 </p>
                 <p className="text-lg text-[#666666] leading-relaxed">
-                  Founded in 2018, we've dedicated ourselves to researching, developing, and 
+                  Founded in 2018, we&#39;ve dedicated ourselves to researching, developing, and 
                   crafting premium ayurvedic and nutraceutical products that honor traditional 
                   knowledge while meeting contemporary quality standards.
                 </p>
@@ -147,11 +149,14 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="aspect-[4/5] bg-[#8B7355] rounded-sm overflow-hidden">
-                  <img
+                <div className="relative aspect-[4/5] bg-[#8B7355] rounded-sm overflow-hidden">
+                  <Image
                     src="https://via.placeholder.com/500x600/F8F6F3/8B7355?text=About+Story"
                     alt="Our laboratory"
-                    className="w-full h-full object-cover"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+                    className="object-cover"
                   />
                 </div>
               </motion.div>
@@ -321,11 +326,14 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   className="text-center space-y-4"
                 >
-                  <div className="aspect-square bg-[#E8E6E0] rounded-sm overflow-hidden mx-auto max-w-xs">
-                    <img
+                  <div className="relative aspect-square bg-[#E8E6E0] rounded-sm overflow-hidden mx-auto max-w-xs">
+                    <Image
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      unoptimized
+                      sizes="(max-width: 640px) 200px, 300px"
+                      className="object-cover"
                     />
                   </div>
                   <div className="space-y-2">
@@ -362,18 +370,18 @@ export default function AboutPage() {
                 Discover how our products can support your path to holistic wellness
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
+                <Link
                   href="/products"
                   className="px-8 py-3 bg-white text-black text-sm font-medium hover:bg-gray-100 transition-colors uppercase tracking-wider"
                 >
                   Explore Products
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/contact"
                   className="px-8 py-3 border border-white text-white text-sm font-medium hover:bg-white hover:text-black transition-colors uppercase tracking-wider"
                 >
                   Contact Us
-                </a>
+                </Link>
               </div>
             </motion.div>
           </div>

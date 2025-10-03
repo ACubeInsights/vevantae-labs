@@ -51,9 +51,9 @@ export interface BlogPost {
   title: string
   excerpt: string
   content: string
-  meta_title: any | null
-  meta_description: any | null
-  featured_image: any | null
+  meta_title: string | null
+  meta_description: string | null
+  featured_image: string | null
   category: string
   tags: string[]
   author: string
@@ -124,12 +124,13 @@ export const getProducts = async (filters?: {
   }
 
   // Only show active products that are in stock
-  query = query.eq('status', 'active').eq('in_stock', true)
+  // Be robust to status casing differences ('active' vs 'Active')
+  query = query.in('status', ['active', 'Active']).eq('in_stock', true)
 
   const { data, error } = await query.order('created_at', { ascending: false })
 
   if (error) {
-    console.error('Error fetching products:', error)
+    console.error('Error fetching products:', error?.message || error, error)
     return []
   }
 
@@ -141,11 +142,11 @@ export const getProduct = async (id: string) => {
     .from('products03')
     .select('*')
     .eq('id', id)
-    .eq('status', 'active')
+    .in('status', ['active', 'Active'])
     .single()
 
   if (error) {
-    console.error('Error fetching product:', error)
+    console.error('Error fetching product:', error?.message || error, error)
     return null
   }
 
@@ -157,11 +158,11 @@ export const getProductBySlug = async (slug: string) => {
     .from('products03')
     .select('*')
     .eq('slug', slug)
-    .eq('status', 'active')
+    .in('status', ['active', 'Active'])
     .single()
 
   if (error) {
-    console.error('Error fetching product by slug:', error)
+    console.error('Error fetching product by slug:', error?.message || error, error)
     return null
   }
 

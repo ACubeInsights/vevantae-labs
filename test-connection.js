@@ -13,8 +13,8 @@ async function testConnection() {
     
     // Test all possible table variations
     const tables = [
-      'products', 'blogs', 'blog_posts', 'testimonials', 'contact_forms', 'products_01',
-      'Products', 'Blogs', 'BlogPosts', 'Testimonials', 'ContactForms'
+      'products03', 'blogs', 'blog_posts', 'testimonials', 'contact_forms',
+      'Products03', 'Blogs', 'BlogPosts', 'Testimonials', 'ContactForms'
     ];
     
     for (const table of tables) {

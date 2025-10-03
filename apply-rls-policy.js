@@ -27,7 +27,9 @@ const env = loadEnvFile();
 async function applyRLSPolicy() {
   try {
     // Read the SQL file
-    const sqlContent = fs.readFileSync('fix-products01-admin-policy.sql', 'utf8');
+    // Use products03 admin policy file
+    const sqlPath = 'fix-products01-admin-policy.sql'
+    const sqlContent = fs.readFileSync(sqlPath, 'utf8');
     
     // Create Supabase client with service role key
     const supabase = createClient(
@@ -35,7 +37,7 @@ async function applyRLSPolicy() {
       env.SUPABASE_SERVICE_ROLE_KEY
     );
 
-    console.log('🔧 Applying RLS policy to products_01 table...');
+    console.log('🔧 Applying RLS policy to products03 table...');
     
     // Split SQL into individual statements
     const statements = sqlContent
@@ -43,20 +45,31 @@ async function applyRLSPolicy() {
       .map(stmt => stmt.trim())
       .filter(stmt => stmt.length > 0);
     
-    // Execute each statement
+    // Execute each statement via RPC function if available
+    // Note: Some projects don't have the helper Postgres function `exec_sql(sql text)` installed.
+    // If missing, we will log guidance to run the SQL file manually in Supabase.
+    let missingExecSql = false
     for (const statement of statements) {
-      console.log(`Executing: ${statement.substring(0, 50)}...`);
-      
-      const { error } = await supabase.rpc('exec_sql', {
-        sql: statement
-      });
-      
+      console.log(`Executing: ${statement.substring(0, 50)}...`)
+      const { error } = await supabase.rpc('exec_sql', { sql: statement })
       if (error) {
-        console.error('❌ Error executing statement:', error);
-        console.error('Statement:', statement);
+        console.error('❌ Error executing statement:', error)
+        console.error('Statement:', statement)
+        if ((error.message || '').includes('Could not find the function public.exec_sql')) {
+          missingExecSql = true
+          break
+        }
       } else {
-        console.log('✅ Statement executed successfully');
+        console.log('✅ Statement executed successfully')
       }
+    }
+
+    if (missingExecSql) {
+      console.log('\n⚠️ exec_sql RPC function missing.')
+      console.log('Please apply the SQL manually:')
+      console.log(`1) Open Supabase SQL Editor for your project`)
+      console.log(`2) Paste the contents of ${sqlPath}`)
+      console.log('3) Run to create policies on products03')
     }
     
     console.log('🎉 RLS policy application completed!');

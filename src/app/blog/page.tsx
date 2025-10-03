@@ -1,9 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Calendar, User, ArrowRight, Clock } from 'lucide-react'
+// Removed unused icon imports flagged by ESLint
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { BlogCard } from '@/components/BlogCard'
@@ -53,7 +52,7 @@ export default function BlogPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                Insights & Knowledge
+                Insights &amp; Knowledge
               </motion.h1>
               
               <motion.p 

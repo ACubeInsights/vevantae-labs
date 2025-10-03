@@ -1,7 +1,7 @@
--- Add UPDATE policy for products_01 table
+-- Add UPDATE policy for products03 table
 -- This allows updating product data including images
 
-CREATE POLICY "Allow public UPDATE on products_01" ON "public"."products_01"
+CREATE POLICY "Allow public UPDATE on products03" ON "public"."products03"
 AS PERMISSIVE FOR UPDATE
 TO public
 USING (true)

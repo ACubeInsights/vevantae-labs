@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getProducts, Product } from '@/lib/supabase';
-import { formatPrice } from '@/lib/utils';
 
 // Helper function to validate and fix image URLs
 function getValidImageUrl(imageUrl: string | undefined): string | null {
@@ -87,9 +86,9 @@ export default function TestSupabasePage() {
                 </h3>
                 <p className="text-gray-600 mb-4">{product.description || 'No description available'}</p>
                 <div className="flex items-center justify-between mb-4">
-                  {product.product_ml && (
+                  {product.net_quantity && (
                     <span className="text-lg font-medium text-blue-600">
-                      {product.product_ml}ml
+                      {product.net_quantity}
                     </span>
                   )}
                   {product.category && (
@@ -98,18 +97,18 @@ export default function TestSupabasePage() {
                     </span>
                   )}
                 </div>
-                {product.quantity !== null && (
+                {product.stock_quantity !== null && (
                   <div className="mb-4">
                     <span className="text-sm text-gray-600">
-                      Available: {product.quantity} units
+                      Available: {product.stock_quantity} units
                     </span>
                   </div>
                 )}
-                {product.benefits && product.benefits.length > 0 && (
+                {product.health_benefits && product.health_benefits.length > 0 && (
                   <div className="mt-4">
                     <h4 className="text-sm font-medium text-gray-900 mb-2">Benefits:</h4>
                     <div className="flex flex-wrap gap-1">
-                      {product.benefits.slice(0, 3).map((benefit, index) => (
+                      {product.health_benefits.slice(0, 3).map((benefit, index) => (
                         <span
                           key={index}
                           className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded"

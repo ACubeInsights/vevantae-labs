@@ -1,13 +1,12 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProducts, Product } from '@/lib/supabase';
-import { formatPrice } from '@/lib/utils';
-import { Search, Filter, X, ChevronDown, Grid, List, SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, X, Grid, List, SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
@@ -36,7 +35,7 @@ function getValidImageUrl(imageUrl: string | undefined): string | null {
   }
 }
 
-export default function ProductsPage() {
+function ProductsContent() {
   const searchParams = useSearchParams();
   
   // State management
@@ -103,7 +102,7 @@ export default function ProductsPage() {
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = products.filter(product => {
+    const filtered = products.filter(product => {
       // Category filter
       if (selectedCategory !== 'All' && product.category !== selectedCategory) {
         return false;
@@ -748,5 +747,13 @@ export default function ProductsPage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background pt-20 flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground"></div></div>}>
+      <ProductsContent />
+    </Suspense>
   );
 }
