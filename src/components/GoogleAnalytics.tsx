@@ -13,7 +13,8 @@ declare global {
   }
 }
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-VDMQ3FND7S'
+// Only enable GA when an explicit measurement ID is provided
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? ''
 
 export function GoogleAnalytics() {
   const pathname = usePathname()
@@ -23,7 +24,9 @@ export function GoogleAnalytics() {
     if (!GA_MEASUREMENT_ID) return
 
     const query = searchParams.size ? `?${searchParams.toString()}` : ''
-    const url = `${pathname}${query}`
+    // Use full URL (origin + path + query) for accurate GA page_location
+    const origin = typeof window !== 'undefined' ? window.location.origin : ''
+    const url = `${origin}${pathname}${query}`
     
     // Track page views (guard for browser and gtag availability)
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -33,7 +36,9 @@ export function GoogleAnalytics() {
     }
   }, [pathname, searchParams])
 
-  if (!GA_MEASUREMENT_ID) {
+  // In absence of a valid measurement ID, or in non-production environments,
+  // do not load GA to avoid noisy console/network errors during local testing.
+  if (!GA_MEASUREMENT_ID || process.env.NODE_ENV !== 'production') {
     return null
   }
 
@@ -52,7 +57,8 @@ export function GoogleAnalytics() {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${GA_MEASUREMENT_ID}', {
-              debug_mode: ${process.env.NODE_ENV === 'development'},
+              // Keep debug_mode off in production builds to avoid type narrowing issues
+              debug_mode: false,
               send_page_view: true,
               // Enhanced session tracking
               engagement_time_msec: 1000, // Track engagement every 1 second
