@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
+import { GoogleAnalytics } from '@/components/GoogleAnalytics';
+import { SessionTrackerWrapper } from '@/components/SessionTrackerWrapper';
 
 const inter = Inter({
   variable: '--font-suisse',
@@ -44,7 +46,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} font-sans antialiased bg-background text-primary`}>
-        {children}
+        <GoogleAnalytics />
+        <SessionTrackerWrapper>
+          {children}
+        </SessionTrackerWrapper>
         <WhatsAppButton />
       </body>
     </html>
