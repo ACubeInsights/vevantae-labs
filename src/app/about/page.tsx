@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Users, Target, Eye, Heart, Calendar } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { usePageTracking } from '@/hooks/usePageTracking';
 
 const values = [
   {
@@ -94,6 +95,10 @@ const team = [
 ];
 
 export default function AboutPage() {
+  usePageTracking({
+    pageName: 'About'
+  });
+
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />

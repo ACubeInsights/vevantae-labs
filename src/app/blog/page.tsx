@@ -7,10 +7,15 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { BlogCard } from '@/components/BlogCard';
 import { getBlogPosts, BlogPost } from '@/lib/supabase';
+import { usePageTracking } from '@/hooks/usePageTracking';
 
 const categories = ['All', 'Wellness', 'Skincare', 'Health', 'Lifestyle'];
 
 export default function BlogPage() {
+  usePageTracking({
+    pageName: 'Blog'
+  });
+
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
