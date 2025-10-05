@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import { Heart, Brain, Shield, Leaf, Zap, Moon, Sun, Droplets, CheckCircle } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { usePageTracking } from '@/hooks/usePageTracking';
 
 const benefits = [
   {
@@ -134,10 +133,6 @@ const comparisonData = [
 ];
 
 export default function BenefitsPage() {
-  usePageTracking({
-    pageName: 'Benefits'
-  });
-
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />
