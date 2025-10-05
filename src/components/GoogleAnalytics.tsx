@@ -4,9 +4,12 @@ import Script from 'next/script'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
+type GtagEventParams = Record<string, unknown>
+type GtagConfigParams = Record<string, unknown>
+
 declare global {
   interface Window {
-    gtag: (command: string, ...args: any[]) => void
+    gtag: (command: 'config' | 'event' | 'js' | string, ...args: unknown[]) => void
   }
 }
 
@@ -19,12 +22,15 @@ export function GoogleAnalytics() {
   useEffect(() => {
     if (!GA_MEASUREMENT_ID) return
 
-    const url = pathname + searchParams.toString()
+    const query = searchParams.size ? `?${searchParams.toString()}` : ''
+    const url = `${pathname}${query}`
     
-    // Track page views
-    window.gtag('config', GA_MEASUREMENT_ID, {
-      page_location: url,
-    })
+    // Track page views (guard for browser and gtag availability)
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('config', GA_MEASUREMENT_ID, {
+        page_location: url,
+      } as GtagConfigParams)
+    }
   }, [pathname, searchParams])
 
   if (!GA_MEASUREMENT_ID) {
@@ -67,7 +73,7 @@ export function GoogleAnalytics() {
   )
 }
 
-export const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
+export const trackEvent = (eventName: string, parameters?: GtagEventParams) => {
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', eventName, parameters)
   }
@@ -94,7 +100,18 @@ export const trackFormSubmission = (formName: string, additionalData?: Record<st
 }
 
 // Common tracking functions for e-commerce and user interactions
-export const trackPurchase = (transactionId: string, value: number, currency: string = 'INR', items: any[]) => {
+type GAItem = {
+  item_id?: string
+  item_name?: string
+  item_brand?: string
+  item_category?: string
+  item_variant?: string
+  price?: number
+  quantity?: number
+  [key: string]: string | number | boolean | null | undefined
+}
+
+export const trackPurchase = (transactionId: string, value: number, currency: string = 'INR', items: GAItem[]) => {
   trackEvent('purchase', {
     transaction_id: transactionId,
     value,
@@ -103,7 +120,7 @@ export const trackPurchase = (transactionId: string, value: number, currency: st
   })
 }
 
-export const trackAddToCart = (currency: string = 'INR', value: number, items: any[]) => {
+export const trackAddToCart = (currency: string = 'INR', value: number, items: GAItem[]) => {
   trackEvent('add_to_cart', {
     currency,
     value,
@@ -111,7 +128,7 @@ export const trackAddToCart = (currency: string = 'INR', value: number, items: a
   })
 }
 
-export const trackViewItem = (currency: string = 'INR', value: number, items: any[]) => {
+export const trackViewItem = (currency: string = 'INR', value: number, items: GAItem[]) => {
   trackEvent('view_item', {
     currency,
     value,
@@ -173,7 +190,7 @@ export const trackScrollDepth = (scrollPercent: number, pageName: string) => {
   })
 }
 
-export const trackUserEngagement = (engagementType: string, details?: Record<string, any>) => {
+export const trackUserEngagement = (engagementType: string, details?: GtagEventParams) => {
   trackEvent('user_engagement', {
     engagement_type: engagementType,
     timestamp: new Date().toISOString(),
