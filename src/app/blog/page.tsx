@@ -1,52 +1,53 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 // Removed unused icon imports flagged by ESLint
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
-import { BlogCard } from '@/components/BlogCard'
-import { getBlogPosts, BlogPost } from '@/lib/supabase'
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { BlogCard } from '@/components/BlogCard';
+import { getBlogPosts, BlogPost } from '@/lib/supabase';
 
-const categories = ['All', 'Wellness', 'Skincare', 'Health', 'Lifestyle']
+const categories = ['All', 'Wellness', 'Skincare', 'Health', 'Lifestyle'];
 
 export default function BlogPage() {
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
-  const [loading, setLoading] = useState(true)
-  
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchBlogPosts = async () => {
       try {
-        const posts = await getBlogPosts()
-        setBlogPosts(posts)
+        const posts = await getBlogPosts();
+        setBlogPosts(posts);
       } catch (error) {
-        console.error('Error fetching blog posts:', error)
+        console.error('Error fetching blog posts:', error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    
-    fetchBlogPosts()
-  }, [])
-  
-  const filteredPosts = selectedCategory === 'All' 
-    ? blogPosts 
-    : blogPosts.filter(post => post.category === selectedCategory)
-  
-  const featuredPosts = blogPosts.filter(post => post.is_featured)
-  const regularPosts = filteredPosts.filter(post => !post.is_featured)
+    };
+
+    fetchBlogPosts();
+  }, []);
+
+  const filteredPosts =
+    selectedCategory === 'All'
+      ? blogPosts
+      : blogPosts.filter((post) => post.category === selectedCategory);
+
+  const featuredPosts = blogPosts.filter((post) => post.is_featured);
+  const regularPosts = filteredPosts.filter((post) => !post.is_featured);
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />
-      
+
       <main>
         {/* Hero Section */}
         <section className="py-20 lg:py-32">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto text-center space-y-8">
-              <motion.h1 
+              <motion.h1
                 className="text-4xl md:text-6xl font-light text-[#111111] leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -54,15 +55,15 @@ export default function BlogPage() {
               >
                 Insights &amp; Knowledge
               </motion.h1>
-              
-              <motion.p 
+
+              <motion.p
                 className="text-lg text-[#666666] max-w-3xl mx-auto leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                Explore the intersection of ancient wisdom and modern wellness through 
-                our curated collection of articles and insights.
+                Explore the intersection of ancient wisdom and modern wellness through our curated
+                collection of articles and insights.
               </motion.p>
             </div>
           </div>
@@ -77,39 +78,39 @@ export default function BlogPage() {
               </div>
             </div>
           </section>
-        ) : featuredPosts.length > 0 && (
-          <section className="py-20">
-            <div className="container mx-auto px-6">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="mb-16"
-              >
-                <h2 className="text-3xl lg:text-4xl font-light text-[#111111] mb-4">
-                  Featured Articles
-                </h2>
-                <p className="text-lg text-[#666666]">
-                  Our most popular and insightful pieces
-                </p>
-              </motion.div>
+        ) : (
+          featuredPosts.length > 0 && (
+            <section className="py-20">
+              <div className="container mx-auto px-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="mb-16"
+                >
+                  <h2 className="text-3xl lg:text-4xl font-light text-[#111111] mb-4">
+                    Featured Articles
+                  </h2>
+                  <p className="text-lg text-[#666666]">Our most popular and insightful pieces</p>
+                </motion.div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {featuredPosts.map((post, index) => (
-                  <motion.div
-                    key={post.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <BlogCard post={post} />
-                  </motion.div>
-                ))}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {featuredPosts.map((post, index) => (
+                    <motion.div
+                      key={post.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                    >
+                      <BlogCard post={post} />
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          )
         )}
 
         {/* Category Filter */}
@@ -122,10 +123,8 @@ export default function BlogPage() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl lg:text-4xl font-light text-[#111111] mb-8">
-                All Articles
-              </h2>
-              
+              <h2 className="text-3xl lg:text-4xl font-light text-[#111111] mb-8">All Articles</h2>
+
               <div className="flex flex-wrap justify-center gap-4">
                 {categories.map((category) => (
                   <button
@@ -184,14 +183,12 @@ export default function BlogPage() {
               viewport={{ once: true }}
               className="max-w-2xl mx-auto text-center space-y-8"
             >
-              <h2 className="text-3xl lg:text-4xl font-light">
-                Stay Informed
-              </h2>
+              <h2 className="text-3xl lg:text-4xl font-light">Stay Informed</h2>
               <p className="text-lg text-gray-300 leading-relaxed">
-                Subscribe to our newsletter for the latest insights on wellness, 
-                Ayurveda, and natural health.
+                Subscribe to our newsletter for the latest insights on wellness, Ayurveda, and
+                natural health.
               </p>
-              
+
               <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <input
                   type="email"
@@ -209,8 +206,8 @@ export default function BlogPage() {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
-  )
+  );
 }

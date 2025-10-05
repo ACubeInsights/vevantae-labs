@@ -7,54 +7,54 @@
 @layer base {
   :root {
     /* Aesop-inspired color palette */
-    --background: #FAF9F6; /* Warm off-white */
+    --background: #faf9f6; /* Warm off-white */
     --foreground: #111111; /* Deep black */
-    --card: #FFFFFF;
+    --card: #ffffff;
     --card-foreground: #111111;
-    --popover: #FFFFFF;
+    --popover: #ffffff;
     --popover-foreground: #111111;
     --primary: #111111; /* Deep black */
-    --primary-foreground: #FFFFFF;
+    --primary-foreground: #ffffff;
     --secondary: #666666; /* Medium gray */
-    --secondary-foreground: #FFFFFF;
-    --muted: #E8E6E0; /* Light warm gray */
+    --secondary-foreground: #ffffff;
+    --muted: #e8e6e0; /* Light warm gray */
     --muted-foreground: #666666;
-    --accent: #8B7355; /* Warm brown */
-    --accent-foreground: #FFFFFF;
-    --destructive: #DC2626;
-    --destructive-foreground: #FFFFFF;
-    --border: #E8E6E0;
-    --input: #E8E6E0;
+    --accent: #8b7355; /* Warm brown */
+    --accent-foreground: #ffffff;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --border: #e8e6e0;
+    --input: #e8e6e0;
     --ring: #111111;
     --radius: 0.125rem; /* 2px - minimal rounded corners */
   }
 
   .dark {
     --background: #111111;
-    --foreground: #FAF9F6;
+    --foreground: #faf9f6;
     --card: #111111;
-    --card-foreground: #FAF9F6;
+    --card-foreground: #faf9f6;
     --popover: #111111;
-    --popover-foreground: #FAF9F6;
-    --primary: #FAF9F6;
+    --popover-foreground: #faf9f6;
+    --primary: #faf9f6;
     --primary-foreground: #111111;
     --secondary: #999999;
     --secondary-foreground: #111111;
     --muted: #262626;
     --muted-foreground: #999999;
-    --accent: #A68B5B;
-    --accent-foreground: #FAF9F6;
-    --destructive: #EF4444;
-    --destructive-foreground: #FAF9F6;
+    --accent: #a68b5b;
+    --accent-foreground: #faf9f6;
+    --destructive: #ef4444;
+    --destructive-foreground: #faf9f6;
     --border: #262626;
     --input: #262626;
-    --ring: #FAF9F6;
+    --ring: #faf9f6;
   }
 
   * {
     box-sizing: border-box;
   }
-  
+
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, sans-serif;

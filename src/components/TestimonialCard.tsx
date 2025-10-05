@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { Testimonial } from '@/lib/supabase'
-import { Star } from 'lucide-react'
+import { Testimonial } from '@/lib/supabase';
+import { Star } from 'lucide-react';
 
 interface TestimonialCardProps {
-  testimonial: Testimonial
-  className?: string
+  testimonial: Testimonial;
+  className?: string;
 }
 
 export function TestimonialCard({ testimonial, className = '' }: TestimonialCardProps) {
@@ -18,26 +18,22 @@ export function TestimonialCard({ testimonial, className = '' }: TestimonialCard
             <Star
               key={index}
               className={`w-4 h-4 ${
-                index < testimonial.rating
-                  ? 'fill-amber text-amber'
-                  : 'text-border'
+                index < testimonial.rating ? 'fill-amber text-amber' : 'text-border'
               }`}
             />
           ))}
         </div>
-        
+
         {/* Testimonial text */}
         <blockquote className="text-secondary leading-relaxed italic">
           &quot;{testimonial.comment}&quot;
         </blockquote>
-        
+
         {/* Author */}
         <div className="pt-4 border-t border-border">
-          <cite className="text-primary font-semibold not-italic">
-            {testimonial.name}
-          </cite>
+          <cite className="text-primary font-semibold not-italic">{testimonial.name}</cite>
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,28 +1,28 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
+import Link from 'next/link';
 
 export function Footer() {
   const footerLinks = {
-    'Products': [
+    Products: [
       { name: 'Ayurvedic Solutions', href: '/products?category=ayurvedic' },
       { name: 'Nutraceuticals', href: '/products?category=nutraceutical' },
       { name: 'New & Notable', href: '/products?featured=true' },
       { name: 'All Products', href: '/products' },
     ],
-    'Learn': [
+    Learn: [
       { name: 'Benefits of Ayurveda', href: '/benefits/ayurveda' },
       { name: 'Benefits of Nutraceuticals', href: '/benefits/nutraceuticals' },
       { name: 'Blog', href: '/blog' },
       { name: 'About Us', href: '/about' },
     ],
-    'Partnership': [
+    Partnership: [
       { name: 'Contact Us', href: '/contact' },
       { name: 'B2B Inquiries', href: '/contact?type=b2b' },
       { name: 'Quality Standards', href: '/quality' },
       { name: 'Certifications', href: '/certifications' },
     ],
-  }
+  };
 
   return (
     <footer className="bg-[#111111] text-white">
@@ -31,28 +31,37 @@ export function Footer() {
           {/* Brand section */}
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="inline-block">
-              <span className="text-xl font-light text-white tracking-wide">
-                Vevantae Labs
-              </span>
+              <span className="text-xl font-light text-white tracking-wide">Vevantae Labs</span>
             </Link>
-            
+
             <p className="text-gray-300 leading-relaxed max-w-md text-sm">
-              Ancient Wisdom, Modern Wellness. Bridging traditional ayurvedic knowledge 
-              with contemporary nutraceutical science for holistic health solutions.
+              Ancient Wisdom, Modern Wellness. Bridging traditional ayurvedic knowledge with
+              contemporary nutraceutical science for holistic health solutions.
             </p>
-            
+
             <div className="space-y-2 text-sm text-gray-400">
-              <p>Email: <a href="mailto:alokik2012@gmail.com" className="hover:text-white transition-colors">alokik2012@gmail.com</a></p>
-              <p>Phone: <a href="tel:+919671300080" className="hover:text-white transition-colors">+91 96713 00080</a></p>
+              <p>
+                Email:{' '}
+                <a
+                  href="mailto:alokik2012@gmail.com"
+                  className="hover:text-white transition-colors"
+                >
+                  alokik2012@gmail.com
+                </a>
+              </p>
+              <p>
+                Phone:{' '}
+                <a href="tel:+919671300080" className="hover:text-white transition-colors">
+                  +91 96713 00080
+                </a>
+              </p>
             </div>
           </div>
 
           {/* Links sections */}
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title} className="space-y-4">
-              <h3 className="text-sm font-normal text-white uppercase tracking-wider">
-                {title}
-              </h3>
+              <h3 className="text-sm font-normal text-white uppercase tracking-wider">{title}</h3>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.name}>
@@ -72,9 +81,7 @@ export function Footer() {
         {/* Newsletter section */}
         <div className="mt-16 pt-8 border-t border-gray-800">
           <div className="max-w-md">
-            <h3 className="text-lg font-light text-white mb-4">
-              Stay informed
-            </h3>
+            <h3 className="text-lg font-light text-white mb-4">Stay informed</h3>
             <p className="text-sm text-gray-400 mb-6">
               Subscribe to receive updates on new products and wellness insights.
             </p>
@@ -105,7 +112,7 @@ export function Footer() {
                 Cookie Policy
               </Link>
             </div>
-            
+
             <div className="text-sm text-gray-400">
               <p>&copy; {new Date().getFullYear()} Vevantae Labs. All rights reserved.</p>
             </div>
@@ -113,5 +120,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

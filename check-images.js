@@ -10,8 +10,8 @@ let supabaseUrl, supabaseAnonKey;
 try {
   const envContent = fs.readFileSync('.env.local', 'utf8');
   const lines = envContent.split('\n');
-  
-  lines.forEach(line => {
+
+  lines.forEach((line) => {
     if (line.startsWith('NEXT_PUBLIC_SUPABASE_URL=')) {
       supabaseUrl = line.split('=')[1];
     }
@@ -45,14 +45,13 @@ async function checkImages() {
     }
 
     console.log(`\n🔍 Checking images for ${products.length} active products:\n`);
-    
+
     products.forEach((product, index) => {
       console.log(`${index + 1}. ${product.name}`);
       console.log(`   ID: ${product.id}`);
       console.log(`   Images: ${JSON.stringify(product.images)}`);
       console.log('');
     });
-
   } catch (error) {
     console.error('Error:', error);
   }

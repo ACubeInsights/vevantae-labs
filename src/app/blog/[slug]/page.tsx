@@ -1,115 +1,130 @@
-'use client'
+'use client';
 
-import { useState, useEffect, useRef } from 'react'
-import { useParams } from 'next/navigation'
-import Image from 'next/image'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { ArrowLeft, Calendar, User, Clock, Tag, Share2, Copy, Check, Facebook, Twitter, Linkedin } from 'lucide-react'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
-import { getBlogPost, getBlogPosts, BlogPost } from '@/lib/supabase'
-import { formatDate } from '@/lib/utils'
+import { useState, useEffect, useRef } from 'react';
+import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import {
+  ArrowLeft,
+  Calendar,
+  User,
+  Clock,
+  Tag,
+  Share2,
+  Copy,
+  Check,
+  Facebook,
+  Twitter,
+  Linkedin,
+} from 'lucide-react';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { getBlogPost, getBlogPosts, BlogPost } from '@/lib/supabase';
+import { formatDate } from '@/lib/utils';
 
 export default function BlogDetailPage() {
-  const params = useParams()
-  const [post, setPost] = useState<BlogPost | null>(null)
-  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [copySuccess, setCopySuccess] = useState(false)
-  const [showShareMenu, setShowShareMenu] = useState(false)
-  const shareMenuRef = useRef<HTMLDivElement>(null)
+  const params = useParams();
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [copySuccess, setCopySuccess] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  const shareMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchBlogPost = async () => {
       try {
         if (!params.slug || typeof params.slug !== 'string') {
-          setError('Invalid blog post URL')
-          return
+          setError('Invalid blog post URL');
+          return;
         }
 
         // Fetch the main blog post
-        const blogPost = await getBlogPost(params.slug)
-        setPost(blogPost)
+        const blogPost = await getBlogPost(params.slug);
+        setPost(blogPost);
 
-        // Fetch related posts (same category, excluding current post)
-        const allPosts = await getBlogPosts()
-        const related = allPosts
-          .filter(p => p.id !== blogPost.id && p.category === blogPost.category)
-          .slice(0, 3)
-        setRelatedPosts(related)
-
-      } catch (error) {
-        console.error('Error fetching blog post:', error)
-        setError('Blog post not found')
+        // If post exists, fetch related posts (same category, excluding current post)
+        if (blogPost) {
+          const allPosts = await getBlogPosts();
+          const related = allPosts
+            .filter((p) => p.id !== blogPost.id && p.category === blogPost.category)
+            .slice(0, 3);
+          setRelatedPosts(related);
+        } else {
+          setRelatedPosts([]);
+        }
+      } catch {
+        // Avoid noisy logs; set user-friendly error
+        setError('Blog post not found');
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchBlogPost()
-  }, [params.slug])
+    fetchBlogPost();
+  }, [params.slug]);
 
   // Handle click outside to close share menu
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (shareMenuRef.current && !shareMenuRef.current.contains(event.target as Node)) {
-        setShowShareMenu(false)
+        setShowShareMenu(false);
       }
-    }
+    };
 
     if (showShareMenu) {
-      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [showShareMenu])
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showShareMenu]);
 
   // Copy link functionality
   const handleCopyLink = async () => {
     try {
-      const currentUrl = window.location.href
-      await navigator.clipboard.writeText(currentUrl)
-      setCopySuccess(true)
-      setTimeout(() => setCopySuccess(false), 2000)
+      const currentUrl = window.location.href;
+      await navigator.clipboard.writeText(currentUrl);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
     } catch (err) {
-      console.error('Failed to copy link:', err)
+      console.error('Failed to copy link:', err);
     }
-  }
+  };
 
   // Share functionality
   const handleShare = (platform: string) => {
     if (platform === 'copy') {
-      handleCopyLink()
-      setShowShareMenu(false)
-      return
+      handleCopyLink();
+      setShowShareMenu(false);
+      return;
     }
 
-    const currentUrl = window.location.href
-    const title = post?.title || 'Check out this article'
-    
-    let shareUrl = ''
-    
+    const currentUrl = window.location.href;
+    const title = post?.title || 'Check out this article';
+
+    let shareUrl = '';
+
     switch (platform) {
       case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`
-        break
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
+        break;
       case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(title)}`
-        break
+        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(title)}`;
+        break;
       case 'linkedin':
-        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`
-        break
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`;
+        break;
       default:
-        return
+        return;
     }
-    
-    window.open(shareUrl, '_blank', 'noopener,noreferrer')
-    setShowShareMenu(false)
-  }
+
+    window.open(shareUrl, '_blank', 'noopener,noreferrer');
+    setShowShareMenu(false);
+  };
 
   if (loading) {
     return (
@@ -135,7 +150,7 @@ export default function BlogDetailPage() {
         </main>
         <Footer />
       </div>
-    )
+    );
   }
 
   if (error || !post) {
@@ -163,13 +178,13 @@ export default function BlogDetailPage() {
         </main>
         <Footer />
       </div>
-    )
+    );
   }
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />
-      
+
       <main>
         {/* Back Navigation */}
         <section className="py-8 bg-white border-b border-[#E8E6E0]">
@@ -253,7 +268,10 @@ export default function BlogDetailPage() {
               >
                 <div className="relative aspect-[16/9] overflow-hidden rounded-sm bg-gray-100">
                   <Image
-                    src={post.featured_image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDYwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjhGNkYzIi8+Cjx0ZXh0IHg9IjMwMCIgeT0iMjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZmlsbD0iIzhCNzM1NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4Ij5CbG9nIFBvc3Q8L3RleHQ+Cjwvc3ZnPg=='}
+                    src={
+                      post.featured_image ||
+                      'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDYwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjhGNkYzIi8+Cjx0ZXh0IHg9IjMwMCIgeT0iMjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZmlsbD0iIzhCNzM1NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4Ij5CbG9nIFBvc3Q8L3RleHQ+Cjwvc3ZnPg=='
+                    }
                     alt={post.title}
                     fill
                     className="object-cover"
@@ -275,7 +293,7 @@ export default function BlogDetailPage() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="prose prose-lg max-w-none"
               >
-                <div 
+                <div
                   className="text-[#333333] leading-relaxed space-y-6"
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
@@ -317,7 +335,7 @@ export default function BlogDetailPage() {
               >
                 <div className="flex items-center justify-end gap-6">
                   {/* Copy Link Button */}
-                  <button 
+                  <button
                     onClick={handleCopyLink}
                     className="flex items-center gap-2 text-[#8B7355] hover:text-[#111111] transition-colors text-sm font-medium uppercase tracking-wider"
                   >
@@ -333,17 +351,17 @@ export default function BlogDetailPage() {
                       </>
                     )}
                   </button>
-                  
+
                   {/* Share Button with Dropdown */}
                   <div className="relative" ref={shareMenuRef}>
-                    <button 
+                    <button
                       onClick={() => setShowShareMenu(!showShareMenu)}
                       className="flex items-center gap-2 text-[#8B7355] hover:text-[#111111] transition-colors text-sm font-medium uppercase tracking-wider"
                     >
                       <Share2 className="w-4 h-4" />
                       Share
                     </button>
-                    
+
                     {showShareMenu && (
                       <div className="absolute right-0 top-full mt-2 bg-white border border-[#E8E6E0] rounded-sm shadow-lg z-10 min-w-[160px]">
                         <button
@@ -391,9 +409,7 @@ export default function BlogDetailPage() {
                   <h2 className="text-3xl lg:text-4xl font-light text-[#111111] mb-4">
                     Related Articles
                   </h2>
-                  <p className="text-[#666666]">
-                    More insights from the {post.category} category
-                  </p>
+                  <p className="text-[#666666]">More insights from the {post.category} category</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -409,29 +425,32 @@ export default function BlogDetailPage() {
                         <article className="bg-white border border-gray-200 rounded-sm overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
                           <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
                             <Image
-                              src={relatedPost.featured_image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDYwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjhGNkYzIi8+Cjx0ZXh0IHg9IjMwMCIgeT0iMjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZmlsbD0iIzhCNzM1NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4Ij5CbG9nIFBvc3Q8L3RleHQ+Cjwvc3ZnPg=='}
+                              src={
+                                relatedPost.featured_image ||
+                                'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDYwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjhGNkYzIi8+Cjx0ZXh0IHg9IjMwMCIgeT0iMjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZmlsbD0iIzhCNzM1NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4Ij5CbG9nIFBvc3Q8L3RleHQ+Cjwvc3ZnPg=='
+                              }
                               alt={relatedPost.title}
                               fill
                               className="object-cover transition-transform duration-300 group-hover:scale-105"
                               loading="lazy"
                             />
                           </div>
-                          
+
                           <div className="p-6 space-y-3 flex-1 flex flex-col">
                             <div className="flex items-center gap-4 text-xs text-[#8B7355] uppercase tracking-wider">
                               <span>{formatDate(relatedPost.published_at)}</span>
                               <span>•</span>
                               <span>By {relatedPost.author}</span>
                             </div>
-                            
+
                             <h3 className="text-lg font-semibold text-[#111111] group-hover:text-[#8B7355] transition-colors duration-200 leading-tight">
                               {relatedPost.title}
                             </h3>
-                            
+
                             <p className="text-[#666666] leading-relaxed text-sm flex-1">
                               {relatedPost.excerpt}
                             </p>
-                            
+
                             <div className="pt-4 mt-auto border-t border-gray-100">
                               <span className="text-sm font-semibold text-[#8B7355] uppercase tracking-wider group-hover:text-[#111111] transition-colors duration-200">
                                 Read More →
@@ -468,14 +487,12 @@ export default function BlogDetailPage() {
               viewport={{ once: true }}
               className="max-w-2xl mx-auto text-center space-y-8"
             >
-              <h2 className="text-3xl lg:text-4xl font-light">
-                Stay Informed
-              </h2>
+              <h2 className="text-3xl lg:text-4xl font-light">Stay Informed</h2>
               <p className="text-lg text-gray-300 leading-relaxed">
-                Subscribe to our newsletter for the latest insights on wellness, 
-                Ayurveda, and natural health.
+                Subscribe to our newsletter for the latest insights on wellness, Ayurveda, and
+                natural health.
               </p>
-              
+
               <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <input
                   type="email"
@@ -493,8 +510,8 @@ export default function BlogDetailPage() {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
-  )
+  );
 }

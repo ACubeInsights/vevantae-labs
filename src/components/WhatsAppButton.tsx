@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { MessageCircle } from 'lucide-react'
+import { MessageCircle } from 'lucide-react';
 
 export function WhatsAppButton() {
-  const phoneNumber = '+919671300080'
-  const message = 'Hello! I would like to know more about Vevantae Labs products.'
-  
+  const phoneNumber = '+919671300080';
+  const message = 'Hello! I would like to know more about Vevantae Labs products.';
+
   const handleClick = () => {
-    const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, '_blank')
-  }
+    const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   return (
     <button
@@ -18,12 +18,12 @@ export function WhatsAppButton() {
       aria-label="Contact us on WhatsApp"
     >
       <MessageCircle className="w-6 h-6" />
-      
+
       {/* Tooltip */}
       <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-primary text-background text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
         Chat with us on WhatsApp
         <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-primary"></div>
       </div>
     </button>
-  )
+  );
 }

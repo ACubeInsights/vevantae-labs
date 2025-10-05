@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Menu, X, Search } from 'lucide-react'
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Menu, X, Search } from 'lucide-react';
 
 export function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navigation = [
     { name: 'Products', href: '/products' },
@@ -15,7 +15,7 @@ export function Header() {
     { name: 'Benefits', href: '/benefits' },
     { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/contact' },
-  ]
+  ];
 
   return (
     <header className="sticky top-0 z-40 bg-white/40 backdrop-blur-3xl backdrop-saturate-200">
@@ -23,7 +23,10 @@ export function Header() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
-            <span className="text-xl font-light text-gray-900 tracking-wide drop-shadow-lg" style={{textShadow: '0 0 8px rgba(255,255,255,0.8)'}}>
+            <span
+              className="text-xl font-light text-gray-900 tracking-wide drop-shadow-lg"
+              style={{ textShadow: '0 0 8px rgba(255,255,255,0.8)' }}
+            >
               Vevantae Labs
             </span>
           </Link>
@@ -31,20 +34,18 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-12">
             {navigation.map((item) => {
-              const isActive = pathname === item.href
+              const isActive = pathname === item.href;
               return (
                 <Link
                   key={item.name}
                   href={item.href}
                   className={`text-sm font-normal transition-colors duration-300 uppercase tracking-wider drop-shadow-lg ${
-                    isActive 
-                      ? 'text-blue-600 font-medium' 
-                      : 'text-gray-800 hover:text-blue-600'
+                    isActive ? 'text-blue-600 font-medium' : 'text-gray-800 hover:text-blue-600'
                   }`}
                 >
                   {item.name}
                 </Link>
-              )
+              );
             })}
           </nav>
 
@@ -57,8 +58,8 @@ export function Header() {
             </button>
 
             {/* B2B Inquiry */}
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               className="text-sm font-normal text-gray-800 hover:text-blue-600 transition-colors duration-300 uppercase tracking-wider drop-shadow-lg"
             >
               Inquire
@@ -69,11 +70,7 @@ export function Header() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden text-gray-800 hover:text-blue-600 transition-colors duration-300 drop-shadow-lg"
             >
-              {isMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               <span className="sr-only">Toggle menu</span>
             </button>
           </div>
@@ -84,26 +81,26 @@ export function Header() {
           <div className="lg:hidden bg-white/30 backdrop-blur-3xl backdrop-saturate-200">
             <nav className="py-6 space-y-1">
               {navigation.map((item) => {
-                const isActive = pathname === item.href
+                const isActive = pathname === item.href;
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
                     className={`block px-6 py-3 text-sm font-normal transition-colors duration-300 uppercase tracking-wider drop-shadow-lg ${
-                       isActive 
-                         ? 'text-blue-600 font-medium bg-blue-100/40' 
-                         : 'text-gray-800 hover:text-blue-600 hover:bg-white/30'
-                     }`}
+                      isActive
+                        ? 'text-blue-600 font-medium bg-blue-100/40'
+                        : 'text-gray-800 hover:text-blue-600 hover:bg-white/30'
+                    }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
-                )
+                );
               })}
             </nav>
           </div>
         )}
       </div>
     </header>
-  )
+  );
 }

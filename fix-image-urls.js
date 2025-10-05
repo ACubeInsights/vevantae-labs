@@ -8,8 +8,8 @@ let supabaseUrl, supabaseAnonKey;
 try {
   const envContent = fs.readFileSync('.env.local', 'utf8');
   const lines = envContent.split('\n');
-  
-  lines.forEach(line => {
+
+  lines.forEach((line) => {
     if (line.startsWith('NEXT_PUBLIC_SUPABASE_URL=')) {
       supabaseUrl = line.split('=')[1];
     }
@@ -32,7 +32,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 async function fixImageUrls() {
   try {
     console.log('🔧 Fixing invalid image URLs in database...');
-    
+
     // Get all products with images
     const { data: products, error: fetchError } = await supabase
       .from('products03')
@@ -45,9 +45,9 @@ async function fixImageUrls() {
     }
 
     console.log(`Found ${products.length} products with images`);
-    
+
     let updatedCount = 0;
-    
+
     for (const product of products) {
       if (product.images && Array.isArray(product.images)) {
         let needsUpdate = false;
@@ -59,13 +59,13 @@ async function fixImageUrls() {
           }
           return img;
         });
-        
+
         if (needsUpdate) {
           const { error: updateError } = await supabase
             .from('products03')
             .update({ images: updatedImages })
             .eq('id', product.id);
-            
+
           if (updateError) {
             console.error(`Error updating product ${product.name}:`, updateError);
           } else {
@@ -75,9 +75,8 @@ async function fixImageUrls() {
         }
       }
     }
-    
+
     console.log(`\n🎉 Successfully updated ${updatedCount} products with valid image URLs`);
-    
   } catch (error) {
     console.error('Error:', error);
   }

@@ -1,33 +1,24 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { 
-  Heart, 
-  Brain, 
-  Shield, 
-  Leaf, 
-  Zap, 
-  Moon, 
-  Sun, 
-  Droplets,
-  CheckCircle
-} from 'lucide-react'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Heart, Brain, Shield, Leaf, Zap, Moon, Sun, Droplets, CheckCircle } from 'lucide-react';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
 const benefits = [
   {
     icon: Heart,
     title: 'Cardiovascular Health',
-    description: 'Support heart health with natural compounds that promote healthy circulation and blood pressure.',
+    description:
+      'Support heart health with natural compounds that promote healthy circulation and blood pressure.',
     details: [
       'Improved blood circulation',
       'Healthy cholesterol levels',
       'Enhanced cardiovascular endurance',
-      'Natural blood pressure support'
-    ]
+      'Natural blood pressure support',
+    ],
   },
   {
     icon: Brain,
@@ -37,19 +28,19 @@ const benefits = [
       'Enhanced memory and recall',
       'Improved focus and concentration',
       'Mental clarity and alertness',
-      'Stress-related cognitive support'
-    ]
+      'Stress-related cognitive support',
+    ],
   },
   {
     icon: Shield,
     title: 'Immune Support',
-    description: 'Strengthen your body\'s natural defenses with powerful adaptogenic compounds.',
+    description: "Strengthen your body's natural defenses with powerful adaptogenic compounds.",
     details: [
       'Enhanced immune response',
       'Antioxidant protection',
       'Seasonal wellness support',
-      'Natural detoxification'
-    ]
+      'Natural detoxification',
+    ],
   },
   {
     icon: Zap,
@@ -59,8 +50,8 @@ const benefits = [
       'Sustained energy throughout the day',
       'Reduced fatigue and tiredness',
       'Enhanced physical performance',
-      'Natural metabolic support'
-    ]
+      'Natural metabolic support',
+    ],
   },
   {
     icon: Moon,
@@ -70,84 +61,88 @@ const benefits = [
       'Improved sleep quality',
       'Faster recovery times',
       'Reduced stress and anxiety',
-      'Natural relaxation support'
-    ]
+      'Natural relaxation support',
+    ],
   },
   {
     icon: Droplets,
     title: 'Skin & Beauty',
-    description: 'Nourish your skin from within with collagen-supporting nutrients and antioxidants.',
+    description:
+      'Nourish your skin from within with collagen-supporting nutrients and antioxidants.',
     details: [
       'Healthy, glowing skin',
       'Reduced signs of aging',
       'Enhanced skin elasticity',
-      'Natural UV protection'
-    ]
-  }
-]
+      'Natural UV protection',
+    ],
+  },
+];
 
 const ayurvedicPrinciples = [
   {
     title: 'Holistic Approach',
-    description: 'Ayurveda treats the whole person, not just symptoms, addressing root causes for lasting wellness.',
-    icon: Leaf
+    description:
+      'Ayurveda treats the whole person, not just symptoms, addressing root causes for lasting wellness.',
+    icon: Leaf,
   },
   {
     title: 'Natural Ingredients',
-    description: 'Using pure, natural herbs and compounds that work in harmony with your body\'s systems.',
-    icon: Sun
+    description:
+      "Using pure, natural herbs and compounds that work in harmony with your body's systems.",
+    icon: Sun,
   },
   {
     title: 'Personalized Wellness',
-    description: 'Understanding that each person is unique, with individual needs and constitution.',
-    icon: Heart
+    description:
+      'Understanding that each person is unique, with individual needs and constitution.',
+    icon: Heart,
   },
   {
     title: 'Time-Tested Wisdom',
     description: 'Drawing from 5,000+ years of documented use and traditional knowledge.',
-    icon: Shield
-  }
-]
+    icon: Shield,
+  },
+];
 
 const comparisonData = [
   {
     aspect: 'Approach',
     synthetic: 'Targets specific symptoms',
-    natural: 'Addresses root causes holistically'
+    natural: 'Addresses root causes holistically',
   },
   {
     aspect: 'Side Effects',
     synthetic: 'Often has unwanted side effects',
-    natural: 'Minimal to no side effects when used properly'
+    natural: 'Minimal to no side effects when used properly',
   },
   {
     aspect: 'Long-term Use',
     synthetic: 'May cause dependency or tolerance',
-    natural: 'Safe for long-term use and maintenance'
+    natural: 'Safe for long-term use and maintenance',
   },
   {
     aspect: 'Body Harmony',
     synthetic: 'May disrupt natural processes',
-    natural: 'Works with body\'s natural systems'
+    natural: "Works with body's natural systems",
   },
   {
     aspect: 'Sustainability',
     synthetic: 'Often environmentally harmful',
-    natural: 'Eco-friendly and sustainable'
-  }
-]
+    natural: 'Eco-friendly and sustainable',
+  },
+];
 
 export default function BenefitsPage() {
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />
-      
+
       <main>
         {/* Hero Section */}
         <section className="py-20 lg:py-32">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto text-center space-y-8">
-              <motion.h1 
+              <motion.h1
                 className="text-4xl md:text-6xl font-light text-[#111111] leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -155,15 +150,15 @@ export default function BenefitsPage() {
               >
                 The Benefits of Natural Wellness
               </motion.h1>
-              
-              <motion.p 
+
+              <motion.p
                 className="text-lg text-[#666666] max-w-3xl mx-auto leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                Discover how ancient wisdom and modern science combine to support 
-                your journey toward optimal health and vitality.
+                Discover how ancient wisdom and modern science combine to support your journey
+                toward optimal health and vitality.
               </motion.p>
             </div>
           </div>
@@ -198,15 +193,14 @@ export default function BenefitsPage() {
                   className="bg-white p-8 rounded-sm group hover:shadow-lg transition-shadow duration-300"
                 >
                   <benefit.icon className="w-12 h-12 text-[#8B7355] mb-6" />
-                  <h3 className="text-xl font-medium text-[#111111] mb-4">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-[#666666] leading-relaxed mb-6">
-                    {benefit.description}
-                  </p>
+                  <h3 className="text-xl font-medium text-[#111111] mb-4">{benefit.title}</h3>
+                  <p className="text-[#666666] leading-relaxed mb-6">{benefit.description}</p>
                   <ul className="space-y-2">
                     {benefit.details.map((detail, detailIndex) => (
-                      <li key={detailIndex} className="flex items-start gap-2 text-sm text-[#666666]">
+                      <li
+                        key={detailIndex}
+                        className="flex items-start gap-2 text-sm text-[#666666]"
+                      >
                         <CheckCircle className="w-4 h-4 text-[#8B7355] mt-0.5 flex-shrink-0" />
                         {detail}
                       </li>
@@ -234,8 +228,8 @@ export default function BenefitsPage() {
                     Rooted in Ancient Wisdom
                   </h2>
                   <p className="text-lg text-[#666666] leading-relaxed">
-                    Our approach is grounded in Ayurvedic principles that have guided 
-                    wellness practices for thousands of years, validated by modern research.
+                    Our approach is grounded in Ayurvedic principles that have guided wellness
+                    practices for thousands of years, validated by modern research.
                   </p>
                 </div>
 
@@ -254,9 +248,7 @@ export default function BenefitsPage() {
                         <h3 className="text-lg font-medium text-[#111111] mb-2">
                           {principle.title}
                         </h3>
-                        <p className="text-[#666666] leading-relaxed">
-                          {principle.description}
-                        </p>
+                        <p className="text-[#666666] leading-relaxed">{principle.description}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -316,7 +308,7 @@ export default function BenefitsPage() {
                     <h3 className="text-lg font-medium text-[#8B7355]">Natural</h3>
                   </div>
                 </div>
-                
+
                 {comparisonData.map((item, index) => (
                   <motion.div
                     key={item.aspect}
@@ -377,8 +369,8 @@ export default function BenefitsPage() {
                     Backed by Science
                   </h2>
                   <p className="text-lg text-[#666666] leading-relaxed">
-                    Every ingredient in our formulations is supported by extensive research 
-                    and clinical studies, ensuring both safety and efficacy.
+                    Every ingredient in our formulations is supported by extensive research and
+                    clinical studies, ensuring both safety and efficacy.
                   </p>
                 </div>
 
@@ -388,9 +380,7 @@ export default function BenefitsPage() {
                       <span className="text-white font-bold text-lg">500+</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium text-[#111111] mb-2">
-                        Published Studies
-                      </h3>
+                      <h3 className="text-lg font-medium text-[#111111] mb-2">Published Studies</h3>
                       <p className="text-[#666666]">
                         Our ingredients are backed by hundreds of peer-reviewed research papers
                       </p>
@@ -402,9 +392,7 @@ export default function BenefitsPage() {
                       <span className="text-white font-bold text-lg">25+</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium text-[#111111] mb-2">
-                        Clinical Trials
-                      </h3>
+                      <h3 className="text-lg font-medium text-[#111111] mb-2">Clinical Trials</h3>
                       <p className="text-[#666666]">
                         Rigorous testing ensures safety and validates traditional uses
                       </p>
@@ -440,11 +428,9 @@ export default function BenefitsPage() {
               viewport={{ once: true }}
               className="max-w-2xl mx-auto text-center space-y-8"
             >
-              <h2 className="text-3xl lg:text-4xl font-light">
-                Experience the Benefits
-              </h2>
+              <h2 className="text-3xl lg:text-4xl font-light">Experience the Benefits</h2>
               <p className="text-lg text-gray-300 leading-relaxed">
-                Start your journey toward optimal wellness with our scientifically-backed, 
+                Start your journey toward optimal wellness with our scientifically-backed,
                 naturally-derived formulations.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -465,8 +451,8 @@ export default function BenefitsPage() {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
-  )
+  );
 }

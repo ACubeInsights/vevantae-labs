@@ -12,7 +12,14 @@ interface CrispImageProps {
   onLoad?: () => void;
 }
 
-export default function CrispImage({ src, alt, className, width, height, onLoad }: CrispImageProps) {
+export default function CrispImage({
+  src,
+  alt,
+  className,
+  width,
+  height,
+  onLoad,
+}: CrispImageProps) {
   const [, setIsLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState<string>('');
 
@@ -20,20 +27,20 @@ export default function CrispImage({ src, alt, className, width, height, onLoad 
     // Preload the image
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    
+
     img.onload = () => {
       setImageSrc(src);
       setIsLoaded(true);
       onLoad?.();
     };
-    
+
     img.onerror = () => {
       setImageSrc(src); // Still set the src even if preload fails
       setIsLoaded(true);
     };
-    
+
     img.src = src;
-    
+
     return () => {
       img.onload = null;
       img.onerror = null;

@@ -1,258 +1,194 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { getSupabase } from './supabaseClient';
 
-// Minimal Supabase Database types used in this project
-// Covers tables referenced: products03, blogs, testimonials, contact_submissions
-type Database = {
-  public: {
-    Tables: {
-      products03: {
-        Row: Product
-        Insert: Partial<Product> & {
-          id?: string
-          created_at?: string | null
-          updated_at?: string | null
-        }
-        Update: Partial<Product>
-      }
-      blogs: {
-        Row: BlogPost
-        Insert: Partial<BlogPost> & { id?: string; created_at?: string; updated_at?: string }
-        Update: Partial<BlogPost>
-      }
-      testimonials: {
-        Row: Testimonial
-        Insert: Partial<Testimonial> & { id?: string; created_at?: string }
-        Update: Partial<Testimonial>
-      }
-      contact_submissions: {
-        Row: {
-          id: string
-          name: string
-          email: string
-          subject: string
-          message: string
-          created_at: string
-        }
-        Insert: {
-          name: string
-          email: string
-          subject: string
-          message: string
-        }
-        Update: Partial<{
-          name: string
-          email: string
-          subject: string
-          message: string
-        }>
-      }
-    }
-    Views: Record<string, never>
-    Functions: Record<string, never>
-    Enums: Record<string, never>
-  }
-}
-
-// Lazy initialize Supabase client to avoid import-time errors during build/prerender
-// Ensures helpful error messages if environment variables are missing
-let supabaseClient: SupabaseClient<Database> | null = null
-
-const getSupabase = () => {
-  if (supabaseClient) return supabaseClient
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error(
-      'Supabase environment variables are missing. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.'
-    )
-  }
-
-  supabaseClient = createClient<Database>(supabaseUrl, supabaseAnonKey)
-  return supabaseClient
-}
+// Supabase client is provided via getSupabase() from supabaseClient.ts
 
 // Types for our database tables
 export interface Product {
-  id: string
-  sku: string
-  slug: string | null
-  name: string
-  description: string | null
-  short_description: string | null
-  category: string
-  product_type: string | null
-  net_quantity: string | null
-  serving_info: string | null
-  mrp: number | null
-  selling_price: number
-  age_group: string | null
-  gender: string | null
-  health_benefits: string[] | null
-  health_conditions: string[] | null
-  key_ingredients: string[] | null
-  dosha: string | null
-  how_to_use: string | null
-  duration: string | null
-  precautions: string | null
-  certifications: string[] | null
-  images: string[] | null
-  main_image: string | null
-  meta_title: string | null
-  meta_description: string | null
-  tags: string[] | null
-  stock_quantity: number | null
-  in_stock: boolean | null
-  status: string | null
-  is_featured: boolean | null
-  is_bestseller: boolean | null
-  average_rating: number | null
-  total_reviews: number | null
-  created_at: string | null
-  updated_at: string | null
+  id: string;
+  sku: string;
+  slug: string | null;
+  name: string;
+  description: string | null;
+  short_description: string | null;
+  category: string;
+  product_type: string | null;
+  net_quantity: string | null;
+  serving_info: string | null;
+  mrp: number | null;
+  selling_price: number;
+  age_group: string | null;
+  gender: string | null;
+  health_benefits: string[] | null;
+  health_conditions: string[] | null;
+  key_ingredients: string[] | null;
+  dosha: string | null;
+  how_to_use: string | null;
+  duration: string | null;
+  precautions: string | null;
+  certifications: string[] | null;
+  images: string[] | null;
+  main_image: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
+  tags: string[] | null;
+  stock_quantity: number | null;
+  in_stock: boolean | null;
+  status: string | null;
+  is_featured: boolean | null;
+  is_bestseller: boolean | null;
+  average_rating: number | null;
+  total_reviews: number | null;
+  created_at: string | null;
+  updated_at: string | null;
 }
 
 export interface BlogPost {
-  id: string
-  slug: string
-  title: string
-  excerpt: string
-  content: string
-  meta_title: string | null
-  meta_description: string | null
-  featured_image: string | null
-  category: string
-  tags: string[]
-  author: string
-  status: string
-  is_featured: boolean
-  published_at: string
-  created_at: string
-  updated_at: string
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  meta_title: string | null;
+  meta_description: string | null;
+  featured_image: string | null;
+  category: string;
+  tags: string[];
+  author: string;
+  status: string;
+  is_featured: boolean;
+  published_at: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Testimonial {
-  id: string
-  name: string
-  rating: number
-  comment: string
-  product_id?: string
-  created_at: string
+  id: string;
+  name: string;
+  rating: number;
+  comment: string;
+  product_id?: string;
+  created_at: string;
 }
 
 // Database query functions
 export const getProducts = async (filters?: {
-  category?: string
-  age_group?: string
-  health_benefit?: string
-  health_condition?: string
-  search?: string
-  is_featured?: boolean
-  is_bestseller?: boolean
-  gender?: string
-  dosha?: string
+  category?: string;
+  age_group?: string;
+  health_benefit?: string;
+  health_condition?: string;
+  search?: string;
+  is_featured?: boolean;
+  is_bestseller?: boolean;
+  gender?: string;
+  dosha?: string;
 }) => {
-  let query = getSupabase().from('products03').select('*')
+  try {
+    let query = getSupabase().from('products03').select('*');
 
-  if (filters?.category) {
-    query = query.eq('category', filters.category)
+    if (filters?.category) {
+      query = query.eq('category', filters.category);
+    }
+
+    if (filters?.age_group) {
+      query = query.eq('age_group', filters.age_group);
+    }
+
+    if (filters?.gender) {
+      query = query.eq('gender', filters.gender);
+    }
+
+    if (filters?.dosha) {
+      query = query.eq('dosha', filters.dosha);
+    }
+
+    if (filters?.health_benefit) {
+      query = query.contains('health_benefits', [filters.health_benefit]);
+    }
+
+    if (filters?.health_condition) {
+      query = query.contains('health_conditions', [filters.health_condition]);
+    }
+
+    if (filters?.search) {
+      query = query.or(
+        `name.ilike.%${filters.search}%,description.ilike.%${filters.search}%,short_description.ilike.%${filters.search}%`
+      );
+    }
+
+    if (filters?.is_featured !== undefined) {
+      query = query.eq('is_featured', filters.is_featured);
+    }
+
+    if (filters?.is_bestseller !== undefined) {
+      query = query.eq('is_bestseller', filters.is_bestseller);
+    }
+
+    // Only show active products that are in stock
+    // Be robust to status casing differences ('active' vs 'Active')
+    query = query.in('status', ['active', 'Active']).eq('in_stock', true);
+
+    const { data, error } = await query.order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('Error fetching products:', err);
+    return [];
   }
-
-  if (filters?.age_group) {
-    query = query.eq('age_group', filters.age_group)
-  }
-
-  if (filters?.gender) {
-    query = query.eq('gender', filters.gender)
-  }
-
-  if (filters?.dosha) {
-    query = query.eq('dosha', filters.dosha)
-  }
-
-  if (filters?.health_benefit) {
-    query = query.contains('health_benefits', [filters.health_benefit])
-  }
-
-  if (filters?.health_condition) {
-    query = query.contains('health_conditions', [filters.health_condition])
-  }
-
-  if (filters?.search) {
-    query = query.or(`name.ilike.%${filters.search}%,description.ilike.%${filters.search}%,short_description.ilike.%${filters.search}%`)
-  }
-
-  if (filters?.is_featured !== undefined) {
-    query = query.eq('is_featured', filters.is_featured)
-  }
-
-  if (filters?.is_bestseller !== undefined) {
-    query = query.eq('is_bestseller', filters.is_bestseller)
-  }
-
-  // Only show active products that are in stock
-  // Be robust to status casing differences ('active' vs 'Active')
-  query = query.in('status', ['active', 'Active']).eq('in_stock', true)
-
-  const { data, error } = await query.order('created_at', { ascending: false })
-
-  if (error) {
-    console.error('Error fetching products:', error?.message || error, error)
-    return []
-  }
-
-  return data || []
-}
+};
 
 export const getProduct = async (id: string) => {
-  const { data, error } = await getSupabase()
-    .from('products03')
-    .select('*')
-    .eq('id', id)
-    .in('status', ['active', 'Active'])
-    .single()
+  try {
+    const { data, error } = await getSupabase()
+      .from('products03')
+      .select('*')
+      .eq('id', id)
+      .in('status', ['active', 'Active'])
+      .single();
 
-  if (error) {
-    console.error('Error fetching product:', error?.message || error, error)
-    return null
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error('Error fetching product:', err);
+    return null;
   }
-
-  return data
-}
+};
 
 export const getProductBySlug = async (slug: string) => {
-  const { data, error } = await getSupabase()
-    .from('products03')
-    .select('*')
-    .eq('slug', slug)
-    .in('status', ['active', 'Active'])
-    .single()
+  try {
+    const { data, error } = await getSupabase()
+      .from('products03')
+      .select('*')
+      .eq('slug', slug)
+      .in('status', ['active', 'Active'])
+      .single();
 
-  if (error) {
-    console.error('Error fetching product by slug:', error?.message || error, error)
-    return null
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error('Error fetching product by slug:', err);
+    return null;
   }
-
-  return data
-}
+};
 
 export const getBlogPosts = async (limit?: number) => {
-  let query = getSupabase()
-    .from('blogs')
-    .select('*')
-    .eq('status', 'published')
-    .order('published_at', { ascending: false })
+  try {
+    let query = getSupabase()
+      .from('blogs')
+      .select('*')
+      .eq('status', 'published')
+      .order('published_at', { ascending: false });
 
-  if (limit) {
-    query = query.limit(limit)
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+    return data as BlogPost[];
+  } catch (err) {
+    throw err;
   }
-
-  const { data, error } = await query
-  
-  if (error) throw error
-  return data as BlogPost[]
-}
+};
 
 export const getBlogPost = async (slug: string) => {
   const { data, error } = await getSupabase()
@@ -260,39 +196,47 @@ export const getBlogPost = async (slug: string) => {
     .select('*')
     .eq('slug', slug)
     .eq('status', 'published')
-    .single()
-  
-  if (error) throw error
-  return data as BlogPost
-}
+    .single();
+
+  // When no row matches, Supabase may return PGRST116 (0 rows for single)
+  if (error) {
+    const code = (error as { code?: string } | null)?.code;
+    if (code === 'PGRST116') return null;
+    throw error;
+  }
+  return data as BlogPost;
+};
 
 export const getTestimonials = async (limit?: number) => {
-  let query = getSupabase()
-    .from('testimonials')
-    .select('*')
-    .order('created_at', { ascending: false })
+  try {
+    let query = getSupabase()
+      .from('testimonials')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-  if (limit) {
-    query = query.limit(limit)
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+    return data as Testimonial[];
+  } catch (err) {
+    throw err;
   }
-
-  const { data, error } = await query
-  
-  if (error) throw error
-  return data as Testimonial[]
-}
+};
 
 export const submitContactForm = async (formData: {
-  name: string
-  email: string
-  subject: string
-  message: string
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
 }) => {
-  const { data, error } = await getSupabase()
-    .from('contact_submissions')
-    // Cast to never[] to satisfy generic overload without using `any`
-    .insert([formData] as never[])
-  
-  if (error) throw error
-  return data
-}
+  try {
+    const { data, error } = await getSupabase().from('contact_submissions').insert([formData]);
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};

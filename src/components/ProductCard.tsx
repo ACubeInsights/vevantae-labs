@@ -1,47 +1,50 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { useState } from 'react'
-import { Product } from '@/lib/supabase'
-import { Button } from '@/components/ui/Button'
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+import { Product } from '@/lib/supabase';
+import { Button } from '@/components/ui/Button';
 
 // Custom arrow components
 const ChevronLeft = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
   </svg>
-)
+);
 
 const ChevronRight = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
   </svg>
-)
+);
 
 interface ProductCardProps {
-  product: Product
-  className?: string
+  product: Product;
+  className?: string;
 }
 
 export function ProductCard({ product, className = '' }: ProductCardProps) {
-  const images = product.images || []
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  
+  const images = product.images || [];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const nextImage = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setCurrentImageIndex((prev) => (prev + 1) % images.length)
-  }
-  
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+
   const prevImage = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
-  }
-  
-  const currentImage = images.length > 0 ? images[currentImageIndex] : 'https://via.placeholder.com/340x340/F8F6F3/8B7355?text=No+Image'
-  
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const currentImage =
+    images.length > 0
+      ? images[currentImageIndex]
+      : 'https://via.placeholder.com/340x340/F8F6F3/8B7355?text=No+Image';
+
   return (
     <div className={`group cursor-pointer h-full flex flex-col ${className}`}>
       <Link href={`/products/${product.id}`} className="block">
@@ -53,7 +56,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
-          
+
           {/* Navigation arrows - only show if there are multiple images */}
           {images.length > 1 && (
             <>
@@ -73,7 +76,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
               </button>
             </>
           )}
-          
+
           {/* Image indicators */}
           {images.length > 1 && (
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
@@ -87,7 +90,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
               ))}
             </div>
           )}
-          
+
           {/* Category badge */}
           <div className="absolute top-4 left-4">
             <span className="bg-background/90 text-primary px-3 py-1 text-xs uppercase tracking-wider font-semibold">
@@ -95,35 +98,34 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
             </span>
           </div>
         </div>
-        
+
         <div className="pt-6 space-y-2 flex-1 flex flex-col">
           <h3 className="text-lg font-semibold text-primary group-hover:text-secondary transition-colors duration-200">
             {product.name}
           </h3>
-          
+
           <p className="text-secondary text-sm line-clamp-2 leading-relaxed">
             {product.short_description || product.description}
           </p>
-          
+
           {product.health_benefits && product.health_benefits.length > 0 && (
             <div className="flex flex-wrap gap-1 pt-2">
               {product.health_benefits.slice(0, 2).map((benefit, index) => (
-                <span
-                  key={index}
-                  className="text-xs text-olive bg-olive/10 px-2 py-1 rounded-sm"
-                >
+                <span key={index} className="text-xs text-olive bg-olive/10 px-2 py-1 rounded-sm">
                   {benefit}
                 </span>
               ))}
             </div>
           )}
-          
+
           <div className="pt-4 mt-auto">
             <div className="flex items-center justify-between mb-2">
               {product.mrp && product.selling_price && product.mrp > product.selling_price && (
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-secondary line-through">₹{product.mrp}</span>
-                  <span className="text-lg font-semibold text-primary">₹{product.selling_price}</span>
+                  <span className="text-lg font-semibold text-primary">
+                    ₹{product.selling_price}
+                  </span>
                 </div>
               )}
               {(!product.mrp || product.mrp <= product.selling_price) && (
@@ -139,9 +141,9 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
                 </div>
               )}
             </div>
-            
-            <Button 
-              variant="outline" 
+
+            <Button
+              variant="outline"
               size="sm"
               className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 w-full"
             >
@@ -151,5 +153,5 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
         </div>
       </Link>
     </div>
-  )
+  );
 }

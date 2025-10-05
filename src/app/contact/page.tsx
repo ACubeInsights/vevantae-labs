@@ -20,33 +20,42 @@ export default function ContactPage() {
     company: '',
     inquiryType: 'general',
     subject: '',
-    message: ''
+    message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     setIsSubmitting(false);
     setIsSubmitted(true);
-    
+
     // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
-      setFormData({ name: '', email: '', company: '', inquiryType: 'general', subject: '', message: '' });
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        inquiryType: 'general',
+        subject: '',
+        message: '',
+      });
     }, 3000);
   };
 
@@ -55,26 +64,26 @@ export default function ContactPage() {
       icon: Mail,
       title: 'B2B Partnerships',
       details: 'partnerships@vevantaelabs.com',
-      description: 'For bulk orders and business inquiries'
+      description: 'For bulk orders and business inquiries',
     },
     {
       icon: Phone,
       title: 'Business Line',
       details: '+91 96713 00080',
-      description: 'Mon-Fri from 9am to 6pm IST'
+      description: 'Mon-Fri from 9am to 6pm IST',
     },
     {
       icon: MapPin,
       title: 'Corporate Office',
       details: 'India - Research &amp; Development Center',
-      description: 'Our headquarters and manufacturing facility'
+      description: 'Our headquarters and manufacturing facility',
     },
     {
       icon: Clock,
       title: 'Business Hours',
       details: 'Monday - Friday: 9:00 AM - 6:00 PM IST',
-      description: 'Dedicated support for business clients'
-    }
+      description: 'Dedicated support for business clients',
+    },
   ];
 
   const inquiryTypes = [
@@ -83,34 +92,40 @@ export default function ContactPage() {
     { value: 'bulk', label: 'Bulk Orders (500+ units)' },
     { value: 'private-label', label: 'Private Label Manufacturing' },
     { value: 'distribution', label: 'Distribution Partnership' },
-    { value: 'research', label: 'Research Collaboration' }
+    { value: 'research', label: 'Research Collaboration' },
   ];
 
   const faqs = [
     {
       question: 'What is the minimum order quantity for bulk purchases?',
-      answer: 'Our bulk order program starts at 500 units per product. We offer tiered pricing with better rates for larger volumes (1000+, 5000+, 10000+ units).'
+      answer:
+        'Our bulk order program starts at 500 units per product. We offer tiered pricing with better rates for larger volumes (1000+, 5000+, 10000+ units).',
     },
     {
       question: 'Do you offer private label manufacturing?',
-      answer: 'Yes, we provide comprehensive private label services including custom formulations, packaging design, and regulatory compliance support for businesses looking to launch their own wellness product lines.'
+      answer:
+        'Yes, we provide comprehensive private label services including custom formulations, packaging design, and regulatory compliance support for businesses looking to launch their own wellness product lines.',
     },
     {
       question: 'What certifications do your manufacturing facilities have?',
-      answer: 'Our facilities are GMP certified, ISO 22000 compliant, and follow FSSAI guidelines. We maintain the highest quality standards for all B2B partnerships.'
+      answer:
+        'Our facilities are GMP certified, ISO 22000 compliant, and follow FSSAI guidelines. We maintain the highest quality standards for all B2B partnerships.',
     },
     {
       question: 'How long does it take to fulfill bulk orders?',
-      answer: 'Standard bulk orders (500-2000 units) typically take 2-3 weeks. Larger orders or custom formulations may require 4-6 weeks. We provide detailed timelines during the quotation process.'
+      answer:
+        'Standard bulk orders (500-2000 units) typically take 2-3 weeks. Larger orders or custom formulations may require 4-6 weeks. We provide detailed timelines during the quotation process.',
     },
     {
       question: 'Do you offer distribution partnerships?',
-      answer: 'Yes, we work with qualified distributors globally. We provide marketing support, training materials, and competitive wholesale pricing for our distribution partners.'
+      answer:
+        'Yes, we work with qualified distributors globally. We provide marketing support, training materials, and competitive wholesale pricing for our distribution partners.',
     },
     {
       question: 'Can you develop custom formulations for our brand?',
-      answer: 'Absolutely. Our R&D team can develop custom ayurvedic and nutraceutical formulations based on your specifications, target market, and regulatory requirements.'
-    }
+      answer:
+        'Absolutely. Our R&D team can develop custom ayurvedic and nutraceutical formulations based on your specifications, target market, and regulatory requirements.',
+    },
   ];
 
   return (
@@ -124,11 +139,10 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h1 className="text-5xl md:text-6xl font-light text-[#111111] mb-6">
-              Partner With Us
-            </h1>
+            <h1 className="text-5xl md:text-6xl font-light text-[#111111] mb-6">Partner With Us</h1>
             <p className="text-xl text-[#666666] max-w-3xl mx-auto leading-relaxed">
-              Ready to explore B2B partnerships, bulk orders, or custom wellness solutions? Let&#39;s discuss how we can support your business needs.
+              Ready to explore B2B partnerships, bulk orders, or custom wellness solutions?
+              Let&#39;s discuss how we can support your business needs.
             </p>
           </motion.div>
         </div>
@@ -147,7 +161,7 @@ export default function ContactPage() {
             >
               <div className="bg-white rounded-2xl p-8 shadow-sm">
                 <h2 className="text-3xl font-light text-[#111111] mb-8">Business Inquiry Form</h2>
-                
+
                 {isSubmitted ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -156,13 +170,18 @@ export default function ContactPage() {
                   >
                     <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                     <h3 className="text-2xl font-light text-[#111111] mb-2">Thank You!</h3>
-                    <p className="text-[#666666]">Your message has been sent successfully. We&#39;ll get back to you soon.</p>
+                    <p className="text-[#666666]">
+                      Your message has been sent successfully. We&#39;ll get back to you soon.
+                    </p>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-[#111111] mb-2">
+                        <label
+                          htmlFor="name"
+                          className="block text-sm font-medium text-[#111111] mb-2"
+                        >
                           Full Name *
                         </label>
                         <input
@@ -176,9 +195,12 @@ export default function ContactPage() {
                           placeholder="Your full name"
                         />
                       </div>
-                      
+
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-[#111111] mb-2">
+                        <label
+                          htmlFor="email"
+                          className="block text-sm font-medium text-[#111111] mb-2"
+                        >
                           Business Email *
                         </label>
                         <input
@@ -193,10 +215,13 @@ export default function ContactPage() {
                         />
                       </div>
                     </div>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="company" className="block text-sm font-medium text-[#111111] mb-2">
+                        <label
+                          htmlFor="company"
+                          className="block text-sm font-medium text-[#111111] mb-2"
+                        >
                           Company Name *
                         </label>
                         <input
@@ -210,9 +235,12 @@ export default function ContactPage() {
                           placeholder="Your company name"
                         />
                       </div>
-                      
+
                       <div>
-                        <label htmlFor="inquiryType" className="block text-sm font-medium text-[#111111] mb-2">
+                        <label
+                          htmlFor="inquiryType"
+                          className="block text-sm font-medium text-[#111111] mb-2"
+                        >
                           Inquiry Type *
                         </label>
                         <select
@@ -231,9 +259,12 @@ export default function ContactPage() {
                         </select>
                       </div>
                     </div>
-                    
+
                     <div>
-                      <label htmlFor="subject" className="block text-sm font-medium text-[#111111] mb-2">
+                      <label
+                        htmlFor="subject"
+                        className="block text-sm font-medium text-[#111111] mb-2"
+                      >
                         Subject *
                       </label>
                       <input
@@ -244,12 +275,15 @@ export default function ContactPage() {
                         onChange={handleInputChange}
                         required
                         className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#111111] focus:border-transparent transition-all"
-                        placeholder="What&apos;s this about?"
-                        />
+                        placeholder="What's this about?"
+                      />
                     </div>
-                    
+
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-[#111111] mb-2">
+                      <label
+                        htmlFor="message"
+                        className="block text-sm font-medium text-[#111111] mb-2"
+                      >
                         Message *
                       </label>
                       <textarea
@@ -263,7 +297,7 @@ export default function ContactPage() {
                         placeholder="Please provide details about your business needs, expected volumes, timeline, and any specific requirements..."
                       />
                     </div>
-                    
+
                     <button
                       type="submit"
                       disabled={isSubmitting}
@@ -296,7 +330,7 @@ export default function ContactPage() {
             >
               <div>
                 <h2 className="text-3xl font-light text-[#111111] mb-8">Contact Information</h2>
-                
+
                 <div className="space-y-6">
                   {contactInfo.map((info, index) => {
                     const IconComponent = info.icon;
@@ -373,7 +407,8 @@ export default function ContactPage() {
           >
             <h2 className="text-4xl font-light text-[#111111] mb-6">Manufacturing Facility</h2>
             <p className="text-lg text-[#666666] max-w-2xl mx-auto">
-              Visit our state-of-the-art manufacturing and R&D facility to see our quality processes and discuss partnership opportunities.
+              Visit our state-of-the-art manufacturing and R&D facility to see our quality processes
+              and discuss partnership opportunities.
             </p>
           </motion.div>
 

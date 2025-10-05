@@ -1,7 +1,8 @@
 const { createClient } = require('@supabase/supabase-js');
 
 const supabaseUrl = 'https://rdeaaedtrsxgygcyhjcb.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkZWFhZWR0cnN4Z3lnY3loamNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwMjUwNTIsImV4cCI6MjA3MzYwMTA1Mn0.lcr5ULUJLE1wTzo3jMlJ8Y5WVjURKqNbtI9K5B_vaXQ';
+const supabaseAnonKey =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkZWFhZWR0cnN4Z3lnY3loamNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwMjUwNTIsImV4cCI6MjA3MzYwMTA1Mn0.lcr5ULUJLE1wTzo3jMlJ8Y5WVjURKqNbtI9K5B_vaXQ';
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -10,22 +11,30 @@ async function testConnection() {
     console.log('=== COMPREHENSIVE SUPABASE DATABASE TEST ===');
     console.log('Supabase URL:', supabaseUrl);
     console.log('');
-    
+
     // Test all possible table variations
     const tables = [
-      'products03', 'blogs', 'blog_posts', 'testimonials', 'contact_forms',
-      'Products03', 'Blogs', 'BlogPosts', 'Testimonials', 'ContactForms'
+      'products03',
+      'blogs',
+      'blog_posts',
+      'testimonials',
+      'contact_forms',
+      'Products03',
+      'Blogs',
+      'BlogPosts',
+      'Testimonials',
+      'ContactForms',
     ];
-    
+
     for (const table of tables) {
       console.log(`\n🔍 Testing table: "${table}"`);
-      
+
       try {
         const { data, error, count } = await supabase
           .from(table)
           .select('*', { count: 'exact' })
           .limit(10);
-        
+
         if (error) {
           console.log(`   ❌ Error: ${error.message}`);
         } else {
@@ -46,9 +55,8 @@ async function testConnection() {
         console.log(`   💥 Exception:`, err.message);
       }
     }
-    
+
     console.log('\n=== TEST COMPLETE ===');
-    
   } catch (error) {
     console.error('❌ FATAL ERROR:', error);
   }

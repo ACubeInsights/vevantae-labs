@@ -17,7 +17,7 @@ const sortOptions = [
   { value: 'name-desc', label: 'Name Z-A' },
   { value: 'newest', label: 'Newest First' },
   { value: 'oldest', label: 'Oldest First' },
-  { value: 'featured', label: 'Featured First' }
+  { value: 'featured', label: 'Featured First' },
 ];
 
 const ITEMS_PER_PAGE = 12;
@@ -25,7 +25,7 @@ const ITEMS_PER_PAGE = 12;
 // Helper function to validate image URLs
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
-  
+
   // Check if it's a valid URL
   try {
     new URL(imageUrl);
@@ -37,12 +37,12 @@ function getValidImageUrl(imageUrl: string | undefined): string | null {
 
 function ProductsContent() {
   const searchParams = useSearchParams();
-  
+
   // State management
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Filter states
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'All');
   const [selectedAgeGroup, setSelectedAgeGroup] = useState('All Ages');
@@ -82,9 +82,9 @@ function ProductsContent() {
   // Get available benefits and health conditions from products
   const availableBenefits = useMemo(() => {
     const benefits = new Set<string>();
-    products.forEach(product => {
+    products.forEach((product) => {
       if (product.health_benefits) {
-        product.health_benefits.forEach(benefit => benefits.add(benefit));
+        product.health_benefits.forEach((benefit) => benefits.add(benefit));
       }
     });
     return Array.from(benefits).sort();
@@ -92,9 +92,9 @@ function ProductsContent() {
 
   const availableHealthConditions = useMemo(() => {
     const conditions = new Set<string>();
-    products.forEach(product => {
+    products.forEach((product) => {
       if (product.health_conditions) {
-        product.health_conditions.forEach(condition => conditions.add(condition));
+        product.health_conditions.forEach((condition) => conditions.add(condition));
       }
     });
     return Array.from(conditions).sort();
@@ -102,7 +102,7 @@ function ProductsContent() {
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
-    const filtered = products.filter(product => {
+    const filtered = products.filter((product) => {
       // Category filter
       if (selectedCategory !== 'All' && product.category !== selectedCategory) {
         return false;
@@ -115,7 +115,7 @@ function ProductsContent() {
 
       // Benefits filter
       if (selectedBenefits.length > 0) {
-        const hasSelectedBenefit = selectedBenefits.some(benefit =>
+        const hasSelectedBenefit = selectedBenefits.some((benefit) =>
           product.health_benefits?.includes(benefit)
         );
         if (!hasSelectedBenefit) return false;
@@ -123,7 +123,7 @@ function ProductsContent() {
 
       // Health conditions filter
       if (selectedHealthConditions.length > 0) {
-        const hasSelectedCondition = selectedHealthConditions.some(condition =>
+        const hasSelectedCondition = selectedHealthConditions.some((condition) =>
           product.health_conditions?.includes(condition)
         );
         if (!hasSelectedCondition) return false;
@@ -137,9 +137,11 @@ function ProductsContent() {
           product.description,
           ...(product.health_benefits || []),
           ...(product.health_conditions || []),
-          ...(product.key_ingredients || [])
-        ].join(' ').toLowerCase();
-        
+          ...(product.key_ingredients || []),
+        ]
+          .join(' ')
+          .toLowerCase();
+
         if (!searchableText.includes(query)) return false;
       }
 
@@ -165,7 +167,15 @@ function ProductsContent() {
     });
 
     return filtered;
-  }, [products, selectedCategory, selectedAgeGroup, selectedBenefits, selectedHealthConditions, searchQuery, sortBy]);
+  }, [
+    products,
+    selectedCategory,
+    selectedAgeGroup,
+    selectedBenefits,
+    selectedHealthConditions,
+    searchQuery,
+    sortBy,
+  ]);
 
   // Pagination
   const totalPages = Math.ceil(filteredAndSortedProducts.length / ITEMS_PER_PAGE);
@@ -176,18 +186,14 @@ function ProductsContent() {
 
   // Helper functions
   const toggleBenefit = (benefit: string) => {
-    setSelectedBenefits(prev =>
-      prev.includes(benefit)
-        ? prev.filter(b => b !== benefit)
-        : [...prev, benefit]
+    setSelectedBenefits((prev) =>
+      prev.includes(benefit) ? prev.filter((b) => b !== benefit) : [...prev, benefit]
     );
   };
 
   const toggleHealthCondition = (condition: string) => {
-    setSelectedHealthConditions(prev =>
-      prev.includes(condition)
-        ? prev.filter(c => c !== condition)
-        : [...prev, condition]
+    setSelectedHealthConditions((prev) =>
+      prev.includes(condition) ? prev.filter((c) => c !== condition) : [...prev, condition]
     );
   };
 
@@ -205,7 +211,7 @@ function ProductsContent() {
     selectedAgeGroup !== 'All Ages',
     selectedBenefits.length > 0,
     selectedHealthConditions.length > 0,
-    searchQuery.trim() !== ''
+    searchQuery.trim() !== '',
   ].filter(Boolean).length;
 
   // Loading skeleton component
@@ -227,7 +233,7 @@ function ProductsContent() {
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="section-padding pt-20">
         <div className="container mx-auto px-6">
@@ -241,8 +247,8 @@ function ProductsContent() {
               Our Products
             </h1>
             <p className="text-xl text-[#333333] max-w-2xl mx-auto">
-              Discover our curated collection of premium wellness products, 
-              crafted with ancient wisdom and modern science.
+              Discover our curated collection of premium wellness products, crafted with ancient
+              wisdom and modern science.
             </p>
           </motion.div>
         </div>
@@ -323,7 +329,7 @@ function ProductsContent() {
                   onChange={(e) => setSortBy(e.target.value)}
                   className="px-4 py-2 border border-[#E5E5E0] text-[#111111] focus:outline-none focus:border-[#111111] bg-[#FAF9F6]"
                 >
-                  {sortOptions.map(option => (
+                  {sortOptions.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
@@ -340,11 +346,11 @@ function ProductsContent() {
                 initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }}
                 animate={{ opacity: 1, scaleY: 1, transformOrigin: 'top' }}
                 exit={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }}
-                transition={{ 
-                  duration: 0.25, 
+                transition={{
+                  duration: 0.25,
                   ease: [0.4, 0.0, 0.2, 1],
                   opacity: { duration: 0.2 },
-                  scaleY: { duration: 0.25 }
+                  scaleY: { duration: 0.25 },
                 }}
                 className="bg-white border border-[#E5E5E0] p-6 mb-8 origin-top"
               >
@@ -420,7 +426,9 @@ function ProductsContent() {
                 {availableHealthConditions.length > 0 && (
                   <div className="mt-6">
                     <div className="flex-1">
-                      <h3 className="font-bold text-[#8B7355] mb-3 uppercase text-sm">Health Conditions</h3>
+                      <h3 className="font-bold text-[#8B7355] mb-3 uppercase text-sm">
+                        Health Conditions
+                      </h3>
                       <div className="max-h-32 overflow-y-auto">
                         <div className="flex flex-wrap gap-2">
                           {availableHealthConditions.slice(0, 10).map((condition) => (
@@ -458,10 +466,13 @@ function ProductsContent() {
 
           {/* Products Grid or Loading State */}
           {loading ? (
-            <div className={viewMode === 'grid' 
-              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" 
-              : "flex flex-col gap-4"
-            }>
+            <div
+              className={
+                viewMode === 'grid'
+                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+                  : 'flex flex-col gap-4'
+              }
+            >
               {Array.from({ length: 8 }).map((_, index) => (
                 <ProductSkeleton key={index} />
               ))}
@@ -469,7 +480,9 @@ function ProductsContent() {
           ) : error ? (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">⚠️</div>
-              <h3 className="text-xl font-bold text-[#111111] mb-2 uppercase">Error Loading Products</h3>
+              <h3 className="text-xl font-bold text-[#111111] mb-2 uppercase">
+                Error Loading Products
+              </h3>
               <p className="text-[#333333] mb-6">{error}</p>
               <button
                 onClick={() => window.location.reload()}
@@ -484,12 +497,13 @@ function ProductsContent() {
               transition={{
                 layout: {
                   duration: 0.4,
-                  ease: [0.4, 0.0, 0.2, 1]
-                }
+                  ease: [0.4, 0.0, 0.2, 1],
+                },
               }}
-              className={viewMode === 'grid' 
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" 
-                : "flex flex-col gap-4"
+              className={
+                viewMode === 'grid'
+                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+                  : 'flex flex-col gap-4'
               }
             >
               <AnimatePresence mode="wait">
@@ -500,13 +514,13 @@ function ProductsContent() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    transition={{ 
-                      duration: 0.4, 
+                    transition={{
+                      duration: 0.4,
                       delay: index * 0.05,
                       layout: {
                         duration: 0.4,
-                        ease: [0.4, 0.0, 0.2, 1]
-                      }
+                        ease: [0.4, 0.0, 0.2, 1],
+                      },
                     }}
                     className="group"
                   >
@@ -517,20 +531,23 @@ function ProductsContent() {
                           {/* Product Image */}
                           <div className="relative aspect-[4/5] overflow-hidden">
                             <Image
-                              src={getValidImageUrl(product.images?.[0]) || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjhGNkYzIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOEI3MzU1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiPk5vIEltYWdlPC90ZXh0Pgo8L3N2Zz4K'}
+                              src={
+                                getValidImageUrl(product.images?.[0]) ||
+                                'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjhGNkYzIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOEI3MzU1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiPk5vIEltYWdlPC90ZXh0Pgo8L3N2Zz4K'
+                              }
                               alt={product.name || 'Product'}
                               fill
                               className="object-cover group-hover:scale-110 transition-transform duration-700"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                            
+
                             {/* Category Badge */}
                             <div className="absolute top-4 left-4">
                               <span className="bg-[#111111] text-[#FAF9F6] px-3 py-1.5 text-xs uppercase tracking-wider font-bold">
                                 {product.category === 'ayurvedic' ? 'Ayurvedic' : 'Nutraceutical'}
                               </span>
                             </div>
-                            
+
                             {/* Featured Badge */}
                             {product.is_featured && (
                               <div className="absolute top-4 right-4">
@@ -550,19 +567,21 @@ function ProductsContent() {
                               <p className="text-sm text-[#333333] mb-4 line-clamp-3 leading-relaxed h-16">
                                 {product.description}
                               </p>
-                              
+
                               {/* Benefits */}
                               <div className="h-16 mb-4">
                                 {product.health_benefits && product.health_benefits.length > 0 && (
                                   <div className="flex flex-wrap gap-1.5">
-                                    {product.health_benefits.slice(0, 3).map((benefit: string, idx: number) => (
-                                      <span
-                                        key={idx}
-                                        className="text-xs bg-[#A36F40]/10 text-[#A36F40] px-2.5 py-1 font-bold border border-[#A36F40]/20"
-                                      >
-                                        {benefit}
-                                      </span>
-                                    ))}
+                                    {product.health_benefits
+                                      .slice(0, 3)
+                                      .map((benefit: string, idx: number) => (
+                                        <span
+                                          key={idx}
+                                          className="text-xs bg-[#A36F40]/10 text-[#A36F40] px-2.5 py-1 font-bold border border-[#A36F40]/20"
+                                        >
+                                          {benefit}
+                                        </span>
+                                      ))}
                                     {product.health_benefits.length > 3 && (
                                       <span className="text-xs text-[#333333] px-2.5 py-1 font-medium">
                                         +{product.health_benefits.length - 3} more
@@ -590,7 +609,10 @@ function ProductsContent() {
                             {/* Product Image */}
                             <div className="relative w-full md:w-48 h-48 md:h-auto overflow-hidden">
                               <Image
-                                src={getValidImageUrl(product.images?.[0]) || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjhGNkYzIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOEI3MzU1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiPk5vIEltYWdlPC90ZXh0Pgo8L3N2Zz4K'}
+                                src={
+                                  getValidImageUrl(product.images?.[0]) ||
+                                  'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjhGNkYzIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOEI3MzU1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiPk5vIEltYWdlPC90ZXh0Pgo8L3N2Zz4K'
+                                }
                                 alt={product.name || 'Product'}
                                 fill
                                 className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -622,14 +644,16 @@ function ProductsContent() {
                               {/* Benefits */}
                               {product.health_benefits && product.health_benefits.length > 0 && (
                                 <div className="flex flex-wrap gap-2 mb-4">
-                                  {product.health_benefits.slice(0, 4).map((benefit: string, idx: number) => (
-                                    <span
-                                      key={idx}
-                                      className="text-xs bg-[#A36F40]/10 text-[#A36F40] px-3 py-1.5 font-bold border border-[#A36F40]/20"
-                                    >
-                                      {benefit}
-                                    </span>
-                                  ))}
+                                  {product.health_benefits
+                                    .slice(0, 4)
+                                    .map((benefit: string, idx: number) => (
+                                      <span
+                                        key={idx}
+                                        className="text-xs bg-[#A36F40]/10 text-[#A36F40] px-3 py-1.5 font-bold border border-[#A36F40]/20"
+                                      >
+                                        {benefit}
+                                      </span>
+                                    ))}
                                   {product.health_benefits.length > 4 && (
                                     <span className="text-xs text-[#333333] px-3 py-1.5 font-medium">
                                       +{product.health_benefits.length - 4} more benefits
@@ -637,7 +661,7 @@ function ProductsContent() {
                                   )}
                                 </div>
                               )}
-                              
+
                               {/* Age Group */}
                               {product.age_group && (
                                 <div className="text-xs text-[#333333] uppercase tracking-wider font-medium">
@@ -661,10 +685,9 @@ function ProductsContent() {
               <div className="text-6xl mb-4">🔍</div>
               <h3 className="text-xl font-bold text-[#111111] mb-2 uppercase">No products found</h3>
               <p className="text-[#333333] mb-6">
-                {searchQuery 
+                {searchQuery
                   ? `No products match "${searchQuery}". Try adjusting your search or filters.`
-                  : 'No products match your current filters. Try adjusting your selection.'
-                }
+                  : 'No products match your current filters. Try adjusting your selection.'}
               </p>
               <button
                 onClick={clearAllFilters}
@@ -680,7 +703,7 @@ function ProductsContent() {
             <div className="flex justify-center items-center mt-12 mb-8 gap-2">
               {/* Previous Button */}
               <button
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
                 className={`flex items-center gap-2 px-4 py-2 transition-all duration-300 border uppercase text-sm font-bold ${
                   currentPage === 1
@@ -724,7 +747,7 @@ function ProductsContent() {
 
               {/* Next Button */}
               <button
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
                 className={`flex items-center gap-2 px-4 py-2 transition-all duration-300 border uppercase text-sm font-bold ${
                   currentPage === totalPages
@@ -739,9 +762,7 @@ function ProductsContent() {
           )}
 
           {/* Spacer for pages with no pagination */}
-          {!loading && !error && totalPages <= 1 && (
-            <div className="mt-12 mb-8"></div>
-          )}
+          {!loading && !error && totalPages <= 1 && <div className="mt-12 mb-8"></div>}
         </div>
       </section>
 
@@ -752,7 +773,13 @@ function ProductsContent() {
 
 export default function ProductsPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-background pt-20 flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground"></div></div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background pt-20 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground"></div>
+        </div>
+      }
+    >
       <ProductsContent />
     </Suspense>
   );

@@ -1,24 +1,24 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
-import { ArrowRight, Plus } from 'lucide-react'
-import { getProducts, Product, getBlogPosts, BlogPost } from '@/lib/supabase'
-import { BlogCard } from '@/components/BlogCard'
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { ArrowRight, Plus } from 'lucide-react';
+import { getProducts, Product, getBlogPosts, BlogPost } from '@/lib/supabase';
+import { BlogCard } from '@/components/BlogCard';
 
 // Helper function to validate and fix image URLs
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
-  
+
   // If it's already a valid URL, return it
   if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
     return imageUrl;
   }
-  
+
   // If it's a relative path or invalid, return null to use fallback
   return null;
 }
@@ -54,12 +54,10 @@ export default function Home() {
     fetchData();
   }, []);
 
-
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-background min-h-screen">
         {/* Animated Background Elements */}
@@ -67,64 +65,72 @@ export default function Home() {
           {/* Gradient Overlays */}
           <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/20 to-accent/5" />
           <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-accent/3 to-muted/10" />
-          
+
           {/* Floating Particles */}
-           {[...Array(12)].map((_, i) => {
-             // Use deterministic positioning based on index to avoid hydration mismatch
-             const positions = [
-               { left: 15, top: 20 }, { left: 85, top: 15 }, { left: 25, top: 80 },
-               { left: 70, top: 25 }, { left: 45, top: 90 }, { left: 90, top: 60 },
-               { left: 10, top: 50 }, { left: 60, top: 10 }, { left: 35, top: 70 },
-               { left: 80, top: 85 }, { left: 55, top: 40 }, { left: 20, top: 65 }
-             ];
-             const durations = [4, 5, 6, 7, 4.5, 5.5, 6.5, 7.5, 4.2, 5.8, 6.2, 7.2];
-             const delays = [0, 0.5, 1, 1.5, 0.3, 0.8, 1.3, 1.8, 0.2, 0.7, 1.2, 1.7];
-             
-             return (
-               <motion.div
-                 key={i}
-                 className="absolute w-1 h-1 bg-accent/30 rounded-full"
-                 style={{
-                   left: `${positions[i].left}%`,
-                   top: `${positions[i].top}%`,
-                 }}
-                 animate={{
-                   y: [-20, 20, -20],
-                   x: [-10, 10, -10],
-                   opacity: [0.3, 0.7, 0.3],
-                 }}
-                 transition={{
-                   duration: durations[i],
-                   repeat: Infinity,
-                   ease: "easeInOut",
-                   delay: delays[i],
-                 }}
-               />
-             );
-           })}
-          
+          {[...Array(12)].map((_, i) => {
+            // Use deterministic positioning based on index to avoid hydration mismatch
+            const positions = [
+              { left: 15, top: 20 },
+              { left: 85, top: 15 },
+              { left: 25, top: 80 },
+              { left: 70, top: 25 },
+              { left: 45, top: 90 },
+              { left: 90, top: 60 },
+              { left: 10, top: 50 },
+              { left: 60, top: 10 },
+              { left: 35, top: 70 },
+              { left: 80, top: 85 },
+              { left: 55, top: 40 },
+              { left: 20, top: 65 },
+            ];
+            const durations = [4, 5, 6, 7, 4.5, 5.5, 6.5, 7.5, 4.2, 5.8, 6.2, 7.2];
+            const delays = [0, 0.5, 1, 1.5, 0.3, 0.8, 1.3, 1.8, 0.2, 0.7, 1.2, 1.7];
+
+            return (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-accent/30 rounded-full"
+                style={{
+                  left: `${positions[i].left}%`,
+                  top: `${positions[i].top}%`,
+                }}
+                animate={{
+                  y: [-20, 20, -20],
+                  x: [-10, 10, -10],
+                  opacity: [0.3, 0.7, 0.3],
+                }}
+                transition={{
+                  duration: durations[i],
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: delays[i],
+                }}
+              />
+            );
+          })}
+
           {/* Geometric Shapes */}
           <motion.div
             className="absolute top-1/4 right-1/4 w-32 h-32 border border-accent/10 rotate-45"
             animate={{ rotate: [45, 135, 45] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
           />
           <motion.div
             className="absolute bottom-1/3 left-1/4 w-24 h-24 border border-accent/5 rounded-full"
             animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
           />
         </div>
 
         <div className="relative z-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 min-h-screen max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-             {/* Left Content */}
-             <motion.div
-               initial={{ opacity: 0, y: 50 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-               className="lg:col-span-12 xl:col-span-12 flex flex-col justify-center py-16 sm:py-20 lg:py-32 lg:pr-8 xl:pr-16 relative z-30 order-2 lg:order-1 lg:max-w-2xl"
-             >
+            {/* Left Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="lg:col-span-12 xl:col-span-12 flex flex-col justify-center py-16 sm:py-20 lg:py-32 lg:pr-8 xl:pr-16 relative z-30 order-2 lg:order-1 lg:max-w-2xl"
+            >
               <div className="space-y-16">
                 <div className="space-y-10">
                   <div className="space-y-6">
@@ -139,8 +145,8 @@ export default function Home() {
                         New Collection
                       </p>
                     </motion.div>
-                    
-                    <motion.h1 
+
+                    <motion.h1
                       className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight text-foreground leading-[0.85] tracking-tight"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -172,53 +178,53 @@ export default function Home() {
                         <motion.div
                           className="absolute -bottom-2 left-0 h-px bg-accent"
                           initial={{ width: 0 }}
-                          animate={{ width: "60%" }}
+                          animate={{ width: '60%' }}
                           transition={{ duration: 1, delay: 1.5 }}
                         />
                       </motion.span>
                     </motion.h1>
                   </div>
-                  
-                  <motion.p 
+
+                  <motion.p
                     className="text-lg sm:text-xl font-light text-secondary leading-relaxed max-w-lg tracking-wide"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1.3 }}
                   >
-                    Explore our collection of meticulously crafted formulations, 
-                    each designed to elevate the everyday ritual into something extraordinary.
+                    Explore our collection of meticulously crafted formulations, each designed to
+                    elevate the everyday ritual into something extraordinary.
                   </motion.p>
                 </div>
-                
-                <motion.div 
+
+                <motion.div
                   className="flex flex-col sm:flex-row gap-6"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 1.6 }}
                 >
-                  <Link 
-                    href="/products" 
+                  <Link
+                    href="/products"
                     className="group relative inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground text-sm font-medium uppercase tracking-[0.15em] overflow-hidden transition-all duration-500 hover:shadow-xl"
                   >
                     <motion.div
                       className="absolute inset-0 bg-accent"
-                      initial={{ x: "-100%" }}
+                      initial={{ x: '-100%' }}
                       whileHover={{ x: 0 }}
                       transition={{ duration: 0.3 }}
                     />
                     <span className="relative z-10">Discover Collection</span>
                     <ArrowRight className="relative z-10 ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
-                  
-                  <Link 
-                    href="/about" 
+
+                  <Link
+                    href="/about"
                     className="group inline-flex items-center justify-center px-10 py-5 border border-border text-foreground text-sm font-medium uppercase tracking-[0.15em] hover:border-accent hover:bg-accent/5 transition-all duration-500 backdrop-blur-sm"
                   >
                     <span>Our Story</span>
                     <motion.div
                       className="ml-3 w-4 h-4"
                       animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                      transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
                     >
                       <Plus className="w-4 h-4" />
                     </motion.div>
@@ -236,88 +242,88 @@ export default function Home() {
             >
               <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-full lg:w-3/5 lg:ml-auto aspect-[4/5] lg:aspect-[3/4] lg:h-4/5 lg:self-center">
                 {/* Background Layers */}
-                <motion.div 
+                <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-muted/20 to-accent/5 rounded-sm lg:opacity-60"
-                  animate={{ 
+                  animate={{
                     background: [
-                      "linear-gradient(135deg, rgba(232, 230, 224, 0.2) 0%, rgba(139, 115, 85, 0.05) 100%)",
-                      "linear-gradient(135deg, rgba(139, 115, 85, 0.05) 0%, rgba(232, 230, 224, 0.2) 100%)",
-                      "linear-gradient(135deg, rgba(232, 230, 224, 0.2) 0%, rgba(139, 115, 85, 0.05) 100%)"
-                    ]
+                      'linear-gradient(135deg, rgba(232, 230, 224, 0.2) 0%, rgba(139, 115, 85, 0.05) 100%)',
+                      'linear-gradient(135deg, rgba(139, 115, 85, 0.05) 0%, rgba(232, 230, 224, 0.2) 100%)',
+                      'linear-gradient(135deg, rgba(232, 230, 224, 0.2) 0%, rgba(139, 115, 85, 0.05) 100%)',
+                    ],
                   }}
-                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
                 />
-                
+
                 {/* Main Image Container */}
                 <div className="absolute inset-0 p-2 sm:p-4">
-                  <motion.div 
+                  <motion.div
                     className="relative w-full h-full group border-2 border-accent/20 rounded-sm overflow-hidden"
-                    whileHover={{ scale: 1.02, borderColor: "rgba(139, 115, 85, 0.4)" }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    whileHover={{ scale: 1.02, borderColor: 'rgba(139, 115, 85, 0.4)' }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent z-10" />
                     <div className="absolute inset-0 bg-[#F1E5D4]/50 mix-blend-screen z-10 pointer-events-none" />
                     <div className="absolute inset-0 bg-[rgba(139,115,85,0.28)] mix-blend-soft-light z-10 pointer-events-none" />
                     <div className="absolute inset-0 bg-[#F3E8D8]/35 mix-blend-screen z-20 pointer-events-none" />
                     <Image
-                       src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                       alt="Soft beige minimalist texture background"
-                       fill
-                       className="object-cover shadow-2xl opacity-100 brightness-110"
-                       priority
-                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
-                     />
-                    
+                      src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt="Soft beige minimalist texture background"
+                      fill
+                      className="object-cover shadow-2xl opacity-100 brightness-110"
+                      priority
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                    />
+
                     {/* Overlay Effects */}
-                    <motion.div 
+                    <motion.div
                       className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-all duration-700"
-                      whileHover={{ 
-                        boxShadow: "inset 0 0 0 1px rgba(139, 115, 85, 0.3)"
+                      whileHover={{
+                        boxShadow: 'inset 0 0 0 1px rgba(139, 115, 85, 0.3)',
                       }}
                     />
-                    
+
                     {/* Interactive Elements */}
                     <motion.div
                       className="absolute top-8 right-8 w-3 h-3 bg-accent rounded-full shadow-lg z-20"
-                      animate={{ 
+                      animate={{
                         scale: [1, 1.2, 1],
-                        opacity: [0.7, 1, 0.7]
+                        opacity: [0.7, 1, 0.7],
                       }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                     />
                     <motion.div
                       className="absolute bottom-12 left-8 w-2 h-2 bg-accent/60 rounded-full z-20"
-                      animate={{ 
+                      animate={{
                         scale: [1, 1.3, 1],
-                        opacity: [0.5, 0.8, 0.5]
+                        opacity: [0.5, 0.8, 0.5],
                       }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+                      transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
                     />
                   </motion.div>
                 </div>
-                
+
                 {/* Floating Accent Elements */}
                 <motion.div
                   className="absolute top-1/4 -right-4 w-16 h-16 border border-accent/20 rounded-full"
-                  animate={{ 
+                  animate={{
                     y: [-10, 10, -10],
-                    rotate: [0, 180, 360]
+                    rotate: [0, 180, 360],
                   }}
-                  transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
                 />
                 <motion.div
                   className="absolute bottom-1/4 -left-4 w-12 h-12 bg-accent/5 rounded-sm"
-                  animate={{ 
+                  animate={{
                     x: [-5, 5, -5],
-                    rotate: [0, -90, 0]
+                    rotate: [0, -90, 0],
                   }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                  transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
                 />
               </div>
             </motion.div>
           </div>
         </div>
-        
+
         {/* Scroll Indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
@@ -329,7 +335,7 @@ export default function Home() {
           <motion.div
             className="w-px h-8 bg-accent/50"
             animate={{ scaleY: [1, 0.5, 1] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
       </section>
@@ -358,7 +364,8 @@ export default function Home() {
                 <span className="block italic font-light text-accent/80 mt-2">Wellness</span>
               </h2>
               <p className="text-lg font-light text-secondary max-w-2xl mx-auto leading-relaxed">
-                Choose from our carefully curated collections, each designed to support your unique wellness journey.
+                Choose from our carefully curated collections, each designed to support your unique
+                wellness journey.
               </p>
             </div>
           </motion.div>
@@ -376,13 +383,13 @@ export default function Home() {
                   {/* Luxury Dark Background with Multiple Gradients */}
                   <div className="absolute inset-0 bg-gradient-to-br from-accent via-accent/80 to-accent/60" />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 via-transparent to-transparent" />
-                  
+
                   {/* Premium Texture Overlay */}
                   <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]" />
-                  
+
                   {/* Luxury Shimmer Effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-card/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                  
+
                   {/* Image Placeholder with Luxury Frame */}
                   <div className="absolute inset-0 bottom-2/3">
                     <div className="absolute inset-4 border border-card/20 rounded-sm" />
@@ -396,7 +403,7 @@ export default function Home() {
                       <div className="space-y-3">
                         {/* Luxury Accent Line */}
                         <div className="w-16 h-px bg-gradient-to-r from-transparent via-card/60 to-transparent mx-auto" />
-                        
+
                         <h3 className="text-3xl lg:text-4xl font-thin text-card tracking-[0.02em] leading-tight">
                           <span className="bg-gradient-to-r from-card via-card/95 to-card/90 bg-clip-text text-transparent">
                             Ayurvedic Solutions
@@ -405,7 +412,7 @@ export default function Home() {
                         <p className="text-card/75 font-light leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide">
                           Ancient wisdom meets modern science in our traditional formulations.
                         </p>
-                        
+
                         {/* Decorative Element */}
                         <div className="flex items-center justify-center space-x-2 pt-2">
                           <div className="w-1 h-1 bg-card/40 rounded-full" />
@@ -415,21 +422,23 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Luxury Explore Button */}
                   <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
                     <div className="relative group/btn">
                       {/* Button Background with Luxury Effects */}
                       <div className="absolute inset-0 bg-card/10 backdrop-blur-sm border border-card/30 rounded-sm shadow-lg" />
                       <div className="absolute inset-0 bg-gradient-to-r from-card/5 via-card/10 to-card/5 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-                      
+
                       <div className="relative flex items-center justify-center px-10 py-4 text-card group-hover/btn:text-card/90 transition-all duration-300">
-                        <span className="text-xs font-medium uppercase tracking-[0.2em] mr-3">Explore Collection</span>
+                        <span className="text-xs font-medium uppercase tracking-[0.2em] mr-3">
+                          Explore Collection
+                        </span>
                         <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Hover Effect */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-t from-card/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"
@@ -452,13 +461,13 @@ export default function Home() {
                   {/* Luxury Light Background with Multiple Gradients */}
                   <div className="absolute inset-0 bg-gradient-to-br from-background via-muted to-muted/80" />
                   <div className="absolute inset-0 bg-gradient-to-t from-accent/10 via-transparent to-transparent" />
-                  
+
                   {/* Premium Texture Overlay */}
                   <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,rgba(139,69,19,0.1)_1px,transparent_1px)] bg-[length:20px_20px]" />
-                  
+
                   {/* Luxury Shimmer Effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                  
+
                   {/* Image Placeholder with Luxury Frame */}
                   <div className="absolute inset-0 bottom-2/3">
                     <div className="absolute inset-4 border border-accent/40 rounded-sm" />
@@ -472,7 +481,7 @@ export default function Home() {
                       <div className="space-y-3">
                         {/* Luxury Accent Line */}
                         <div className="w-16 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent mx-auto" />
-                        
+
                         <h3 className="text-3xl lg:text-4xl font-thin text-foreground tracking-[0.02em] leading-tight">
                           <span className="bg-gradient-to-r from-accent via-accent/90 to-accent/80 bg-clip-text text-transparent">
                             Nutraceuticals
@@ -481,7 +490,7 @@ export default function Home() {
                         <p className="text-secondary font-light leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide">
                           Scientifically-backed supplements for optimal health and vitality.
                         </p>
-                        
+
                         {/* Decorative Element */}
                         <div className="flex items-center justify-center space-x-2 pt-2">
                           <div className="w-1 h-1 bg-accent/60 rounded-full" />
@@ -498,14 +507,16 @@ export default function Home() {
                       {/* Button Background with Luxury Effects */}
                       <div className="absolute inset-0 bg-accent/30 backdrop-blur-sm border border-accent/40 rounded-sm shadow-lg" />
                       <div className="absolute inset-0 bg-gradient-to-r from-accent/20 via-accent/30 to-accent/20 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-                      
+
                       <div className="relative flex items-center justify-center px-10 py-4 text-foreground group-hover/btn:text-accent transition-all duration-300">
-                        <span className="text-xs font-medium uppercase tracking-[0.2em] mr-3">Explore Collection</span>
+                        <span className="text-xs font-medium uppercase tracking-[0.2em] mr-3">
+                          Explore Collection
+                        </span>
                         <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Hover Effect */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"
@@ -524,31 +535,37 @@ export default function Home() {
         {/* Luxury Background Layers */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/30 to-card/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-muted/20 via-transparent to-background/30" />
-        
+
         {/* Premium Texture Overlays */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23111111' fill-opacity='0.4'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3Ccircle cx='53' cy='53' r='1'/%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }} />
-        
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23111111' fill-opacity='0.4'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3Ccircle cx='53' cy='53' r='1'/%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
+
         {/* Shimmer Effect */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/10 to-transparent animate-pulse" />
         </div>
-        
+
         {/* Elegant Pattern */}
         <div className="absolute inset-0 opacity-[0.02]">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, hsl(var(--accent)) 2px, transparent 2px), radial-gradient(circle at 75% 75%, hsl(var(--secondary)) 1px, transparent 1px)`,
-            backgroundSize: '80px 80px, 40px 40px'
-          }} />
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 25% 25%, hsl(var(--accent)) 2px, transparent 2px), radial-gradient(circle at 75% 75%, hsl(var(--secondary)) 1px, transparent 1px)`,
+              backgroundSize: '80px 80px, 40px 40px',
+            }}
+          />
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
           {/* Luxury Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             viewport={{ once: true }}
             className="text-center mb-20 lg:mb-24"
           >
@@ -564,7 +581,7 @@ export default function Home() {
                 </div>
                 <div className="w-16 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
               </div>
-              
+
               {/* Luxury Typography */}
               <div className="relative">
                 <h2 className="text-5xl lg:text-7xl font-extralight text-foreground tracking-tight leading-tight">
@@ -575,17 +592,18 @@ export default function Home() {
                     <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
                   </span>
                 </h2>
-                
+
                 {/* Luxury Accent */}
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-1 h-1 bg-accent/60 rounded-full" />
               </div>
-              
+
               {/* Enhanced Description */}
               <div className="relative max-w-3xl mx-auto">
                 <p className="text-xl font-light text-secondary leading-relaxed tracking-wide">
-                  Discover curated wellness solutions tailored to your unique lifestyle needs and health aspirations.
+                  Discover curated wellness solutions tailored to your unique lifestyle needs and
+                  health aspirations.
                 </p>
-                
+
                 {/* Decorative Elements */}
                 <div className="flex items-center justify-center space-x-3 mt-6">
                   <div className="w-2 h-2 bg-accent/40 rounded-full" />
@@ -605,32 +623,38 @@ export default function Home() {
             {/* First set of 6 cards */}
             <Link href="/products?health_conditions=joint-pain" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C10.9 2 10 2.9 10 4V6C8.9 6 8 6.9 8 8V10C6.9 10 6 10.9 6 12C6 13.1 6.9 14 8 14V16C8 17.1 8.9 18 10 18V20C10 21.1 10.9 22 12 22C13.1 22 14 21.1 14 20V18C15.1 18 16 17.1 16 16V14C17.1 14 18 13.1 18 12C18 10.9 17.1 10 16 10V8C16 6.9 15.1 6 14 6V4C14 2.9 13.1 2 12 2Z" opacity="0.8"/>
-                        <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C10.9 2 10 2.9 10 4V6C8.9 6 8 6.9 8 8V10C6.9 10 6 10.9 6 12C6 13.1 6.9 14 8 14V16C8 17.1 8.9 18 10 18V20C10 21.1 10.9 22 12 22C13.1 22 14 21.1 14 20V18C15.1 18 16 17.1 16 16V14C17.1 14 18 13.1 18 12C18 10.9 17.1 10 16 10V8C16 6.9 15.1 6 14 6V4C14 2.9 13.1 2 12 2Z"
+                          opacity="0.8"
+                        />
+                        <circle cx="12" cy="12" r="2" fill="currentColor" />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -647,32 +671,41 @@ export default function Home() {
 
             <Link href="/products?health_conditions=inflammation" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C11.2 2.8 10.5 3.7 10 4.8C9.2 6.4 9 8.1 9.5 9.7C10 11.3 11.1 12.6 12.5 13.3C13.9 14 15.6 14 17 13.3C18.4 12.6 19.5 11.3 20 9.7C20.5 8.1 20.3 6.4 19.5 4.8C19 3.7 18.3 2.8 17.5 2C18.8 3.5 19.5 5.4 19.5 7.5C19.5 11.6 16.1 15 12 15C7.9 15 4.5 11.6 4.5 7.5C4.5 5.4 5.2 3.5 6.5 2Z" opacity="0.9"/>
-                        <path d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z" fill="currentColor"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C11.2 2.8 10.5 3.7 10 4.8C9.2 6.4 9 8.1 9.5 9.7C10 11.3 11.1 12.6 12.5 13.3C13.9 14 15.6 14 17 13.3C18.4 12.6 19.5 11.3 20 9.7C20.5 8.1 20.3 6.4 19.5 4.8C19 3.7 18.3 2.8 17.5 2C18.8 3.5 19.5 5.4 19.5 7.5C19.5 11.6 16.1 15 12 15C7.9 15 4.5 11.6 4.5 7.5C4.5 5.4 5.2 3.5 6.5 2Z"
+                          opacity="0.9"
+                        />
+                        <path
+                          d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z"
+                          fill="currentColor"
+                        />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -689,31 +722,37 @@ export default function Home() {
 
             <Link href="/products?health_conditions=low-immunity" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z" opacity="0.9"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"
+                          opacity="0.9"
+                        />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -730,34 +769,49 @@ export default function Home() {
 
             <Link href="/products?health_conditions=stress" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" opacity="0.8"/>
-                        <path d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z" fill="currentColor"/>
-                        <path d="M12 14C10.9 14 10 14.9 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.9 13.1 14 12 14Z" fill="currentColor"/>
-                        <path d="M12 20C10.9 20 10 20.9 10 22C10 23.1 10.9 24 12 24C13.1 24 14 23.1 14 22C14 20.9 13.1 20 12 20Z" fill="currentColor"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z"
+                          opacity="0.8"
+                        />
+                        <path
+                          d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M12 14C10.9 14 10 14.9 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.9 13.1 14 12 14Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M12 20C10.9 20 10 20.9 10 22C10 23.1 10.9 24 12 24C13.1 24 14 23.1 14 22C14 20.9 13.1 20 12 20Z"
+                          fill="currentColor"
+                        />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -774,32 +828,41 @@ export default function Home() {
 
             <Link href="/products?health_conditions=fatigue" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" opacity="0.3"/>
-                        <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="currentColor"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                          opacity="0.3"
+                        />
+                        <path
+                          d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z"
+                          fill="currentColor"
+                        />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -816,32 +879,41 @@ export default function Home() {
 
             <Link href="/products?health_conditions=sleep-issues" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" opacity="0.4"/>
-                        <path d="M12 7C9.24 7 7 9.24 7 12C7 14.76 9.24 17 12 17C14.76 17 17 14.76 17 12C17 9.24 14.76 7 12 7ZM12 15C10.34 15 9 13.66 9 12C9 10.34 10.34 9 12 9C13.66 9 15 10.34 15 12C15 13.66 13.66 15 12 15Z" fill="currentColor"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                          opacity="0.4"
+                        />
+                        <path
+                          d="M12 7C9.24 7 7 9.24 7 12C7 14.76 9.24 17 12 17C14.76 17 17 14.76 17 12C17 9.24 14.76 7 12 7ZM12 15C10.34 15 9 13.66 9 12C9 10.34 10.34 9 12 9C13.66 9 15 10.34 15 12C15 13.66 13.66 15 12 15Z"
+                          fill="currentColor"
+                        />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -859,32 +931,38 @@ export default function Home() {
             {/* Duplicate cards for infinite scroll */}
             <Link href="/products?health_conditions=joint-pain" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C10.9 2 10 2.9 10 4V6C8.9 6 8 6.9 8 8V10C6.9 10 6 10.9 6 12C6 13.1 6.9 14 8 14V16C8 17.1 8.9 18 10 18V20C10 21.1 10.9 22 12 22C13.1 22 14 21.1 14 20V18C15.1 18 16 17.1 16 16V14C17.1 14 18 13.1 18 12C18 10.9 17.1 10 16 10V8C16 6.9 15.1 6 14 6V4C14 2.9 13.1 2 12 2ZM12 4V6H14V8H16V10H18V12H16V14H14V16H12V18H10V16H8V14H6V12H8V10H10V8H12V6H10V4H12Z" opacity="0.8"/>
-                        <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C10.9 2 10 2.9 10 4V6C8.9 6 8 6.9 8 8V10C6.9 10 6 10.9 6 12C6 13.1 6.9 14 8 14V16C8 17.1 8.9 18 10 18V20C10 21.1 10.9 22 12 22C13.1 22 14 21.1 14 20V18C15.1 18 16 17.1 16 16V14C17.1 14 18 13.1 18 12C18 10.9 17.1 10 16 10V8C16 6.9 15.1 6 14 6V4C14 2.9 13.1 2 12 2ZM12 4V6H14V8H16V10H18V12H16V14H14V16H12V18H10V16H8V14H6V12H8V10H10V8H12V6H10V4H12Z"
+                          opacity="0.8"
+                        />
+                        <circle cx="12" cy="12" r="2" fill="currentColor" />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -901,32 +979,41 @@ export default function Home() {
 
             <Link href="/products?health_conditions=inflammation" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C11.2 2.8 10.5 3.7 10 4.8C9.2 6.4 9 8.1 9.5 9.7C10 11.3 11.1 12.6 12.5 13.3C13.9 14 15.6 14 17 13.3C18.4 12.6 19.5 11.3 20 9.7C20.5 8.1 20.3 6.4 19.5 4.8C19 3.7 18.3 2.8 17.5 2C18.8 3.5 19.5 5.4 19.5 7.5C19.5 11.6 16.1 15 12 15C7.9 15 4.5 11.6 4.5 7.5C4.5 5.4 5.2 3.5 6.5 2C5.7 2.8 5 3.7 4.5 4.8C3.7 6.4 3.5 8.1 4 9.7C4.5 11.3 5.6 12.6 7 13.3C8.4 14 10.1 14 11.5 13.3C10.1 12.6 9 11.3 8.5 9.7C8 8.1 8.2 6.4 9 4.8C9.5 3.7 10.2 2.8 11 2H12Z" opacity="0.9"/>
-                        <path d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z" fill="currentColor"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C11.2 2.8 10.5 3.7 10 4.8C9.2 6.4 9 8.1 9.5 9.7C10 11.3 11.1 12.6 12.5 13.3C13.9 14 15.6 14 17 13.3C18.4 12.6 19.5 11.3 20 9.7C20.5 8.1 20.3 6.4 19.5 4.8C19 3.7 18.3 2.8 17.5 2C18.8 3.5 19.5 5.4 19.5 7.5C19.5 11.6 16.1 15 12 15C7.9 15 4.5 11.6 4.5 7.5C4.5 5.4 5.2 3.5 6.5 2C5.7 2.8 5 3.7 4.5 4.8C3.7 6.4 3.5 8.1 4 9.7C4.5 11.3 5.6 12.6 7 13.3C8.4 14 10.1 14 11.5 13.3C10.1 12.6 9 11.3 8.5 9.7C8 8.1 8.2 6.4 9 4.8C9.5 3.7 10.2 2.8 11 2H12Z"
+                          opacity="0.9"
+                        />
+                        <path
+                          d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z"
+                          fill="currentColor"
+                        />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -943,31 +1030,37 @@ export default function Home() {
 
             <Link href="/products?health_conditions=low-immunity" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z" opacity="0.9"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"
+                          opacity="0.9"
+                        />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -984,34 +1077,49 @@ export default function Home() {
 
             <Link href="/products?health_conditions=stress" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" opacity="0.8"/>
-                        <path d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z" fill="currentColor"/>
-                        <path d="M12 14C10.9 14 10 14.9 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.9 13.1 14 12 14Z" fill="currentColor"/>
-                        <path d="M12 20C10.9 20 10 20.9 10 22C10 23.1 10.9 24 12 24C13.1 24 14 23.1 14 22C14 20.9 13.1 20 12 20Z" fill="currentColor"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z"
+                          opacity="0.8"
+                        />
+                        <path
+                          d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M12 14C10.9 14 10 14.9 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.9 13.1 14 12 14Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M12 20C10.9 20 10 20.9 10 22C10 23.1 10.9 24 12 24C13.1 24 14 23.1 14 22C14 20.9 13.1 20 12 20Z"
+                          fill="currentColor"
+                        />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -1028,32 +1136,41 @@ export default function Home() {
 
             <Link href="/products?health_conditions=fatigue" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" opacity="0.3"/>
-                        <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="currentColor"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                          opacity="0.3"
+                        />
+                        <path
+                          d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z"
+                          fill="currentColor"
+                        />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -1070,32 +1187,41 @@ export default function Home() {
 
             <Link href="/products?health_conditions=sleep-issues" className="group flex-shrink-0">
               <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
-                
                 {/* Luxury Background Layers */}
                 <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
                 <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
-                
+
                 {/* Premium Border & Shadow */}
                 <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
-                
+
                 {/* Shimmer Overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
                   {/* Luxury Icon Container */}
                   <div className="relative mb-6 lg:mb-8">
                     <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
                     <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
-                      <svg className="w-10 h-10 lg:w-12 lg:h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" opacity="0.4"/>
-                        <path d="M12 7C9.24 7 7 9.24 7 12C7 14.76 9.24 17 12 17C14.76 17 17 14.76 17 12C17 9.24 14.76 7 12 7ZM12 15C10.34 15 9 13.66 9 12C9 10.34 10.34 9 12 9C13.66 9 15 10.34 15 12C15 13.66 13.66 15 12 15Z" fill="currentColor"/>
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                          opacity="0.4"
+                        />
+                        <path
+                          d="M12 7C9.24 7 7 9.24 7 12C7 14.76 9.24 17 12 17C14.76 17 17 14.76 17 12C17 9.24 14.76 7 12 7ZM12 15C10.34 15 9 13.66 9 12C9 10.34 10.34 9 12 9C13.66 9 15 10.34 15 12C15 13.66 13.66 15 12 15Z"
+                          fill="currentColor"
+                        />
                       </svg>
                     </div>
                   </div>
-                  
+
                   {/* Enhanced Typography */}
                   <div className="space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
@@ -1148,16 +1274,18 @@ export default function Home() {
                   Featured
                 </h2>
                 <p className="text-lg font-light text-secondary max-w-2xl leading-relaxed">
-                  A curated selection of our most celebrated formulations, 
-                  each embodying our commitment to quality and craftsmanship.
+                  A curated selection of our most celebrated formulations, each embodying our
+                  commitment to quality and craftsmanship.
                 </p>
               </div>
-              
-              <Link 
-                href="/products" 
+
+              <Link
+                href="/products"
                 className="group inline-flex items-center text-foreground hover:text-accent transition-colors duration-300"
               >
-                <span className="text-sm font-medium uppercase tracking-[0.15em] mr-3">View All</span>
+                <span className="text-sm font-medium uppercase tracking-[0.15em] mr-3">
+                  View All
+                </span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -1170,57 +1298,59 @@ export default function Home() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 lg:px-12">
               {featuredProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="group cursor-pointer h-full"
-              >
-                <Link href={`/products/${product.id}`} className="block h-full">
-                  <div className="space-y-6 h-full flex flex-col">
-                    <div className="relative aspect-[4/5] bg-muted overflow-hidden rounded-sm shadow-sm group-hover:shadow-md transition-shadow duration-300">
-                      <Image
-                        src={getValidImageUrl(product.images?.[0]) || 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=500&fit=crop&auto=format&q=80&ixlib=rb-4.0.3'}
-                        alt={product.name || 'Product'}
-                        fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-out"
-                      />
-                      <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-300" />
-                      
-                      {/* Category Badge */}
-                      {product.category && (
-                        <div className="absolute top-4 left-4">
-                          <span className="text-xs font-medium text-accent uppercase tracking-[0.15em] bg-card/95 backdrop-blur-sm px-3 py-1.5 rounded-sm shadow-sm">
-                            {product.category}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <div className="space-y-3 flex-1">
-                      <h3 className="text-xl font-light text-foreground group-hover:text-accent transition-colors duration-300 leading-tight">
-                        {product.name || 'Untitled Product'}
-                      </h3>
-                      <p className="text-sm font-light text-muted-foreground leading-relaxed">
-                        {product.description || 'No description available'}
-                      </p>
-                      {product.net_quantity && (
-                        <p className="text-lg font-medium text-foreground">
-                          {product.net_quantity}
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  className="group cursor-pointer h-full"
+                >
+                  <Link href={`/products/${product.id}`} className="block h-full">
+                    <div className="space-y-6 h-full flex flex-col bg-card border border-border overflow-hidden transition-all duration-500 hover:border-[#333333] group-hover:-translate-y-1">
+                      <div className="relative aspect-[4/5] bg-muted overflow-hidden">
+                        <Image
+                          src={
+                            getValidImageUrl(product.images?.[0]) ||
+                            'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=500&fit=crop&auto=format&q=80&ixlib=rb-4.0.3'
+                          }
+                          alt={product.name || 'Product'}
+                          fill
+                          className="object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-out"
+                        />
+                        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-300" />
+
+                        {/* Category Badge */}
+                        {product.category && (
+                          <div className="absolute top-4 left-4">
+                            <span className="bg-[#111111] text-[#FAF9F6] px-3 py-1.5 text-xs uppercase tracking-wider font-bold">
+                              {product.category === 'ayurvedic' ? 'Ayurvedic' : 'Nutraceutical'}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="space-y-3 flex-1 pl-6 pr-6 pb-6">
+                        <h3 className="text-xl font-light text-foreground group-hover:text-accent transition-colors duration-300 leading-tight">
+                          {product.name || 'Untitled Product'}
+                        </h3>
+                        <p className="text-sm font-light text-muted-foreground leading-relaxed">
+                          {product.description || 'No description available'}
                         </p>
-                      )}
+                        {product.net_quantity && (
+                          <p className="text-lg font-medium text-foreground">
+                            {product.net_quantity}
+                          </p>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              </motion.div>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           )}
         </div>
       </section>
-
 
       {/* Philosophy Section */}
       <section className="py-24 lg:py-32 bg-background">
@@ -1247,17 +1377,18 @@ export default function Home() {
                 </h2>
                 <div className="w-16 h-px bg-accent" />
                 <p className="text-lg font-light text-secondary leading-relaxed">
-                  Our approach combines ancient Ayurvedic wisdom with contemporary 
-                  scientific understanding, creating formulations that honor both 
-                  tradition and innovation.
+                  Our approach combines ancient Ayurvedic wisdom with contemporary scientific
+                  understanding, creating formulations that honor both tradition and innovation.
                 </p>
               </div>
-              
-              <Link 
-                href="/about" 
+
+              <Link
+                href="/about"
                 className="group inline-flex items-center text-foreground hover:text-accent transition-colors duration-300"
               >
-                <span className="text-sm font-medium uppercase tracking-[0.15em] mr-3">Learn More</span>
+                <span className="text-sm font-medium uppercase tracking-[0.15em] mr-3">
+                  Learn More
+                </span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
@@ -1278,16 +1409,14 @@ export default function Home() {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-primary/10" />
-                
+
                 {/* Overlay Text */}
                 <div className="absolute bottom-8 left-8 right-8">
                   <div className="bg-black/70 backdrop-blur-sm p-6 space-y-3 rounded-sm shadow-lg">
-                    <h4 className="text-lg font-medium text-white">
-                      Sustainable Practices
-                    </h4>
+                    <h4 className="text-lg font-medium text-white">Sustainable Practices</h4>
                     <p className="text-base font-normal text-white/90 leading-relaxed">
-                      Every formulation reflects our commitment to environmental 
-                      responsibility and ethical sourcing.
+                      Every formulation reflects our commitment to environmental responsibility and
+                      ethical sourcing.
                     </p>
                   </div>
                 </div>
@@ -1325,7 +1454,7 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 auto-rows-fr">
               {blogPosts.map((post, index) => (
                 <motion.div
                   key={post.id}
@@ -1333,8 +1462,9 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
+                  className="h-full"
                 >
-                  <BlogCard post={post} />
+                  <BlogCard post={post} className="h-full min-h-[28rem]" />
                 </motion.div>
               ))}
             </div>
@@ -1397,15 +1527,13 @@ export default function Home() {
             className="max-w-4xl mx-auto text-center space-y-12 px-6 lg:px-12"
           >
             <div className="space-y-6">
-              <h2 className="text-4xl lg:text-5xl font-extralight tracking-tight">
-                Stay Informed
-              </h2>
+              <h2 className="text-4xl lg:text-5xl font-extralight tracking-tight">Stay Informed</h2>
               <p className="text-lg font-light text-primary-foreground/80 max-w-2xl mx-auto leading-relaxed">
-                Subscribe to receive updates on new formulations, insights into our 
-                practices, and invitations to exclusive events.
+                Subscribe to receive updates on new formulations, insights into our practices, and
+                invitations to exclusive events.
               </p>
             </div>
-            
+
             <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
               <input
                 type="email"
@@ -1419,7 +1547,7 @@ export default function Home() {
                 Subscribe
               </button>
             </form>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-8 border-t border-primary-foreground/20">
               <div className="text-center">
                 <p className="text-xs font-medium text-primary-foreground/70 uppercase tracking-[0.15em] mb-2">
@@ -1429,9 +1557,9 @@ export default function Home() {
                   Committed to social and environmental responsibility
                 </p>
               </div>
-              
+
               <div className="w-px h-12 bg-primary-foreground/20 hidden sm:block" />
-              
+
               <div className="text-center">
                 <p className="text-xs font-medium text-primary-foreground/70 uppercase tracking-[0.15em] mb-2">
                   Cruelty Free
@@ -1447,5 +1575,5 @@ export default function Home() {
 
       <Footer />
     </div>
-  )
+  );
 }
