@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ArrowRight, Plus } from 'lucide-react';
+import { InfiniteSlider } from '@/components/ui/infinite-slider';
 import { getProducts, Product, getBlogPosts, BlogPost } from '@/lib/supabase';
 import { BlogCard } from '@/components/BlogCard';
 
@@ -338,6 +339,25 @@ export default function Home() {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
+      </section>
+
+      {/* Certificates Carousel */}
+      <section className="bg-background">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto w-full max-w-[50vw]">
+            <InfiniteSlider
+              gap={40}
+              reverse
+              className="w-full py-8 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)] [mask-size:100%_100%] [-webkit-mask-size:100%_100%]"
+            >
+              <img src="/certificates2/ISO-certificate.avif" alt="ISO 9001 Certificate" className="h-[3.8rem] w-auto object-contain opacity-80 transition-all duration-300 hover:opacity-100 [filter:grayscale(1)_sepia(1)_saturate(.65)_hue-rotate(330deg)_brightness(1.05)_contrast(1.1)] hover:[filter:none]" />
+              <img src="/certificates2/ayush-certificate.avif" alt="AYUSH Certificate" className="h-[3.8rem] w-auto object-contain opacity-80 transition-all duration-300 hover:opacity-100 [filter:grayscale(1)_sepia(1)_saturate(.65)_hue-rotate(330deg)_brightness(1.05)_contrast(1.1)] hover:[filter:none]" />
+              <img src="/certificates2/cruelty-free-certificate.avif" alt="Cruelty-Free Certificate" className="h-[3.8rem] w-auto object-contain opacity-80 transition-all duration-300 hover:opacity-100 [filter:grayscale(1)_sepia(1)_saturate(.65)_hue-rotate(330deg)_brightness(1.05)_contrast(1.1)] hover:[filter:none]" />
+              <img src="/certificates2/gmp-certificate.avif" alt="GMP Certificate" className="h-[3.8rem] w-auto object-contain opacity-80 transition-all duration-300 hover:opacity-100 [filter:grayscale(1)_sepia(1)_saturate(.65)_hue-rotate(330deg)_brightness(1.05)_contrast(1.1)] hover:[filter:none]" />
+              <img src="/certificates2/make-in-india-certificate.avif" alt="Make in India Certificate" className="h-[3.8rem] w-auto object-contain opacity-80 transition-all duration-300 hover:opacity-100 [filter:grayscale(1)_sepia(1)_saturate(.65)_hue-rotate(330deg)_brightness(1.05)_contrast(1.1)] hover:[filter:none]" />
+            </InfiniteSlider>
+          </div>
+        </div>
       </section>
 
       {/* Explore Our Collections */}
