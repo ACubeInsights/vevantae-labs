@@ -9,7 +9,6 @@ import { getProducts, Product } from '@/lib/supabase';
 import { Search, X, Grid, List, SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { usePageTracking } from '@/hooks/usePageTracking';
 
 const categories = ['All', 'ayurvedic', 'nutraceutical'];
 const ageGroups = ['All Ages', 'Children', 'Adults', 'Seniors'];
@@ -38,12 +37,6 @@ function getValidImageUrl(imageUrl: string | undefined): string | null {
 
 function ProductsContent() {
   const searchParams = useSearchParams();
-  usePageTracking({
-    pageName: 'Products',
-    additionalData: {
-      page_type: 'e-commerce'
-    }
-  });
 
   // State management
   const [products, setProducts] = useState<Product[]>([]);

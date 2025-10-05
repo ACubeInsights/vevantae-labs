@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
-import { usePageTracking } from '@/hooks/usePageTracking';
 
 interface FormData {
   name: string;
@@ -15,9 +14,6 @@ interface FormData {
 }
 
 export default function ContactPage() {
-  const { trackFormSubmission } = usePageTracking({
-    pageName: 'Contact'
-  });
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -43,11 +39,8 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    trackFormSubmission('Contact', {
-      inquiry_type: formData.inquiryType,
-      has_company: formData.company ? 'yes' : 'no'
-    });
 
     setIsSubmitting(false);
     setIsSubmitted(true);
