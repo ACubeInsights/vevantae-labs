@@ -619,6 +619,12 @@ export default function Home() {
 
         {/* Full-width Carousel Container */}
         <div className="relative overflow-hidden py-8">
+          {/* Left Fade Gradient */}
+          <div className="absolute left-0 top-0 bottom-0 w-12 lg:w-20 bg-gradient-to-r from-background via-background/60 via-background/30 to-transparent z-10 pointer-events-none" />
+          
+          {/* Right Fade Gradient */}
+          <div className="absolute right-0 top-0 bottom-0 w-12 lg:w-20 bg-gradient-to-l from-background via-background/60 via-background/30 to-transparent z-10 pointer-events-none" />
+          
           <div className="flex animate-scroll hover:pause gap-8 lg:gap-10">
             {/* First set of 6 cards */}
             <Link href="/products?health_conditions=joint-pain" className="group flex-shrink-0">
