@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { trackPageVisit, trackFormSubmission } from '@/components/GoogleAnalytics'
+import { trackPageVisit, trackFormSubmission } from '@/components/GoogleAnalyticsSimple'
 
 interface SimplePageTrackingOptions {
   pageName: string
