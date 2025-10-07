@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { Product } from '@/lib/supabase';
 import { Button } from '@/components/ui/Button';
 
-// Custom arrow components
 const ChevronLeft = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -57,7 +56,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
             loading="lazy"
           />
 
-          {/* Navigation arrows - only show if there are multiple images */}
+          
           {images.length > 1 && (
             <>
               <button
@@ -77,7 +76,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
             </>
           )}
 
-          {/* Image indicators */}
+          
           {images.length > 1 && (
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
               {images.map((_, index) => (
@@ -91,7 +90,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
             </div>
           )}
 
-          {/* Category badge */}
+          
           <div className="absolute top-4 left-4">
             <span className="bg-background/90 text-primary px-3 py-1 text-xs uppercase tracking-wider font-semibold">
               {product.category === 'ayurvedic' ? 'Ayurvedic' : 'Nutraceutical'}

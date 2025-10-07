@@ -19,7 +19,7 @@ export function WhatsAppButton() {
     >
       <MessageCircle className="w-6 h-6" />
 
-      {/* Tooltip */}
+      
       <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-primary text-background text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
         Chat with us on WhatsApp
         <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-primary"></div>

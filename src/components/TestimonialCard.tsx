@@ -12,7 +12,7 @@ export function TestimonialCard({ testimonial, className = '' }: TestimonialCard
   return (
     <div className={`bg-white p-8 border border-border h-full flex flex-col ${className}`}>
       <div className="flex-1 flex flex-col justify-between">
-        {/* Star rating */}
+        
         <div className="flex items-center gap-1">
           {Array.from({ length: 5 }).map((_, index) => (
             <Star
@@ -24,12 +24,12 @@ export function TestimonialCard({ testimonial, className = '' }: TestimonialCard
           ))}
         </div>
 
-        {/* Testimonial text */}
+        
         <blockquote className="text-secondary leading-relaxed italic">
           &quot;{testimonial.comment}&quot;
         </blockquote>
 
-        {/* Author */}
+        
         <div className="pt-4 border-t border-border">
           <cite className="text-primary font-semibold not-italic">{testimonial.name}</cite>
         </div>

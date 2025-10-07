@@ -2,8 +2,9 @@ import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
-import GoogleAnalyticsSimple from '@/components/GoogleAnalyticsSimple';
 
 const inter = Inter({
   variable: '--font-suisse',
@@ -47,9 +48,12 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} font-sans antialiased bg-background text-primary`}>
         <Suspense fallback={null}>
-          <GoogleAnalyticsSimple />
         </Suspense>
-        {children}
+        <Header />
+        <main>
+          {children}
+        </main>
+        <Footer />
         <WhatsAppButton />
       </body>
     </html>

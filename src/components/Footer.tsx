@@ -28,7 +28,7 @@ export function Footer() {
     <footer className="bg-[#111111] text-white">
       <div className="container mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-8">
-          {/* Brand section */}
+          
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="inline-block">
               <span className="text-xl font-light text-white tracking-wide">Vevantae Labs</span>
@@ -58,7 +58,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Links sections */}
+          
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title} className="space-y-4">
               <h3 className="text-sm font-normal text-white uppercase tracking-wider">{title}</h3>
@@ -78,7 +78,7 @@ export function Footer() {
           ))}
         </div>
 
-        {/* Newsletter section */}
+        
         <div className="mt-16 pt-8 border-t border-gray-800">
           <div className="max-w-md">
             <h3 className="text-lg font-light text-white mb-4">Stay informed</h3>
@@ -98,7 +98,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom section */}
+        
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400">

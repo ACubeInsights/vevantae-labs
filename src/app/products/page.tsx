@@ -7,8 +7,6 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProducts, Product } from '@/lib/supabase';
 import { Search, X, Grid, List, SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { usePageTracking } from '@/hooks/usePageTracking';
 
 const categories = ['All', 'ayurvedic', 'nutraceutical'];
@@ -23,11 +21,9 @@ const sortOptions = [
 
 const ITEMS_PER_PAGE = 12;
 
-// Helper function to validate image URLs
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
 
-  // Check if it's a valid URL
   try {
     new URL(imageUrl);
     return imageUrl;
@@ -45,12 +41,10 @@ function ProductsContent() {
     }
   });
 
-  // State management
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Filter states
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'All');
   const [selectedAgeGroup, setSelectedAgeGroup] = useState('All Ages');
   const [selectedBenefits, setSelectedBenefits] = useState<string[]>([]);
@@ -63,7 +57,6 @@ function ProductsContent() {
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -81,12 +74,10 @@ function ProductsContent() {
     fetchProducts();
   }, []);
 
-  // Reset current page when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategory, selectedAgeGroup, selectedBenefits, selectedHealthConditions, searchQuery]);
 
-  // Get available benefits and health conditions from products
   const availableBenefits = useMemo(() => {
     const benefits = new Set<string>();
     products.forEach((product) => {
@@ -107,20 +98,16 @@ function ProductsContent() {
     return Array.from(conditions).sort();
   }, [products]);
 
-  // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
     const filtered = products.filter((product) => {
-      // Category filter
       if (selectedCategory !== 'All' && product.category !== selectedCategory) {
         return false;
       }
 
-      // Age group filter
       if (selectedAgeGroup !== 'All Ages' && product.age_group !== selectedAgeGroup) {
         return false;
       }
 
-      // Benefits filter
       if (selectedBenefits.length > 0) {
         const hasSelectedBenefit = selectedBenefits.some((benefit) =>
           product.health_benefits?.includes(benefit)
@@ -128,7 +115,6 @@ function ProductsContent() {
         if (!hasSelectedBenefit) return false;
       }
 
-      // Health conditions filter
       if (selectedHealthConditions.length > 0) {
         const hasSelectedCondition = selectedHealthConditions.some((condition) =>
           product.health_conditions?.includes(condition)
@@ -136,7 +122,6 @@ function ProductsContent() {
         if (!hasSelectedCondition) return false;
       }
 
-      // Search query filter
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const searchableText = [
@@ -155,7 +140,6 @@ function ProductsContent() {
       return true;
     });
 
-    // Sort products
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'name':
@@ -184,14 +168,12 @@ function ProductsContent() {
     sortBy,
   ]);
 
-  // Pagination
   const totalPages = Math.ceil(filteredAndSortedProducts.length / ITEMS_PER_PAGE);
   const paginatedProducts = filteredAndSortedProducts.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
 
-  // Helper functions
   const toggleBenefit = (benefit: string) => {
     setSelectedBenefits((prev) =>
       prev.includes(benefit) ? prev.filter((b) => b !== benefit) : [...prev, benefit]
@@ -212,7 +194,6 @@ function ProductsContent() {
     setSearchQuery('');
   };
 
-  // Calculate active filters count
   const activeFiltersCount = [
     selectedCategory !== 'All',
     selectedAgeGroup !== 'All Ages',
@@ -221,7 +202,6 @@ function ProductsContent() {
     searchQuery.trim() !== '',
   ].filter(Boolean).length;
 
-  // Loading skeleton component
   const ProductSkeleton = () => (
     <div className="bg-white border border-[#E5E5E0] overflow-hidden animate-pulse">
       <div className="aspect-[4/5] bg-gray-200"></div>
@@ -239,9 +219,8 @@ function ProductsContent() {
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
-      <Header />
 
-      {/* Hero Section */}
+      
       <section className="section-padding pt-20">
         <div className="container mx-auto px-6">
           <motion.div
@@ -261,12 +240,12 @@ function ProductsContent() {
         </div>
       </section>
 
-      {/* Search and Filters */}
+      
       <section className="section-padding">
         <div className="container mx-auto px-6">
           <div className="bg-white border border-[#E5E5E0] p-6 mb-8">
             <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-              {/* Search */}
+              
               <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#333333] w-5 h-5" />
                 <input
@@ -286,9 +265,9 @@ function ProductsContent() {
                 )}
               </div>
 
-              {/* Controls */}
+              
               <div className="flex items-center gap-4">
-                {/* Filter Toggle */}
+                
                 <button
                   onClick={() => setShowFilters(!showFilters)}
                   className={`flex items-center gap-2 px-4 py-2 border transition-all duration-300 ${
@@ -306,7 +285,7 @@ function ProductsContent() {
                   )}
                 </button>
 
-                {/* View Mode Toggle */}
+                
                 <div className="flex bg-[#E5E5E0] p-1">
                   <button
                     onClick={() => setViewMode('grid')}
@@ -330,7 +309,7 @@ function ProductsContent() {
                   </button>
                 </div>
 
-                {/* Sort */}
+                
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
@@ -346,7 +325,7 @@ function ProductsContent() {
             </div>
           </div>
 
-          {/* Filters Panel */}
+          
           <AnimatePresence>
             {showFilters && (
               <motion.div
@@ -362,7 +341,7 @@ function ProductsContent() {
                 className="bg-white border border-[#E5E5E0] p-6 mb-8 origin-top"
               >
                 <div className="flex flex-col lg:flex-row gap-6">
-                  {/* Categories */}
+                  
                   <div className="flex-1">
                     <h3 className="font-bold text-[#111111] mb-3 uppercase text-sm">Categories</h3>
                     <div className="flex flex-wrap gap-2">
@@ -382,7 +361,7 @@ function ProductsContent() {
                     </div>
                   </div>
 
-                  {/* Age Groups */}
+                  
                   <div className="flex-1">
                     <h3 className="font-bold text-[#111111] mb-3 uppercase text-sm">Age Groups</h3>
                     <div className="flex flex-wrap gap-2">
@@ -403,7 +382,7 @@ function ProductsContent() {
                   </div>
                 </div>
 
-                {/* Benefits */}
+                
                 {availableBenefits.length > 0 && (
                   <div className="mt-6">
                     <div className="flex-1">
@@ -429,7 +408,7 @@ function ProductsContent() {
                   </div>
                 )}
 
-                {/* Health Conditions */}
+                
                 {availableHealthConditions.length > 0 && (
                   <div className="mt-6">
                     <div className="flex-1">
@@ -457,7 +436,7 @@ function ProductsContent() {
                   </div>
                 )}
 
-                {/* Clear Filters */}
+                
                 <div className="mt-6 pt-4 border-t border-[#E5E5E0]">
                   <button
                     onClick={clearAllFilters}
@@ -471,7 +450,7 @@ function ProductsContent() {
             )}
           </AnimatePresence>
 
-          {/* Products Grid or Loading State */}
+          
           {loading ? (
             <div
               className={
@@ -533,9 +512,8 @@ function ProductsContent() {
                   >
                     <Link href={`/products/${product.id}`} className="block h-full">
                       {viewMode === 'grid' ? (
-                        // Grid View
                         <div className="bg-white border border-[#E5E5E0] overflow-hidden hover:border-[#333333] transition-all duration-500 group-hover:-translate-y-1 h-full flex flex-col">
-                          {/* Product Image */}
+                          
                           <div className="relative aspect-[4/5] overflow-hidden">
                             <Image
                               src={
@@ -548,14 +526,14 @@ function ProductsContent() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                            {/* Category Badge */}
+                            
                             <div className="absolute top-4 left-4">
                               <span className="bg-[#111111] text-[#FAF9F6] px-3 py-1.5 text-xs uppercase tracking-wider font-bold">
                                 {product.category === 'ayurvedic' ? 'Ayurvedic' : 'Nutraceutical'}
                               </span>
                             </div>
 
-                            {/* Featured Badge */}
+                            
                             {product.is_featured && (
                               <div className="absolute top-4 right-4">
                                 <span className="bg-[#A36F40] text-[#FAF9F6] px-2 py-1 text-xs font-bold">
@@ -565,7 +543,7 @@ function ProductsContent() {
                             )}
                           </div>
 
-                          {/* Product Info */}
+                          
                           <div className="p-6 flex-1 flex flex-col">
                             <div className="flex-1 min-h-0">
                               <h3 className="text-lg font-bold text-[#111111] mb-2 group-hover:text-[#A36F40] transition-colors duration-300 line-clamp-2 h-14">
@@ -575,7 +553,7 @@ function ProductsContent() {
                                 {product.description}
                               </p>
 
-                              {/* Benefits */}
+                              
                               <div className="h-16 mb-4">
                                 {product.health_benefits && product.health_benefits.length > 0 && (
                                   <div className="flex flex-wrap gap-1.5">
@@ -599,7 +577,7 @@ function ProductsContent() {
                               </div>
                             </div>
 
-                            {/* Age Group */}
+                            
                             <div className="mt-auto pt-4 border-t border-border/50 h-8">
                               {product.age_group && (
                                 <span className="text-xs text-[#333333] uppercase tracking-wider font-medium">
@@ -610,10 +588,9 @@ function ProductsContent() {
                           </div>
                         </div>
                       ) : (
-                        // List View
                         <div className="bg-white border border-[#E5E5E0] overflow-hidden hover:border-[#333333] transition-all duration-300">
                           <div className="flex flex-col md:flex-row">
-                            {/* Product Image */}
+                            
                             <div className="relative w-full md:w-48 h-48 md:h-auto overflow-hidden">
                               <Image
                                 src={
@@ -631,7 +608,7 @@ function ProductsContent() {
                               </div>
                             </div>
 
-                            {/* Product Info */}
+                            
                             <div className="flex-1 p-6">
                               <div className="flex justify-between items-start mb-3">
                                 <h3 className="text-xl font-bold text-[#111111] group-hover:text-[#A36F40] transition-colors duration-300">
@@ -648,7 +625,7 @@ function ProductsContent() {
                                 {product.description}
                               </p>
 
-                              {/* Benefits */}
+                              
                               {product.health_benefits && product.health_benefits.length > 0 && (
                                 <div className="flex flex-wrap gap-2 mb-4">
                                   {product.health_benefits
@@ -669,7 +646,7 @@ function ProductsContent() {
                                 </div>
                               )}
 
-                              {/* Age Group */}
+                              
                               {product.age_group && (
                                 <div className="text-xs text-[#333333] uppercase tracking-wider font-medium">
                                   Suitable for {product.age_group}
@@ -686,7 +663,7 @@ function ProductsContent() {
             </motion.div>
           )}
 
-          {/* No Results */}
+          
           {!loading && !error && filteredAndSortedProducts.length === 0 && (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">🔍</div>
@@ -705,10 +682,10 @@ function ProductsContent() {
             </div>
           )}
 
-          {/* Pagination */}
+          
           {!loading && !error && totalPages > 1 && (
             <div className="flex justify-center items-center mt-12 mb-8 gap-2">
-              {/* Previous Button */}
+              
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
@@ -722,7 +699,7 @@ function ProductsContent() {
                 <span className="hidden sm:inline">Previous</span>
               </button>
 
-              {/* Page Numbers */}
+              
               <div className="flex gap-1">
                 {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
                   let pageNumber;
@@ -752,7 +729,7 @@ function ProductsContent() {
                 })}
               </div>
 
-              {/* Next Button */}
+              
               <button
                 onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
@@ -768,12 +745,11 @@ function ProductsContent() {
             </div>
           )}
 
-          {/* Spacer for pages with no pagination */}
+          
           {!loading && !error && totalPages <= 1 && <div className="mt-12 mb-8"></div>}
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 }

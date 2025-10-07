@@ -4,8 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Users, Target, Eye, Heart, Calendar } from 'lucide-react';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { usePageTracking } from '@/hooks/usePageTracking';
 
 const values = [
@@ -101,10 +99,9 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
-      <Header />
 
       <main>
-        {/* Hero Section */}
+        
         <section className="py-20 lg:py-32">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -130,7 +127,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Story Content */}
+        
         <section className="py-20">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -178,7 +175,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Mission & Vision */}
+        
         <section className="py-20 bg-white">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -221,7 +218,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Values */}
+        
         <section className="py-20">
           <div className="container mx-auto px-6">
             <motion.div
@@ -256,7 +253,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Timeline */}
+        
         <section className="py-20 bg-white">
           <div className="container mx-auto px-6">
             <motion.div
@@ -298,7 +295,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Team */}
+        
         <section className="py-20">
           <div className="container mx-auto px-6">
             <motion.div
@@ -345,7 +342,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
+        
         <section className="py-20 bg-[#111111] text-white">
           <div className="container mx-auto px-6">
             <motion.div
@@ -378,7 +375,6 @@ export default function AboutPage() {
         </section>
       </main>
 
-      <Footer />
     </div>
   );
 }

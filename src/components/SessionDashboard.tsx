@@ -12,7 +12,6 @@ export function SessionDashboard() {
   })
 
   useEffect(() => {
-    // Only run on client side
     if (typeof window === 'undefined') return
     
     const updateSessionData = () => {
@@ -28,7 +27,6 @@ export function SessionDashboard() {
       })
     }
 
-    // Update every second
     const interval = setInterval(updateSessionData, 1000)
     updateSessionData() // Initial update
 

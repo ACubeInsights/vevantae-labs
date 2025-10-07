@@ -1,7 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-// Lazy initialize Supabase client to avoid import-time errors during build/prerender
-// Provides clear guidance if required environment variables are missing
 let supabaseClient: SupabaseClient | null = null;
 
 export const getSupabase = (): SupabaseClient => {
@@ -11,6 +9,12 @@ export const getSupabase = (): SupabaseClient => {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
+    if (typeof window === 'undefined') {
+      console.warn('Supabase environment variables missing during build. Using placeholder values.');
+      supabaseClient = createClient('https://placeholder.supabase.co', 'placeholder-key');
+      return supabaseClient;
+    }
+    
     throw new Error(
       'Supabase environment variables are missing. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.'
     );

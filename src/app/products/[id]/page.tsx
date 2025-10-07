@@ -7,26 +7,21 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import { Product } from '@/lib/supabase';
+import { Product, getProduct } from '@/lib/supabase';
 
-// Helper function to validate and fix image URLs
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
 
-  // Clean the URL by trimming whitespace
   const cleanUrl = imageUrl.trim();
 
-  // If it's already a valid URL, return it
   if (cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://')) {
     return cleanUrl;
   }
 
-  // If it starts with a slash, it might be a relative path - try to make it absolute
   if (cleanUrl.startsWith('/')) {
     return cleanUrl;
   }
 
-  // If it looks like a Supabase storage path or other valid path, return it
   if (
     cleanUrl.includes('supabase') ||
     cleanUrl.includes('storage') ||
@@ -35,14 +30,15 @@ function getValidImageUrl(imageUrl: string | undefined): string | null {
     return cleanUrl;
   }
 
-  // For any other case, try to return the URL as-is (Next.js Image component will handle validation)
   return cleanUrl || null;
 }
 
-// Helper function to get product by ID using the getProduct function
 const getProductById = async (id: string): Promise<Product | null> => {
   try {
-    const { getProduct } = await import('@/lib/supabase');
+    if (!id || typeof id !== 'string') {
+      console.error('Invalid product ID:', id);
+      return null;
+    }
     return await getProduct(id);
   } catch (error) {
     console.error('Error fetching product:', error);
@@ -51,7 +47,8 @@ const getProductById = async (id: string): Promise<Product | null> => {
 };
 
 export default function ProductDetailPage() {
-  const { id } = useParams() as { id: string };
+  const params = useParams();
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState('description');
   const [product, setProduct] = useState<Product | null>(null);
@@ -60,11 +57,14 @@ export default function ProductDetailPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        if (!id) {
-          console.error('Product id param missing');
+        if (!id || typeof id !== 'string') {
+          console.error('Product id param missing or invalid:', id);
+          setLoading(false);
           return;
         }
+        console.log('Fetching product with id:', id);
         const fetchedProduct = await getProductById(id);
+        console.log('Fetched product:', fetchedProduct);
         setProduct(fetchedProduct);
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -99,7 +99,7 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-background pt-20">
-      {/* Breadcrumb */}
+      
       <div className="container mx-auto px-6 py-6">
         <div className="flex items-center gap-2 text-sm text-secondary">
           <Link href="/" className="hover:text-foreground transition-colors">
@@ -116,13 +116,13 @@ export default function ProductDetailPage() {
 
       <div className="container mx-auto px-6 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Product Images */}
+          
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {/* Main Image */}
+            
             <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg group">
               <Image
                 key={`main-${selectedImage}`}
@@ -139,7 +139,7 @@ export default function ProductDetailPage() {
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
 
-              {/* Navigation arrows - only show if there are multiple images */}
+              
               {product.images && product.images.length > 1 && (
                 <>
                   <button
@@ -164,7 +164,7 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            {/* Thumbnail Images */}
+            
             {product.images && product.images.length > 1 && (
               <div className="flex gap-2 mt-4">
                 {product.images.slice(0, 4).map((image, index) => (
@@ -194,14 +194,14 @@ export default function ProductDetailPage() {
             )}
           </motion.div>
 
-          {/* Product Info */}
+          
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-6"
           >
-            {/* Header */}
+            
             <div>
               {product.category && (
                 <div className="text-sm text-secondary mb-2">{product.category}</div>
@@ -215,7 +215,7 @@ export default function ProductDetailPage() {
               </p>
             </div>
 
-            {/* Product Details */}
+            
             <div className="space-y-3">
               {product.net_quantity && (
                 <div className="flex items-center gap-3">
@@ -263,7 +263,7 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            {/* Brand Actions */}
+            
             <div className="space-y-4">
               <div className="flex gap-3">
                 <Link
@@ -275,7 +275,7 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
-            {/* Product Details Tabs */}
+            
             <div className="border-t border-border pt-6">
               <div className="flex gap-6 mb-6">
                 {['description', 'benefits', 'ingredients', 'usage'].map((tab) => (
@@ -412,11 +412,11 @@ export default function ProductDetailPage() {
           </motion.div>
         </div>
 
-        {/* Related Products */}
+        
         <section className="mt-20">
           <h2 className="text-2xl font-light text-foreground mb-8">You might also like</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Placeholder for related products */}
+            
             {[1, 2, 3].map((item) => (
               <div key={item} className="bg-card rounded-lg p-6 text-center">
                 <div className="aspect-[4/5] bg-muted rounded-lg mb-4"></div>

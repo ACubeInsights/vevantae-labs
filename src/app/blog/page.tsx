@@ -2,9 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-// Removed unused icon imports flagged by ESLint
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { BlogCard } from '@/components/BlogCard';
 import { getBlogPosts, BlogPost } from '@/lib/supabase';
 import { usePageTracking } from '@/hooks/usePageTracking';
@@ -45,10 +42,9 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
-      <Header />
 
       <main>
-        {/* Hero Section */}
+        
         <section className="py-20 lg:py-32">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -74,7 +70,7 @@ export default function BlogPage() {
           </div>
         </section>
 
-        {/* Featured Articles */}
+        
         {loading ? (
           <section className="py-20">
             <div className="container mx-auto px-6">
@@ -118,7 +114,7 @@ export default function BlogPage() {
           )
         )}
 
-        {/* Category Filter */}
+        
         <section className="py-20 bg-white">
           <div className="container mx-auto px-6">
             <motion.div
@@ -147,7 +143,7 @@ export default function BlogPage() {
               </div>
             </motion.div>
 
-            {/* Articles Grid */}
+            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {regularPosts.map((post, index) => (
                 <motion.div
@@ -178,7 +174,7 @@ export default function BlogPage() {
           </div>
         </section>
 
-        {/* Newsletter Section */}
+        
         <section className="py-20 bg-[#111111] text-white">
           <div className="container mx-auto px-6">
             <motion.div
@@ -212,7 +208,6 @@ export default function BlogPage() {
         </section>
       </main>
 
-      <Footer />
     </div>
   );
 }

@@ -4,16 +4,13 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getProducts, Product } from '@/lib/supabase';
 
-// Helper function to validate and fix image URLs
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
 
-  // If it's already a valid URL, return it
   if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
     return imageUrl;
   }
 
-  // If it's a relative path or invalid, return null to use fallback
   return null;
 }
 

@@ -55,7 +55,6 @@ export default function ContactPage() {
     setIsSubmitting(false);
     setIsSubmitted(true);
 
-    // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
       setFormData({
@@ -139,30 +138,39 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] pt-20">
-      {/* Hero Section */}
-      <section className="section-padding">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h1 className="text-5xl md:text-6xl font-light text-[#111111] mb-6">Partner With Us</h1>
-            <p className="text-xl text-[#666666] max-w-3xl mx-auto leading-relaxed">
-              Ready to explore B2B partnerships, bulk orders, or custom wellness solutions?
-              Let&#39;s discuss how we can support your business needs.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[#FAF9F6]">
+      <main>
+        
+        <section className="py-20 lg:py-32">
+          <div className="container mx-auto px-6">
+            <div className="max-w-4xl mx-auto text-center space-y-8">
+              <motion.h1
+                className="text-4xl md:text-6xl font-light text-[#111111] leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                Partner With Us
+              </motion.h1>
 
-      {/* Contact Form and Info */}
+              <motion.p
+                className="text-lg text-[#666666] max-w-3xl mx-auto leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                Ready to explore B2B partnerships, bulk orders, or custom wellness solutions?
+                Let's discuss how we can support your business needs.
+              </motion.p>
+            </div>
+          </div>
+        </section>
+
+      
       <section className="pb-20">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Contact Form */}
+            
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -330,7 +338,7 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
-            {/* Contact Information */}
+            
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -371,7 +379,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      
       <section className="bg-white py-20">
         <div className="container mx-auto px-6">
           <motion.div
@@ -405,7 +413,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map Section */}
+      
       <section className="py-20">
         <div className="container mx-auto px-6">
           <motion.div
@@ -439,6 +447,7 @@ export default function ContactPage() {
           </motion.div>
         </div>
       </section>
+      </main>
     </div>
   );
 }
