@@ -1,11 +1,6 @@
-'use client'
-
 import Script from 'next/script'
-import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
 
 type GtagEventParams = Record<string, unknown>
-type GtagConfigParams = Record<string, unknown>
 
 declare global {
   interface Window {
@@ -18,26 +13,6 @@ declare global {
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? ''
 
 export function GoogleAnalytics() {
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-
-  useEffect(() => {
-    if (!GA_MEASUREMENT_ID) return
-
-    const query = searchParams.size ? `?${searchParams.toString()}` : ''
-    // Use full URL (origin + path + query) for accurate GA page_location
-    const origin = typeof window !== 'undefined' ? window.location.origin : ''
-    const url = `${origin}${pathname}${query}`
-    
-    // Track page views (guard for browser and gtag availability)
-    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-      window.gtag('config', GA_MEASUREMENT_ID, {
-        page_location: url,
-      } as GtagConfigParams)
-    }
-  }, [pathname, searchParams])
-
-  // Only load GA if measurement ID is provided
   if (!GA_MEASUREMENT_ID) {
     return null
   }
@@ -45,36 +20,17 @@ export function GoogleAnalytics() {
   return (
     <>
       <Script
-        strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-      />
-      <Script
-        id="google-analytics"
         strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}', {
-              // Keep debug_mode off in production builds to avoid type narrowing issues
-              debug_mode: false,
-              send_page_view: true,
-              // Enhanced session tracking
-              engagement_time_msec: 1000, // Track engagement every 1 second
-              session_timeout: 1800, // 30 minutes session timeout
-              // Enhanced measurement for better user behavior tracking
-              enhanced_measurement: {
-                scrolls: true,
-                outbound_clicks: true,
-                site_search: true,
-                video_engagement: true,
-                file_downloads: true
-              }
-            });
-          `,
-        }}
       />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_MEASUREMENT_ID}');
+        `}
+      </Script>
     </>
   )
 }

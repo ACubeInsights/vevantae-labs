@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
+// Force dynamic rendering to avoid build-time issues
+export const dynamic = 'force-dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -1237,7 +1240,8 @@ export default function Home() {
           </div>
 
           <style jsx>{`
-            @keyframes scroll {
+            @keyframes 
+             {
               from {
                 transform: translateX(0);
               }

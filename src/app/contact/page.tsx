@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+
+// Force dynamic rendering to avoid build-time issues
+export const dynamic = 'force-dynamic';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 import { usePageTracking } from '@/hooks/usePageTracking';
