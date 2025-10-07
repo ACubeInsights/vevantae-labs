@@ -4,11 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "./scripts/deployment/build-with-node24.sh",
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test:ga": "./scripts/testing/test-production-ga.sh",
+    "verify:ga": "./scripts/testing/verify-ga-production.sh",
+    "db:migrate": "node scripts/database/apply-rls-policy.js",
+    "db:seed": "node scripts/database/insert-sample-products.js",
+    "db:check": "node scripts/database/check-all-products.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
@@ -17,16 +22,16 @@
     "framer-motion": "^12.23.22",
     "lucide-react": "^0.544.0",
     "next": "15.5.3",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-use-measure": "^2.1.7",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^18.3.25",
+    "@types/react-dom": "^18.3.7",
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.5.3",

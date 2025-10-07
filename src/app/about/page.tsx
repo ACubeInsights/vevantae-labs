@@ -4,8 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Users, Target, Eye, Heart, Calendar } from 'lucide-react';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { usePageTracking } from '@/hooks/usePageTracking';
 
 const values = [
@@ -101,7 +99,6 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
-      <Header />
 
       <main>
         {/* Hero Section */}
@@ -378,7 +375,6 @@ export default function AboutPage() {
         </section>
       </main>
 
-      <Footer />
     </div>
   );
 }

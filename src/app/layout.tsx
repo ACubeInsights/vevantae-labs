@@ -2,9 +2,10 @@ import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
 import { GoogleAnalytics } from '@/components/GoogleAnalytics';
-import { SessionTrackerWrapper } from '@/components/SessionTrackerWrapper';
 
 const inter = Inter({
   variable: '--font-suisse',
@@ -50,9 +51,11 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <GoogleAnalytics />
         </Suspense>
-        <SessionTrackerWrapper>
+        <Header />
+        <main>
           {children}
-        </SessionTrackerWrapper>
+        </main>
+        <Footer />
         <WhatsAppButton />
       </body>
     </html>

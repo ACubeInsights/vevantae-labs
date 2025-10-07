@@ -7,8 +7,6 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProducts, Product } from '@/lib/supabase';
 import { Search, X, Grid, List, SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { usePageTracking } from '@/hooks/usePageTracking';
 
 const categories = ['All', 'ayurvedic', 'nutraceutical'];
@@ -239,7 +237,6 @@ function ProductsContent() {
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
-      <Header />
 
       {/* Hero Section */}
       <section className="section-padding pt-20">
@@ -773,7 +770,6 @@ function ProductsContent() {
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 }

@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 // Removed unused icon imports flagged by ESLint
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { BlogCard } from '@/components/BlogCard';
 import { getBlogPosts, BlogPost } from '@/lib/supabase';
 import { usePageTracking } from '@/hooks/usePageTracking';
@@ -45,7 +43,6 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
-      <Header />
 
       <main>
         {/* Hero Section */}
@@ -212,7 +209,6 @@ export default function BlogPage() {
         </section>
       </main>
 
-      <Footer />
     </div>
   );
 }

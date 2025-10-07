@@ -18,8 +18,6 @@ import {
   Twitter,
   Linkedin,
 } from 'lucide-react';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { getBlogPost, getBlogPosts, BlogPost } from '@/lib/supabase';
 import { formatDate } from '@/lib/utils';
 
@@ -129,7 +127,6 @@ export default function BlogDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#FAF9F6]">
-        <Header />
         <main className="py-20">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
@@ -148,7 +145,6 @@ export default function BlogDetailPage() {
             </div>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -156,7 +152,6 @@ export default function BlogDetailPage() {
   if (error || !post) {
     return (
       <div className="min-h-screen bg-[#FAF9F6]">
-        <Header />
         <main className="py-20">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto text-center">
@@ -176,14 +171,12 @@ export default function BlogDetailPage() {
             </div>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
-      <Header />
 
       <main>
         {/* Back Navigation */}
@@ -511,7 +504,6 @@ export default function BlogDetailPage() {
         </section>
       </main>
 
-      <Footer />
     </div>
   );
 }

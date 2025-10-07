@@ -13,6 +13,7 @@ type InfiniteSliderProps = {
   direction?: 'horizontal' | 'vertical';
   reverse?: boolean;
   className?: string;
+  paused?: boolean;
 };
 
 export function InfiniteSlider({
@@ -23,6 +24,7 @@ export function InfiniteSlider({
   direction = 'horizontal',
   reverse = false,
   className,
+  paused = false,
 }: InfiniteSliderProps) {
   const [currentDuration, setCurrentDuration] = useState(duration);
   const [ref, { width, height }] = useMeasure();
@@ -36,6 +38,10 @@ export function InfiniteSlider({
     const contentSize = size + gap;
     const from = reverse ? -contentSize / 2 : 0;
     const to = reverse ? 0 : -contentSize / 2;
+
+    if (paused) {
+      return;
+    }
 
     if (isTransitioning) {
       controls = animate(translation, [translation.get(), to], {
@@ -71,6 +77,7 @@ export function InfiniteSlider({
     isTransitioning,
     direction,
     reverse,
+    paused,
   ]);
 
   const hoverProps = durationOnHover
