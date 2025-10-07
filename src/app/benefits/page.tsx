@@ -140,7 +140,7 @@ export default function BenefitsPage() {
     <div className="min-h-screen bg-[#FAF9F6]">
 
       <main>
-        {/* Hero Section */}
+        
         <section className="py-20 lg:py-32">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -166,7 +166,7 @@ export default function BenefitsPage() {
           </div>
         </section>
 
-        {/* Benefits Grid */}
+        
         <section className="py-20">
           <div className="container mx-auto px-6">
             <motion.div
@@ -214,7 +214,7 @@ export default function BenefitsPage() {
           </div>
         </section>
 
-        {/* Ayurvedic Principles */}
+        
         <section className="py-20 bg-white">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -279,7 +279,7 @@ export default function BenefitsPage() {
           </div>
         </section>
 
-        {/* Natural vs Synthetic Comparison */}
+        
         <section className="py-20">
           <div className="container mx-auto px-6">
             <motion.div
@@ -336,7 +336,7 @@ export default function BenefitsPage() {
           </div>
         </section>
 
-        {/* Scientific Backing */}
+        
         <section className="py-20 bg-white">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -420,7 +420,7 @@ export default function BenefitsPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
+        
         <section className="py-20 bg-[#111111] text-white">
           <div className="container mx-auto px-6">
             <motion.div

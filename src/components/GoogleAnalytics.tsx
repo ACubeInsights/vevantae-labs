@@ -37,9 +37,8 @@ export function GoogleAnalytics() {
     }
   }, [pathname, searchParams])
 
-  // In absence of a valid measurement ID, or in non-production environments,
-  // do not load GA to avoid noisy console/network errors during local testing.
-  if (!GA_MEASUREMENT_ID || process.env.NODE_ENV !== 'production') {
+  // Only load GA if measurement ID is provided
+  if (!GA_MEASUREMENT_ID) {
     return null
   }
 
@@ -87,7 +86,16 @@ export const trackEvent = (eventName: string, parameters?: GtagEventParams) => {
     return
   }
   
-  console.log('📊 GA Event Attempt:', eventName, parameters)
+  // Check if GA_MEASUREMENT_ID is available
+  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+  if (!GA_MEASUREMENT_ID) {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('� GA Event skipped (no measurement ID in dev):', eventName, parameters)
+    }
+    return
+  }
+  
+  console.log('�📊 GA Event Attempt:', eventName, parameters)
   
   if (window.gtag) {
     console.log('✅ Sending GA Event:', eventName, 'with parameters:', JSON.stringify(parameters, null, 2))
@@ -99,16 +107,33 @@ export const trackEvent = (eventName: string, parameters?: GtagEventParams) => {
     }, 100)
   } else {
     console.log('⚠️ GA not ready, queuing event:', eventName)
-    // Queue the event for when gtag loads
-    setTimeout(() => {
-      if (window.gtag) {
-        console.log('🔄 Retry sending queued GA Event:', eventName, 'with parameters:', JSON.stringify(parameters, null, 2))
-        window.gtag('event', eventName, parameters)
-        console.log('📄 GA Queued event confirmed sent:', eventName)
-      } else {
-        console.error('❌ GA still not available after retry for event:', eventName)
-      }
-    }, 2000)
+    // Queue the event for when gtag loads - but only try a few times
+    let retryCount = 0
+    const maxRetries = 3
+    
+    const retryTracking = () => {
+      setTimeout(() => {
+        if (window.gtag) {
+          console.log('🔄 Retry sending queued GA Event:', eventName, 'with parameters:', JSON.stringify(parameters, null, 2))
+          window.gtag('event', eventName, parameters)
+          console.log('📄 GA Queued event confirmed sent:', eventName)
+        } else {
+          retryCount++
+          if (retryCount < maxRetries) {
+            console.log(`⏳ GA still loading, retry ${retryCount}/${maxRetries} for event:`, eventName)
+            retryTracking()
+          } else {
+            if (process.env.NODE_ENV === 'development') {
+              console.warn('⚠️ GA not available in development after retries:', eventName)
+            } else {
+              console.error('❌ GA still not available after retry for event:', eventName)
+            }
+          }
+        }
+      }, 1000 * (retryCount + 1)) // Exponential backoff: 1s, 2s, 3s
+    }
+    
+    retryTracking()
   }
 }
 

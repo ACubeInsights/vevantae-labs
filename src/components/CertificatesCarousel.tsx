@@ -92,7 +92,7 @@ export function CertificatesCarousel({ className = '' }: CertificatesCarouselPro
         </InfiniteSlider>
       </div>
 
-      {/* Hover Label */}
+      
       <div className="h-12 flex items-center justify-center mt-8">
         <AnimatePresence>
           {hoveredCert && (

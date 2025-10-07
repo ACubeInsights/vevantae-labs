@@ -21,7 +21,7 @@ export function Header() {
     <header className="sticky top-0 z-40 bg-white/40 backdrop-blur-3xl backdrop-saturate-200">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+          
           <Link href="/" className="flex-shrink-0">
             <span
               className="text-xl font-light text-gray-900 tracking-wide drop-shadow-lg"
@@ -31,7 +31,7 @@ export function Header() {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
+          
           <nav className="hidden lg:flex items-center space-x-12">
             {navigation.map((item) => {
               const isActive = pathname === item.href;
@@ -49,15 +49,15 @@ export function Header() {
             })}
           </nav>
 
-          {/* Right side actions */}
+          
           <div className="flex items-center space-x-6">
-            {/* Search */}
+            
             <button className="text-gray-800 hover:text-blue-600 transition-colors duration-300 drop-shadow-lg">
               <Search className="w-5 h-5" />
               <span className="sr-only">Search</span>
             </button>
 
-            {/* B2B Inquiry */}
+            
             <Link
               href="/contact"
               className="text-sm font-normal text-gray-800 hover:text-blue-600 transition-colors duration-300 uppercase tracking-wider drop-shadow-lg"
@@ -65,7 +65,7 @@ export function Header() {
               Inquire
             </Link>
 
-            {/* Mobile menu button */}
+            
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden text-gray-800 hover:text-blue-600 transition-colors duration-300 drop-shadow-lg"
@@ -76,7 +76,7 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        
         {isMenuOpen && (
           <div className="lg:hidden bg-white/30 backdrop-blur-3xl backdrop-saturate-200">
             <nav className="py-6 space-y-1">

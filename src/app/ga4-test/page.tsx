@@ -6,7 +6,6 @@ import { trackEvent, trackViewItem, trackContactFormSubmit } from '@/components/
 
 export default function GoogleAnalyticsTestPage() {
   useEffect(() => {
-    // Test page view tracking (this should be automatic)
     console.log('GA4 Test page loaded')
   }, [])
 

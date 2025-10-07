@@ -14,8 +14,6 @@ export function Newsletter() {
     setMessage('');
 
     try {
-      // Here you would typically send to your newsletter service
-      // For now, we'll just simulate a successful submission
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       setMessage('Thank you for subscribing!');

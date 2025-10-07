@@ -39,11 +39,9 @@ export default function BlogDetailPage() {
           return;
         }
 
-        // Fetch the main blog post
         const blogPost = await getBlogPost(params.slug);
         setPost(blogPost);
 
-        // If post exists, fetch related posts (same category, excluding current post)
         if (blogPost) {
           const allPosts = await getBlogPosts();
           const related = allPosts
@@ -54,7 +52,6 @@ export default function BlogDetailPage() {
           setRelatedPosts([]);
         }
       } catch {
-        // Avoid noisy logs; set user-friendly error
         setError('Blog post not found');
       } finally {
         setLoading(false);
@@ -64,7 +61,6 @@ export default function BlogDetailPage() {
     fetchBlogPost();
   }, [params.slug]);
 
-  // Handle click outside to close share menu
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (shareMenuRef.current && !shareMenuRef.current.contains(event.target as Node)) {
@@ -81,7 +77,6 @@ export default function BlogDetailPage() {
     };
   }, [showShareMenu]);
 
-  // Copy link functionality
   const handleCopyLink = async () => {
     try {
       const currentUrl = window.location.href;
@@ -93,7 +88,6 @@ export default function BlogDetailPage() {
     }
   };
 
-  // Share functionality
   const handleShare = (platform: string) => {
     if (platform === 'copy') {
       handleCopyLink();
@@ -130,7 +124,7 @@ export default function BlogDetailPage() {
         <main className="py-20">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
-              {/* Loading skeleton */}
+              
               <div className="animate-pulse space-y-8">
                 <div className="h-8 bg-gray-200 rounded w-1/4"></div>
                 <div className="h-12 bg-gray-200 rounded w-3/4"></div>
@@ -179,7 +173,7 @@ export default function BlogDetailPage() {
     <div className="min-h-screen bg-[#FAF9F6]">
 
       <main>
-        {/* Back Navigation */}
+        
         <section className="py-8 bg-white border-b border-[#E8E6E0]">
           <div className="container mx-auto px-6">
             <motion.div
@@ -198,7 +192,7 @@ export default function BlogDetailPage() {
           </div>
         </section>
 
-        {/* Article Header */}
+        
         <section className="py-16 lg:py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
@@ -208,19 +202,19 @@ export default function BlogDetailPage() {
                 transition={{ duration: 0.6 }}
                 className="space-y-8"
               >
-                {/* Category Badge */}
+                
                 <div className="flex justify-center">
                   <span className="bg-[#8B7355]/10 text-[#8B7355] px-4 py-2 text-sm uppercase tracking-wider font-semibold rounded-sm">
                     {post.category}
                   </span>
                 </div>
 
-                {/* Title */}
+                
                 <h1 className="text-4xl lg:text-5xl font-light text-[#111111] leading-tight text-center">
                   {post.title}
                 </h1>
 
-                {/* Meta Information */}
+                
                 <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-[#8B7355] uppercase tracking-wider">
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4" />
@@ -238,7 +232,7 @@ export default function BlogDetailPage() {
                   </div>
                 </div>
 
-                {/* Excerpt */}
+                
                 {post.excerpt && (
                   <p className="text-lg text-[#666666] leading-relaxed text-center max-w-3xl mx-auto">
                     {post.excerpt}
@@ -249,7 +243,7 @@ export default function BlogDetailPage() {
           </div>
         </section>
 
-        {/* Featured Image */}
+        
         {post.featured_image && (
           <section className="py-8">
             <div className="container mx-auto px-6">
@@ -276,7 +270,7 @@ export default function BlogDetailPage() {
           </section>
         )}
 
-        {/* Article Content */}
+        
         <section className="py-16 lg:py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
@@ -292,7 +286,7 @@ export default function BlogDetailPage() {
                 />
               </motion.div>
 
-              {/* Tags */}
+              
               {post.tags && post.tags.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -319,7 +313,7 @@ export default function BlogDetailPage() {
                 </motion.div>
               )}
 
-              {/* Share Section */}
+              
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -327,7 +321,7 @@ export default function BlogDetailPage() {
                 className="mt-12 pt-8 border-t border-[#E8E6E0]"
               >
                 <div className="flex items-center justify-end gap-6">
-                  {/* Copy Link Button */}
+                  
                   <button
                     onClick={handleCopyLink}
                     className="flex items-center gap-2 text-[#8B7355] hover:text-[#111111] transition-colors text-sm font-medium uppercase tracking-wider"
@@ -345,7 +339,7 @@ export default function BlogDetailPage() {
                     )}
                   </button>
 
-                  {/* Share Button with Dropdown */}
+                  
                   <div className="relative" ref={shareMenuRef}>
                     <button
                       onClick={() => setShowShareMenu(!showShareMenu)}
@@ -387,7 +381,7 @@ export default function BlogDetailPage() {
           </div>
         </section>
 
-        {/* Related Posts */}
+        
         {relatedPosts.length > 0 && (
           <section className="py-20 bg-[#FAF9F6]">
             <div className="container mx-auto px-6">
@@ -470,7 +464,7 @@ export default function BlogDetailPage() {
           </section>
         )}
 
-        {/* Newsletter Section */}
+        
         <section className="py-20 bg-[#111111] text-white">
           <div className="container mx-auto px-6">
             <motion.div

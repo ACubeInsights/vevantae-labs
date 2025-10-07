@@ -24,7 +24,6 @@ export default function CrispImage({
   const [imageSrc, setImageSrc] = useState<string>('');
 
   useEffect(() => {
-    // Preload the image
     const img = new Image();
     img.crossOrigin = 'anonymous';
 

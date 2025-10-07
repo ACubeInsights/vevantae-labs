@@ -5,23 +5,19 @@ import { trackPageVisit, trackEvent } from '@/components/GoogleAnalytics'
 
 export default function GATestPage() {
   useEffect(() => {
-    // Test different event types
     setTimeout(() => {
       console.log('🧪 Testing GA Events...')
       
-      // Test 1: Standard page view
       trackEvent('page_view', {
         page_title: 'GA Test Page',
         page_location: window.location.href
       })
       
-      // Test 2: Custom benefits page visit
       trackPageVisit('Benefits', {
         test_mode: true,
         timestamp: new Date().toISOString()
       })
       
-      // Test 3: Direct event
       trackEvent('benefits_page_visit', {
         page_name: 'Benefits',
         test_mode: true

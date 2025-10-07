@@ -28,7 +28,7 @@ export function BlogCard({ post, className = '' }: BlogCardProps) {
             loading="lazy"
           />
 
-          {/* Category badge */}
+          
           <div className="absolute top-4 left-4">
             <span className="bg-white/90 text-[#8B7355] px-3 py-1 text-xs uppercase tracking-wider font-semibold rounded-sm">
               {post.category}
