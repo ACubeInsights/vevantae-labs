@@ -5,6 +5,7 @@ import '@/styles/globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
+import { GoogleAnalytics } from '@/components/GoogleAnalytics';
 
 const inter = Inter({
   variable: '--font-suisse',
@@ -48,6 +49,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} font-sans antialiased bg-background text-primary`}>
         <Suspense fallback={null}>
+          <GoogleAnalytics />
         </Suspense>
         <Header />
         <main>

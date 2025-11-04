@@ -1,4 +1,8 @@
+'use client'
+
 import Script from 'next/script'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 type GtagEventParams = Record<string, unknown>
 
@@ -9,28 +13,83 @@ declare global {
   }
 }
 
-// Only enable GA when an explicit measurement ID is provided
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? ''
+// Get measurement ID - this will be read at runtime on client-side
+function getMeasurementId(): string {
+  if (typeof window === 'undefined') return ''
+  // Access at runtime for client components
+  return process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? ''
+}
 
 export function GoogleAnalytics() {
-  if (!GA_MEASUREMENT_ID) {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const [measurementId, setMeasurementId] = useState<string>('')
+  const [isScriptLoaded, setIsScriptLoaded] = useState(false)
+
+  // Get measurement ID on client-side mount
+  useEffect(() => {
+    const id = getMeasurementId()
+    setMeasurementId(id)
+  }, [])
+
+  // Track page views when route changes
+  useEffect(() => {
+    if (!measurementId || !isScriptLoaded) return
+
+    const query = searchParams.size ? `?${searchParams.toString()}` : ''
+    const origin = typeof window !== 'undefined' ? window.location.origin : ''
+    const url = `${origin}${pathname}${query}`
+    const pageTitle = typeof document !== 'undefined' ? document.title : ''
+    
+    // Wait for gtag to be available before tracking
+    const trackPageView = () => {
+      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+        window.gtag('config', measurementId, {
+          page_path: pathname,
+          page_location: url,
+          page_title: pageTitle,
+        })
+      } else {
+        // Retry after a short delay if gtag is not ready
+        setTimeout(trackPageView, 100)
+      }
+    }
+
+    trackPageView()
+  }, [pathname, searchParams, measurementId, isScriptLoaded])
+
+  // Don't render if no measurement ID is provided
+  if (!measurementId) {
     return null
   }
 
   return (
     <>
       <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        id="google-analytics-gtag"
         strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        onLoad={() => {
+          setIsScriptLoaded(true)
+        }}
+        onError={() => {
+          console.error('Failed to load Google Analytics script')
+        }}
       />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_MEASUREMENT_ID}');
-        `}
-      </Script>
+      <Script
+        id="google-analytics-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${measurementId}', {
+              send_page_view: false
+            });
+          `,
+        }}
+      />
     </>
   )
 }
