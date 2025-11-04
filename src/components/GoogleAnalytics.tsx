@@ -2,7 +2,7 @@
 
 import Script from 'next/script'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 type GtagEventParams = Record<string, unknown>
 type GtagConfigParams = Record<string, unknown>
@@ -10,67 +10,87 @@ type GtagConfigParams = Record<string, unknown>
 declare global {
   interface Window {
     gtag: (command: 'config' | 'event' | 'js' | string, ...args: unknown[]) => void
+    dataLayer: unknown[]
   }
 }
 
-// Only enable GA when an explicit measurement ID is provided
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? ''
+// Get measurement ID at runtime (client-side) to ensure it's available in production
+function getMeasurementId(): string {
+  if (typeof window === 'undefined') return ''
+  // Access environment variable at runtime for client components
+  return process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? ''
+}
 
 export function GoogleAnalytics() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const [measurementId, setMeasurementId] = useState<string>('')
+  const [isScriptLoaded, setIsScriptLoaded] = useState(false)
 
+  // Get measurement ID on client-side mount
   useEffect(() => {
-    if (!GA_MEASUREMENT_ID) return
+    const id = getMeasurementId()
+    setMeasurementId(id)
+  }, [])
+
+  // Track page views when route changes
+  useEffect(() => {
+    if (!measurementId || !isScriptLoaded) return
 
     const query = searchParams.size ? `?${searchParams.toString()}` : ''
-    // Use full URL (origin + path + query) for accurate GA page_location
     const origin = typeof window !== 'undefined' ? window.location.origin : ''
     const url = `${origin}${pathname}${query}`
+    const pageTitle = typeof document !== 'undefined' ? document.title : ''
     
-    // Track page views (guard for browser and gtag availability)
-    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-      window.gtag('config', GA_MEASUREMENT_ID, {
-        page_location: url,
-      } as GtagConfigParams)
+    // Wait for gtag to be available before tracking
+    const trackPageView = () => {
+      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+        window.gtag('config', measurementId, {
+          page_location: url,
+          page_title: pageTitle,
+          page_path: pathname,
+        } as GtagConfigParams)
+      } else {
+        // Retry after a short delay if gtag is not ready
+        setTimeout(trackPageView, 100)
+      }
     }
-  }, [pathname, searchParams])
 
-  // In absence of a valid measurement ID, or in non-production environments,
-  // do not load GA to avoid noisy console/network errors during local testing.
-  if (!GA_MEASUREMENT_ID || process.env.NODE_ENV !== 'production') {
+    trackPageView()
+  }, [pathname, searchParams, measurementId, isScriptLoaded])
+
+  // Don't render if no measurement ID is provided
+  // Allow in all environments (dev, staging, production) if ID is set
+  // This ensures it works in preview deployments on Vercel
+  if (!measurementId) {
     return null
   }
 
   return (
     <>
       <Script
+        id="google-analytics-gtag"
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        onLoad={() => {
+          setIsScriptLoaded(true)
+        }}
+        onError={() => {
+          console.error('Failed to load Google Analytics script')
+        }}
       />
       <Script
-        id="google-analytics"
+        id="google-analytics-init"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}', {
-              // Keep debug_mode off in production builds to avoid type narrowing issues
-              debug_mode: false,
+            gtag('config', '${measurementId}', {
               send_page_view: true,
-              // Enhanced session tracking
-              engagement_time_msec: 1000, // Track engagement every 1 second
-              session_timeout: 1800, // 30 minutes session timeout
-              // Enhanced measurement for better user behavior tracking
-              enhanced_measurement: {
-                scrolls: true,
-                outbound_clicks: true,
-                site_search: true,
-                video_engagement: true,
-                file_downloads: true
-              }
+              engagement_time_msec: 1000,
+              session_timeout: 1800
             });
           `,
         }}

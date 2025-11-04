@@ -3,16 +3,17 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getProducts, Product } from '@/lib/supabase';
+import { formatPrice } from '@/lib/utils';
 
 // Helper function to validate and fix image URLs
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
-
+  
   // If it's already a valid URL, return it
   if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
     return imageUrl;
   }
-
+  
   // If it's a relative path or invalid, return null to use fallback
   return null;
 }
@@ -60,7 +61,9 @@ export default function TestSupabasePage() {
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Supabase Connection Test</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Supabase Connection Test
+          </h1>
           <p className="text-lg text-gray-600">
             Successfully connected to Supabase! Found {products.length} products.
           </p>
@@ -68,16 +71,10 @@ export default function TestSupabasePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col"
-            >
+            <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
               <div className="relative aspect-[4/5] overflow-hidden">
                 <Image
-                  src={
-                    getValidImageUrl(product.images?.[0]) ||
-                    'https://via.placeholder.com/300x400/F8F6F3/8B7355?text=Product+Image'
-                  }
+                  src={getValidImageUrl(product.images?.[0]) || 'https://via.placeholder.com/300x400/F8F6F3/8B7355?text=Product+Image'}
                   alt={product.name || 'Product'}
                   fill
                   className="object-cover"
@@ -88,31 +85,31 @@ export default function TestSupabasePage() {
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {product.name || 'Untitled Product'}
                 </h3>
-                <p className="text-gray-600 mb-4">
-                  {product.description || 'No description available'}
-                </p>
+                <p className="text-gray-600 mb-4">{product.description || 'No description available'}</p>
                 <div className="flex items-center justify-between mb-4">
-                  {product.net_quantity && (
+                  {product.product_ml && (
                     <span className="text-lg font-medium text-blue-600">
-                      {product.net_quantity}
+                      {product.product_ml}ml
                     </span>
                   )}
                   {product.category && (
-                    <span className="text-sm text-gray-500 capitalize">{product.category}</span>
+                    <span className="text-sm text-gray-500 capitalize">
+                      {product.category}
+                    </span>
                   )}
                 </div>
-                {product.stock_quantity !== null && (
+                {product.quantity !== null && (
                   <div className="mb-4">
                     <span className="text-sm text-gray-600">
-                      Available: {product.stock_quantity} units
+                      Available: {product.quantity} units
                     </span>
                   </div>
                 )}
-                {product.health_benefits && product.health_benefits.length > 0 && (
+                {product.benefits && product.benefits.length > 0 && (
                   <div className="mt-4">
                     <h4 className="text-sm font-medium text-gray-900 mb-2">Benefits:</h4>
                     <div className="flex flex-wrap gap-1">
-                      {product.health_benefits.slice(0, 3).map((benefit, index) => (
+                      {product.benefits.slice(0, 3).map((benefit, index) => (
                         <span
                           key={index}
                           className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded"

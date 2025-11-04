@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
+import { trackNewsletterSignup } from '@/components/GoogleAnalytics';
 
 export function Newsletter() {
   const [email, setEmail] = useState('');
@@ -17,6 +18,9 @@ export function Newsletter() {
       // Here you would typically send to your newsletter service
       // For now, we'll just simulate a successful submission
       await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Track newsletter signup in GA4
+      trackNewsletterSignup('newsletter_widget');
 
       setMessage('Thank you for subscribing!');
       setEmail('');
