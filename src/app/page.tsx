@@ -335,14 +335,14 @@ export default function Home() {
       </section>
 
       
-      <section className="bg-background pt-8 lg:pt-10 pb-16">
+<section className="bg-background pt-px lg:pt-px pb-0 lg:pb-0 lg:-mt-2">
         <div className="container mx-auto px-6 lg:px-8">
           <CertificatesCarousel />
         </div>
       </section>
 
       
-      <section className="py-24 lg:py-32 bg-background">
+      <section className="pt-6 lg:pt-8 pb-24 lg:pb-32 bg-background">
         <div className="w-full px-0">
           
           <motion.div
