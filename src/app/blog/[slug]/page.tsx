@@ -19,6 +19,8 @@ import {
   Linkedin,
 } from 'lucide-react';
 import { getBlogPost, getBlogPosts, BlogPost } from '@/lib/supabase';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { formatDate } from '@/lib/utils';
 
 export default function BlogDetailPage() {
@@ -280,10 +282,12 @@ export default function BlogDetailPage() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="prose prose-lg max-w-none"
               >
-                <div
-                  className="text-[#333333] leading-relaxed space-y-6"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
-                />
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  className="prose-headings:font-light prose-h1:text-[#111111] prose-h2:text-[#111111] prose-h3:text-[#111111] prose-p:text-[#333333] prose-strong:text-[#111111] prose-li:marker:text-[#8B7355] prose-a:text-[#8B7355] prose-a:no-underline hover:prose-a:underline prose-img:rounded-sm"
+                >
+                  {post.content}
+                </ReactMarkdown>
               </motion.div>
 
               
