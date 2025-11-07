@@ -10,7 +10,7 @@ const categories = ['All', 'Wellness', 'Skincare', 'Health', 'Lifestyle'];
 
 export default function BlogPage() {
   usePageTracking({
-    pageName: 'Blog'
+    pageName: 'Blog',
   });
 
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -41,15 +41,13 @@ export default function BlogPage() {
   const regularPosts = filteredPosts.filter((post) => !post.is_featured);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
-
+    <div className="min-h-screen bg-background">
       <main>
-        
         <section className="py-20 lg:py-32">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto text-center space-y-8">
               <motion.h1
-                className="text-4xl md:text-6xl font-light text-[#111111] leading-tight"
+                className="text-4xl md:text-6xl font-light text-foreground leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
@@ -58,7 +56,7 @@ export default function BlogPage() {
               </motion.h1>
 
               <motion.p
-                className="text-lg text-[#666666] max-w-3xl mx-auto leading-relaxed"
+                className="text-lg text-secondary max-w-3xl mx-auto leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -70,12 +68,11 @@ export default function BlogPage() {
           </div>
         </section>
 
-        
         {loading ? (
           <section className="py-20">
             <div className="container mx-auto px-6">
               <div className="text-center">
-                <p className="text-lg text-[#666666]">Loading articles...</p>
+                <p className="text-lg text-secondary">Loading articles...</p>
               </div>
             </div>
           </section>
@@ -90,10 +87,10 @@ export default function BlogPage() {
                   viewport={{ once: true }}
                   className="mb-16"
                 >
-                  <h2 className="text-3xl lg:text-4xl font-light text-[#111111] mb-4">
+                  <h2 className="text-3xl lg:text-4xl font-light text-foreground mb-4">
                     Featured Articles
                   </h2>
-                  <p className="text-lg text-[#666666]">Our most popular and insightful pieces</p>
+                  <p className="text-lg text-secondary">Our most popular and insightful pieces</p>
                 </motion.div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -114,8 +111,7 @@ export default function BlogPage() {
           )
         )}
 
-        
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-card">
           <div className="container mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -124,7 +120,7 @@ export default function BlogPage() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl lg:text-4xl font-light text-[#111111] mb-8">All Articles</h2>
+              <h2 className="text-3xl lg:text-4xl font-light text-foreground mb-8">All Articles</h2>
 
               <div className="flex flex-wrap justify-center gap-4">
                 {categories.map((category) => (
@@ -133,8 +129,8 @@ export default function BlogPage() {
                     onClick={() => setSelectedCategory(category)}
                     className={`px-6 py-2 text-sm font-medium uppercase tracking-wider transition-colors ${
                       selectedCategory === category
-                        ? 'bg-[#111111] text-white'
-                        : 'bg-transparent text-[#666666] hover:text-[#111111] border border-[#E8E6E0] hover:border-[#111111]'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-transparent text-secondary hover:text-foreground border border-border hover:border-foreground'
                     }`}
                   >
                     {category}
@@ -143,7 +139,6 @@ export default function BlogPage() {
               </div>
             </motion.div>
 
-            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {regularPosts.map((post, index) => (
                 <motion.div
@@ -166,7 +161,7 @@ export default function BlogPage() {
                 viewport={{ once: true }}
                 className="text-center py-16"
               >
-                <p className="text-lg text-[#666666]">
+                <p className="text-lg text-secondary">
                   No articles found in the {selectedCategory} category.
                 </p>
               </motion.div>
@@ -174,8 +169,7 @@ export default function BlogPage() {
           </div>
         </section>
 
-        
-        <section className="py-20 bg-[#111111] text-white">
+        <section className="py-20 bg-primary text-primary-foreground">
           <div className="container mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -185,7 +179,7 @@ export default function BlogPage() {
               className="max-w-2xl mx-auto text-center space-y-8"
             >
               <h2 className="text-3xl lg:text-4xl font-light">Stay Informed</h2>
-              <p className="text-lg text-gray-300 leading-relaxed">
+              <p className="text-lg text-primary-foreground/70 leading-relaxed">
                 Subscribe to our newsletter for the latest insights on wellness, Ayurveda, and
                 natural health.
               </p>
@@ -194,11 +188,11 @@ export default function BlogPage() {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 bg-transparent border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors"
+                  className="flex-1 px-4 py-3 bg-transparent border border-gray-600 text-primary-foreground placeholder-gray-400 focus:outline-none focus:border-white transition-colors"
                 />
                 <button
                   type="submit"
-                  className="px-8 py-3 bg-white text-black text-sm font-medium hover:bg-gray-100 transition-colors uppercase tracking-wider"
+                  className="px-8 py-3 bg-card text-black text-sm font-medium hover:bg-muted transition-colors uppercase tracking-wider"
                 >
                   Subscribe
                 </button>
@@ -207,7 +201,6 @@ export default function BlogPage() {
           </div>
         </section>
       </main>
-
     </div>
   );
 }

@@ -26,7 +26,7 @@ export function Newsletter() {
   };
 
   return (
-    <div className="bg-white border border-border p-8">
+    <div className="bg-card border border-border p-8">
       <div className="max-w-md mx-auto text-center space-y-4">
         <h3 className="text-xl font-semibold text-primary">Stay Updated</h3>
 

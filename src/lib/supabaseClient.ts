@@ -10,11 +10,13 @@ export const getSupabase = (): SupabaseClient => {
 
   if (!supabaseUrl || !supabaseAnonKey) {
     if (typeof window === 'undefined') {
-      console.warn('Supabase environment variables missing during build. Using placeholder values.');
+      console.warn(
+        'Supabase environment variables missing during build. Using placeholder values.'
+      );
       supabaseClient = createClient('https://placeholder.supabase.co', 'placeholder-key');
       return supabaseClient;
     }
-    
+
     throw new Error(
       'Supabase environment variables are missing. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.'
     );

@@ -52,9 +52,7 @@ export default function RootLayout({
           <GoogleAnalytics />
         </Suspense>
         <Header />
-        <main>
-          {children}
-        </main>
+        <main>{children}</main>
         <Footer />
         <WhatsAppButton />
       </body>

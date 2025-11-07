@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import typography from '@tailwindcss/typography';
 
 const config: Config = {
   content: [
@@ -34,10 +35,21 @@ const config: Config = {
         accent: {
           DEFAULT: 'var(--accent)',
           foreground: 'var(--accent-foreground)',
+          strong: 'var(--accent-strong)',
+          soft: 'var(--accent-soft)',
+          'soft-alt': 'var(--accent-soft-alt)',
         },
         destructive: {
           DEFAULT: 'var(--destructive)',
           foreground: 'var(--destructive-foreground)',
+        },
+        success: {
+          DEFAULT: 'var(--success)',
+          foreground: 'var(--success-foreground)',
+          strong: 'var(--success-strong)',
+        },
+        neutral: {
+          strong: 'var(--neutral-strong)',
         },
         border: 'var(--border)',
         input: 'var(--input)',
@@ -53,9 +65,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [typography],
 };
 
 export default config;

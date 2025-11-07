@@ -67,7 +67,7 @@ export default function TestSupabasePage() {
           {products.map((product) => (
             <div
               key={product.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col"
+              className="bg-card rounded-lg shadow-md overflow-hidden h-full flex flex-col"
             >
               <div className="relative aspect-[4/5] overflow-hidden">
                 <Image
@@ -95,7 +95,9 @@ export default function TestSupabasePage() {
                     </span>
                   )}
                   {product.category && (
-                    <span className="text-sm text-gray-500 capitalize">{product.category}</span>
+                    <span className="text-sm text-primary-foreground/50 capitalize">
+                      {product.category}
+                    </span>
                   )}
                 </div>
                 {product.stock_quantity !== null && (
@@ -142,7 +144,7 @@ export default function TestSupabasePage() {
 
         {products.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">
+            <p className="text-primary-foreground/50 text-lg">
               No products found. Make sure to run the SQL schema in your Supabase dashboard.
             </p>
           </div>

@@ -99,7 +99,6 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-background pt-20">
-      
       <div className="container mx-auto px-6 py-6">
         <div className="flex items-center gap-2 text-sm text-secondary">
           <Link href="/" className="hover:text-foreground transition-colors">
@@ -116,13 +115,11 @@ export default function ProductDetailPage() {
 
       <div className="container mx-auto px-6 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            
             <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg group">
               <Image
                 key={`main-${selectedImage}`}
@@ -139,7 +136,6 @@ export default function ProductDetailPage() {
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
 
-              
               {product.images && product.images.length > 1 && (
                 <>
                   <button
@@ -148,14 +144,14 @@ export default function ProductDetailPage() {
                         (prev) => (prev - 1 + product.images!.length) % product.images!.length
                       )
                     }
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 hover:text-gray-900 rounded-full p-3 opacity-70 hover:opacity-100 transition-all duration-200 shadow-lg z-10"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-card/90 hover:bg-card text-gray-700 hover:text-gray-900 rounded-full p-3 opacity-70 hover:opacity-100 transition-all duration-200 shadow-lg z-10"
                     aria-label="Previous image"
                   >
                     <ChevronLeft className="w-6 h-6" />
                   </button>
                   <button
                     onClick={() => setSelectedImage((prev) => (prev + 1) % product.images!.length)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 hover:text-gray-900 rounded-full p-3 opacity-70 hover:opacity-100 transition-all duration-200 shadow-lg z-10"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-card/90 hover:bg-card text-gray-700 hover:text-gray-900 rounded-full p-3 opacity-70 hover:opacity-100 transition-all duration-200 shadow-lg z-10"
                     aria-label="Next image"
                   >
                     <ChevronRight className="w-6 h-6" />
@@ -164,7 +160,6 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            
             {product.images && product.images.length > 1 && (
               <div className="flex gap-2 mt-4">
                 {product.images.slice(0, 4).map((image, index) => (
@@ -194,14 +189,12 @@ export default function ProductDetailPage() {
             )}
           </motion.div>
 
-          
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-6"
           >
-            
             <div>
               {product.category && (
                 <div className="text-sm text-secondary mb-2">{product.category}</div>
@@ -215,7 +208,6 @@ export default function ProductDetailPage() {
               </p>
             </div>
 
-            
             <div className="space-y-3">
               {product.net_quantity && (
                 <div className="flex items-center gap-3">
@@ -263,7 +255,6 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            
             <div className="space-y-4">
               <div className="flex gap-3">
                 <Link
@@ -275,7 +266,6 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
-            
             <div className="border-t border-border pt-6">
               <div className="flex gap-6 mb-6">
                 {['description', 'benefits', 'ingredients', 'usage'].map((tab) => (
@@ -412,11 +402,9 @@ export default function ProductDetailPage() {
           </motion.div>
         </div>
 
-        
         <section className="mt-20">
           <h2 className="text-2xl font-light text-foreground mb-8">You might also like</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
             {[1, 2, 3].map((item) => (
               <div key={item} className="bg-card rounded-lg p-6 text-center">
                 <div className="aspect-[4/5] bg-muted rounded-lg mb-4"></div>

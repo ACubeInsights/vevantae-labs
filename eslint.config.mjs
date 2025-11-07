@@ -21,6 +21,7 @@ const eslintConfig = [
       // Ignore root-level utility scripts written in CommonJS
       // These are operational helpers and not part of the app runtime
       '*.js',
+      'scripts/**/*.js',
     ],
   },
 ];

@@ -1,47 +1,43 @@
-'use client'
+'use client';
 
-import { useEffect } from 'react'
-import { trackPageVisit, trackEvent } from '@/components/GoogleAnalytics'
+import { useEffect } from 'react';
+import { trackPageVisit, trackEvent } from '@/components/GoogleAnalytics';
 
 export default function GATestPage() {
   useEffect(() => {
     setTimeout(() => {
-      console.log('🧪 Testing GA Events...')
-      
+      console.log('🧪 Testing GA Events...');
+
       trackEvent('page_view', {
         page_title: 'GA Test Page',
-        page_location: window.location.href
-      })
-      
+        page_location: window.location.href,
+      });
+
       trackPageVisit('Benefits', {
         test_mode: true,
-        timestamp: new Date().toISOString()
-      })
-      
+        timestamp: new Date().toISOString(),
+      });
+
       trackEvent('benefits_page_visit', {
         page_name: 'Benefits',
-        test_mode: true
-      })
-      
-      console.log('🧪 GA Test events sent!')
-    }, 3000)
-  }, [])
+        test_mode: true,
+      });
+
+      console.log('🧪 GA Test events sent!');
+    }, 3000);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] py-20">
+    <div className="min-h-screen bg-background py-20">
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto text-center space-y-8">
-          <h1 className="text-4xl font-light text-[#111111]">
-            Google Analytics Test Page
-          </h1>
-          <p className="text-lg text-[#666666]">
+          <h1 className="text-4xl font-light text-foreground">Google Analytics Test Page</h1>
+          <p className="text-lg text-secondary">
             This page tests GA event tracking. Check the browser console for event logs.
           </p>
-          <div className="bg-white p-8 rounded-sm">
-            <h2 className="text-xl font-medium text-[#111111] mb-4">
-              Expected Console Logs:
-            </h2>
-            <ul className="text-left space-y-2 text-sm text-[#666666]">
+          <div className="bg-card p-8 rounded-sm">
+            <h2 className="text-xl font-medium text-foreground mb-4">Expected Console Logs:</h2>
+            <ul className="text-left space-y-2 text-sm text-secondary">
               <li>🧪 Testing GA Events...</li>
               <li>📊 GA Event Attempt: page_view</li>
               <li>✅ Sending GA Event: page_view</li>
@@ -52,11 +48,9 @@ export default function GATestPage() {
               <li>📄 GA Event confirmed sent: benefits_page_visit</li>
             </ul>
           </div>
-          <div className="bg-[#111111] text-white p-8 rounded-sm">
-            <h2 className="text-xl font-medium mb-4">
-              Check in GA4:
-            </h2>
-            <p className="text-sm text-gray-300">
+          <div className="bg-primary text-primary-foreground p-8 rounded-sm">
+            <h2 className="text-xl font-medium mb-4">Check in GA4:</h2>
+            <p className="text-sm text-primary-foreground/70">
               Go to Realtime → Events in your GA4 dashboard and look for:
             </p>
             <ul className="text-left mt-4 space-y-1 text-sm">
@@ -67,5 +61,5 @@ export default function GATestPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

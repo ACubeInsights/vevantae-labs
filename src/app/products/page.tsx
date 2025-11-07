@@ -37,8 +37,8 @@ function ProductsContent() {
   usePageTracking({
     pageName: 'Products',
     additionalData: {
-      page_type: 'e-commerce'
-    }
+      page_type: 'e-commerce',
+    },
   });
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -203,7 +203,7 @@ function ProductsContent() {
   ].filter(Boolean).length;
 
   const ProductSkeleton = () => (
-    <div className="bg-white border border-[#E5E5E0] overflow-hidden animate-pulse">
+    <div className="bg-card border border-border overflow-hidden animate-pulse">
       <div className="aspect-[4/5] bg-gray-200"></div>
       <div className="p-6">
         <div className="h-4 bg-gray-200 rounded mb-2"></div>
@@ -218,9 +218,7 @@ function ProductsContent() {
   );
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
-
-      
+    <div className="min-h-screen bg-background">
       <section className="section-padding pt-20">
         <div className="container mx-auto px-6">
           <motion.div
@@ -229,10 +227,10 @@ function ProductsContent() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-[#111111] mb-6 uppercase">
+            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 uppercase">
               Our Products
             </h1>
-            <p className="text-xl text-[#333333] max-w-2xl mx-auto">
+            <p className="text-xl text-neutral-strong max-w-2xl mx-auto">
               Discover our curated collection of premium wellness products, crafted with ancient
               wisdom and modern science.
             </p>
@@ -240,59 +238,54 @@ function ProductsContent() {
         </div>
       </section>
 
-      
       <section className="section-padding">
         <div className="container mx-auto px-6">
-          <div className="bg-white border border-[#E5E5E0] p-6 mb-8">
+          <div className="bg-card border border-border p-6 mb-8">
             <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-              
               <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#333333] w-5 h-5" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-neutral-strong w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search products, benefits, ingredients..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 border border-[#E5E5E0] focus:outline-none focus:border-[#111111] transition-all duration-300 bg-[#FAF9F6] text-[#111111]"
+                  className="w-full pl-12 pr-4 py-3 border border-border focus:outline-none focus:border-foreground transition-all duration-300 bg-background text-foreground"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#333333] hover:text-[#111111]"
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-strong hover:text-foreground"
                   >
                     <X className="w-4 h-4" />
                   </button>
                 )}
               </div>
 
-              
               <div className="flex items-center gap-4">
-                
                 <button
                   onClick={() => setShowFilters(!showFilters)}
                   className={`flex items-center gap-2 px-4 py-2 border transition-all duration-300 ${
                     showFilters || activeFiltersCount > 0
-                      ? 'bg-[#111111] text-[#FAF9F6] border-[#111111]'
-                      : 'bg-[#FAF9F6] text-[#111111] border-[#E5E5E0] hover:border-[#111111]'
+                      ? 'bg-primary text-background border-foreground'
+                      : 'bg-background text-foreground border-border hover:border-foreground'
                   }`}
                 >
                   <SlidersHorizontal className="w-4 h-4" />
                   <span>Filters</span>
                   {activeFiltersCount > 0 && (
-                    <span className="bg-[#FAF9F6] text-[#111111] text-xs px-2 py-1 font-medium">
+                    <span className="bg-background text-foreground text-xs px-2 py-1 font-medium">
                       {activeFiltersCount}
                     </span>
                   )}
                 </button>
 
-                
-                <div className="flex bg-[#E5E5E0] p-1">
+                <div className="flex bg-border p-1">
                   <button
                     onClick={() => setViewMode('grid')}
                     className={`p-2 transition-all duration-300 ${
                       viewMode === 'grid'
-                        ? 'bg-[#FAF9F6] text-[#111111]'
-                        : 'text-[#333333] hover:text-[#111111]'
+                        ? 'bg-background text-foreground'
+                        : 'text-neutral-strong hover:text-foreground'
                     }`}
                   >
                     <Grid className="w-4 h-4" />
@@ -301,19 +294,18 @@ function ProductsContent() {
                     onClick={() => setViewMode('list')}
                     className={`p-2 transition-all duration-300 ${
                       viewMode === 'list'
-                        ? 'bg-[#FAF9F6] text-[#111111]'
-                        : 'text-[#333333] hover:text-[#111111]'
+                        ? 'bg-background text-foreground'
+                        : 'text-neutral-strong hover:text-foreground'
                     }`}
                   >
                     <List className="w-4 h-4" />
                   </button>
                 </div>
 
-                
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="px-4 py-2 border border-[#E5E5E0] text-[#111111] focus:outline-none focus:border-[#111111] bg-[#FAF9F6]"
+                  className="px-4 py-2 border border-border text-foreground focus:outline-none focus:border-foreground bg-background"
                 >
                   {sortOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -325,7 +317,6 @@ function ProductsContent() {
             </div>
           </div>
 
-          
           <AnimatePresence>
             {showFilters && (
               <motion.div
@@ -338,12 +329,11 @@ function ProductsContent() {
                   opacity: { duration: 0.2 },
                   scaleY: { duration: 0.25 },
                 }}
-                className="bg-white border border-[#E5E5E0] p-6 mb-8 origin-top"
+                className="bg-card border border-border p-6 mb-8 origin-top"
               >
                 <div className="flex flex-col lg:flex-row gap-6">
-                  
                   <div className="flex-1">
-                    <h3 className="font-bold text-[#111111] mb-3 uppercase text-sm">Categories</h3>
+                    <h3 className="font-bold text-foreground mb-3 uppercase text-sm">Categories</h3>
                     <div className="flex flex-wrap gap-2">
                       {categories.map((category) => (
                         <button
@@ -351,8 +341,8 @@ function ProductsContent() {
                           onClick={() => setSelectedCategory(category)}
                           className={`px-4 py-2 text-sm transition-all duration-300 border ${
                             selectedCategory === category
-                              ? 'bg-[#111111] text-[#FAF9F6] border-[#111111]'
-                              : 'bg-[#FAF9F6] text-[#333333] border-[#E5E5E0] hover:bg-[#DADAD3] hover:text-[#111111]'
+                              ? 'bg-primary text-background border-foreground'
+                              : 'bg-background text-neutral-strong border-border hover:bg-muted hover:text-foreground'
                           }`}
                         >
                           {category}
@@ -361,9 +351,8 @@ function ProductsContent() {
                     </div>
                   </div>
 
-                  
                   <div className="flex-1">
-                    <h3 className="font-bold text-[#111111] mb-3 uppercase text-sm">Age Groups</h3>
+                    <h3 className="font-bold text-foreground mb-3 uppercase text-sm">Age Groups</h3>
                     <div className="flex flex-wrap gap-2">
                       {ageGroups.map((ageGroup) => (
                         <button
@@ -371,8 +360,8 @@ function ProductsContent() {
                           onClick={() => setSelectedAgeGroup(ageGroup)}
                           className={`px-4 py-2 text-sm transition-all duration-300 border ${
                             selectedAgeGroup === ageGroup
-                              ? 'bg-[#8B7355] text-[#FAF9F6] border-[#8B7355]'
-                              : 'bg-[#FAF9F6] text-[#A0896B] border-[#E5E5E0] hover:bg-[#DADAD3] hover:text-[#8B7355]'
+                              ? 'bg-accent text-background border-accent'
+                              : 'bg-background text-accent/80 border-border hover:bg-muted hover:text-accent'
                           }`}
                         >
                           {ageGroup}
@@ -382,11 +371,10 @@ function ProductsContent() {
                   </div>
                 </div>
 
-                
                 {availableBenefits.length > 0 && (
                   <div className="mt-6">
                     <div className="flex-1">
-                      <h3 className="font-bold text-[#8B7355] mb-3 uppercase text-sm">Benefits</h3>
+                      <h3 className="font-bold text-accent mb-3 uppercase text-sm">Benefits</h3>
                       <div className="max-h-32 overflow-y-auto">
                         <div className="flex flex-wrap gap-2">
                           {availableBenefits.slice(0, 10).map((benefit) => (
@@ -395,8 +383,8 @@ function ProductsContent() {
                               onClick={() => toggleBenefit(benefit)}
                               className={`px-3 py-1 text-sm transition-all duration-300 border ${
                                 selectedBenefits.includes(benefit)
-                                  ? 'bg-[#8B7355] text-[#FAF9F6] border-[#8B7355]'
-                                  : 'bg-[#FAF9F6] text-[#A0896B] border-[#E5E5E0] hover:bg-[#DADAD3] hover:text-[#8B7355]'
+                                  ? 'bg-accent text-background border-accent'
+                                  : 'bg-background text-accent/80 border-border hover:bg-muted hover:text-accent'
                               }`}
                             >
                               {benefit}
@@ -408,11 +396,10 @@ function ProductsContent() {
                   </div>
                 )}
 
-                
                 {availableHealthConditions.length > 0 && (
                   <div className="mt-6">
                     <div className="flex-1">
-                      <h3 className="font-bold text-[#8B7355] mb-3 uppercase text-sm">
+                      <h3 className="font-bold text-accent mb-3 uppercase text-sm">
                         Health Conditions
                       </h3>
                       <div className="max-h-32 overflow-y-auto">
@@ -423,8 +410,8 @@ function ProductsContent() {
                               onClick={() => toggleHealthCondition(condition)}
                               className={`px-3 py-1 text-sm transition-all duration-300 border ${
                                 selectedHealthConditions.includes(condition)
-                                  ? 'bg-[#8B7355] text-[#FAF9F6] border-[#8B7355]'
-                                  : 'bg-[#FAF9F6] text-[#A0896B] border-[#E5E5E0] hover:bg-[#DADAD3] hover:text-[#8B7355]'
+                                  ? 'bg-accent text-background border-accent'
+                                  : 'bg-background text-accent/80 border-border hover:bg-muted hover:text-accent'
                               }`}
                             >
                               {condition}
@@ -436,11 +423,10 @@ function ProductsContent() {
                   </div>
                 )}
 
-                
-                <div className="mt-6 pt-4 border-t border-[#E5E5E0]">
+                <div className="mt-6 pt-4 border-t border-border">
                   <button
                     onClick={clearAllFilters}
-                    className="text-sm text-[#333333] hover:text-[#111111] transition-colors flex items-center gap-1 uppercase font-medium"
+                    className="text-sm text-neutral-strong hover:text-foreground transition-colors flex items-center gap-1 uppercase font-medium"
                   >
                     <X className="w-3 h-3" />
                     Clear filters
@@ -450,7 +436,6 @@ function ProductsContent() {
             )}
           </AnimatePresence>
 
-          
           {loading ? (
             <div
               className={
@@ -466,13 +451,13 @@ function ProductsContent() {
           ) : error ? (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">⚠️</div>
-              <h3 className="text-xl font-bold text-[#111111] mb-2 uppercase">
+              <h3 className="text-xl font-bold text-foreground mb-2 uppercase">
                 Error Loading Products
               </h3>
-              <p className="text-[#333333] mb-6">{error}</p>
+              <p className="text-neutral-strong mb-6">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="px-6 py-3 bg-[#111111] text-[#FAF9F6] hover:bg-[#333333] transition-colors border border-[#111111] uppercase font-bold text-sm"
+                className="px-6 py-3 bg-primary text-background hover:bg-neutral-strong transition-colors border border-foreground uppercase font-bold text-sm"
               >
                 Try Again
               </button>
@@ -512,8 +497,7 @@ function ProductsContent() {
                   >
                     <Link href={`/products/${product.id}`} className="block h-full">
                       {viewMode === 'grid' ? (
-                        <div className="bg-white border border-[#E5E5E0] overflow-hidden hover:border-[#333333] transition-all duration-500 group-hover:-translate-y-1 h-full flex flex-col">
-                          
+                        <div className="bg-card border border-border overflow-hidden hover:border-neutral-strong transition-all duration-500 group-hover:-translate-y-1 h-full flex flex-col">
                           <div className="relative aspect-[4/5] overflow-hidden">
                             <Image
                               src={
@@ -526,34 +510,30 @@ function ProductsContent() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                            
                             <div className="absolute top-4 left-4">
-                              <span className="bg-[#111111] text-[#FAF9F6] px-3 py-1.5 text-xs uppercase tracking-wider font-bold">
+                              <span className="bg-primary text-background px-3 py-1.5 text-xs uppercase tracking-wider font-bold">
                                 {product.category === 'ayurvedic' ? 'Ayurvedic' : 'Nutraceutical'}
                               </span>
                             </div>
 
-                            
                             {product.is_featured && (
                               <div className="absolute top-4 right-4">
-                                <span className="bg-[#A36F40] text-[#FAF9F6] px-2 py-1 text-xs font-bold">
+                                <span className="bg-accent-strong text-background px-2 py-1 text-xs font-bold">
                                   Featured
                                 </span>
                               </div>
                             )}
                           </div>
 
-                          
                           <div className="p-6 flex-1 flex flex-col">
                             <div className="flex-1 min-h-0">
-                              <h3 className="text-lg font-bold text-[#111111] mb-2 group-hover:text-[#A36F40] transition-colors duration-300 line-clamp-2 h-14">
+                              <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-accent-strong transition-colors duration-300 line-clamp-2 h-14">
                                 {product.name}
                               </h3>
-                              <p className="text-sm text-[#333333] mb-4 line-clamp-3 leading-relaxed h-16">
+                              <p className="text-sm text-neutral-strong mb-4 line-clamp-3 leading-relaxed h-16">
                                 {product.description}
                               </p>
 
-                              
                               <div className="h-16 mb-4">
                                 {product.health_benefits && product.health_benefits.length > 0 && (
                                   <div className="flex flex-wrap gap-1.5">
@@ -562,13 +542,13 @@ function ProductsContent() {
                                       .map((benefit: string, idx: number) => (
                                         <span
                                           key={idx}
-                                          className="text-xs bg-[#A36F40]/10 text-[#A36F40] px-2.5 py-1 font-bold border border-[#A36F40]/20"
+                                          className="text-xs bg-accent-strong/10 text-accent-strong px-2.5 py-1 font-bold border border-accent-strong/20"
                                         >
                                           {benefit}
                                         </span>
                                       ))}
                                     {product.health_benefits.length > 3 && (
-                                      <span className="text-xs text-[#333333] px-2.5 py-1 font-medium">
+                                      <span className="text-xs text-neutral-strong px-2.5 py-1 font-medium">
                                         +{product.health_benefits.length - 3} more
                                       </span>
                                     )}
@@ -577,10 +557,9 @@ function ProductsContent() {
                               </div>
                             </div>
 
-                            
                             <div className="mt-auto pt-4 border-t border-border/50 h-8">
                               {product.age_group && (
-                                <span className="text-xs text-[#333333] uppercase tracking-wider font-medium">
+                                <span className="text-xs text-neutral-strong uppercase tracking-wider font-medium">
                                   For {product.age_group}
                                 </span>
                               )}
@@ -588,9 +567,8 @@ function ProductsContent() {
                           </div>
                         </div>
                       ) : (
-                        <div className="bg-white border border-[#E5E5E0] overflow-hidden hover:border-[#333333] transition-all duration-300">
+                        <div className="bg-card border border-border overflow-hidden hover:border-neutral-strong transition-all duration-300">
                           <div className="flex flex-col md:flex-row">
-                            
                             <div className="relative w-full md:w-48 h-48 md:h-auto overflow-hidden">
                               <Image
                                 src={
@@ -602,30 +580,28 @@ function ProductsContent() {
                                 className="object-cover group-hover:scale-105 transition-transform duration-500"
                               />
                               <div className="absolute top-3 left-3">
-                                <span className="bg-[#111111] text-[#FAF9F6] px-2.5 py-1 text-xs uppercase tracking-wider font-bold">
+                                <span className="bg-primary text-background px-2.5 py-1 text-xs uppercase tracking-wider font-bold">
                                   {product.category === 'ayurvedic' ? 'Ayurvedic' : 'Nutraceutical'}
                                 </span>
                               </div>
                             </div>
 
-                            
                             <div className="flex-1 p-6">
                               <div className="flex justify-between items-start mb-3">
-                                <h3 className="text-xl font-bold text-[#111111] group-hover:text-[#A36F40] transition-colors duration-300">
+                                <h3 className="text-xl font-bold text-foreground group-hover:text-accent-strong transition-colors duration-300">
                                   {product.name}
                                 </h3>
                                 {product.is_featured && (
-                                  <span className="bg-[#A36F40] text-[#FAF9F6] px-2 py-1 text-xs font-bold ml-3">
+                                  <span className="bg-accent-strong text-background px-2 py-1 text-xs font-bold ml-3">
                                     Featured
                                   </span>
                                 )}
                               </div>
 
-                              <p className="text-[#333333] mb-4 line-clamp-2 leading-relaxed">
+                              <p className="text-neutral-strong mb-4 line-clamp-2 leading-relaxed">
                                 {product.description}
                               </p>
 
-                              
                               {product.health_benefits && product.health_benefits.length > 0 && (
                                 <div className="flex flex-wrap gap-2 mb-4">
                                   {product.health_benefits
@@ -633,22 +609,21 @@ function ProductsContent() {
                                     .map((benefit: string, idx: number) => (
                                       <span
                                         key={idx}
-                                        className="text-xs bg-[#A36F40]/10 text-[#A36F40] px-3 py-1.5 font-bold border border-[#A36F40]/20"
+                                        className="text-xs bg-accent-strong/10 text-accent-strong px-3 py-1.5 font-bold border border-accent-strong/20"
                                       >
                                         {benefit}
                                       </span>
                                     ))}
                                   {product.health_benefits.length > 4 && (
-                                    <span className="text-xs text-[#333333] px-3 py-1.5 font-medium">
+                                    <span className="text-xs text-neutral-strong px-3 py-1.5 font-medium">
                                       +{product.health_benefits.length - 4} more benefits
                                     </span>
                                   )}
                                 </div>
                               )}
 
-                              
                               {product.age_group && (
-                                <div className="text-xs text-[#333333] uppercase tracking-wider font-medium">
+                                <div className="text-xs text-neutral-strong uppercase tracking-wider font-medium">
                                   Suitable for {product.age_group}
                                 </div>
                               )}
@@ -663,43 +638,41 @@ function ProductsContent() {
             </motion.div>
           )}
 
-          
           {!loading && !error && filteredAndSortedProducts.length === 0 && (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-bold text-[#111111] mb-2 uppercase">No products found</h3>
-              <p className="text-[#333333] mb-6">
+              <h3 className="text-xl font-bold text-foreground mb-2 uppercase">
+                No products found
+              </h3>
+              <p className="text-neutral-strong mb-6">
                 {searchQuery
                   ? `No products match "${searchQuery}". Try adjusting your search or filters.`
                   : 'No products match your current filters. Try adjusting your selection.'}
               </p>
               <button
                 onClick={clearAllFilters}
-                className="px-6 py-3 bg-[#111111] text-[#FAF9F6] hover:bg-[#333333] transition-colors border border-[#111111] uppercase font-bold text-sm"
+                className="px-6 py-3 bg-primary text-background hover:bg-neutral-strong transition-colors border border-foreground uppercase font-bold text-sm"
               >
                 Clear All Filters
               </button>
             </div>
           )}
 
-          
           {!loading && !error && totalPages > 1 && (
             <div className="flex justify-center items-center mt-12 mb-8 gap-2">
-              
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
                 className={`flex items-center gap-2 px-4 py-2 transition-all duration-300 border uppercase text-sm font-bold ${
                   currentPage === 1
-                    ? 'text-[#333333] cursor-not-allowed opacity-50 border-[#E5E5E0]'
-                    : 'text-[#333333] hover:text-[#111111] hover:bg-[#DADAD3] border-[#E5E5E0] hover:border-[#111111]'
+                    ? 'text-neutral-strong cursor-not-allowed opacity-50 border-border'
+                    : 'text-neutral-strong hover:text-foreground hover:bg-muted border-border hover:border-foreground'
                 }`}
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span className="hidden sm:inline">Previous</span>
               </button>
 
-              
               <div className="flex gap-1">
                 {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
                   let pageNumber;
@@ -719,8 +692,8 @@ function ProductsContent() {
                       onClick={() => setCurrentPage(pageNumber)}
                       className={`px-3 py-2 transition-all duration-300 border text-sm font-bold ${
                         currentPage === pageNumber
-                          ? 'bg-[#111111] text-[#FAF9F6] border-[#111111]'
-                          : 'text-[#333333] hover:text-[#111111] hover:bg-[#DADAD3] border-[#E5E5E0] hover:border-[#111111]'
+                          ? 'bg-primary text-background border-foreground'
+                          : 'text-neutral-strong hover:text-foreground hover:bg-muted border-border hover:border-foreground'
                       }`}
                     >
                       {pageNumber}
@@ -729,14 +702,13 @@ function ProductsContent() {
                 })}
               </div>
 
-              
               <button
                 onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
                 className={`flex items-center gap-2 px-4 py-2 transition-all duration-300 border uppercase text-sm font-bold ${
                   currentPage === totalPages
-                    ? 'text-[#333333] cursor-not-allowed opacity-50 border-[#E5E5E0]'
-                    : 'text-[#333333] hover:text-[#111111] hover:bg-[#DADAD3] border-[#E5E5E0] hover:border-[#111111]'
+                    ? 'text-neutral-strong cursor-not-allowed opacity-50 border-border'
+                    : 'text-neutral-strong hover:text-foreground hover:bg-muted border-border hover:border-foreground'
                 }`}
               >
                 <span className="hidden sm:inline">Next</span>
@@ -745,11 +717,9 @@ function ProductsContent() {
             </div>
           )}
 
-          
           {!loading && !error && totalPages <= 1 && <div className="mt-12 mb-8"></div>}
         </div>
       </section>
-
     </div>
   );
 }

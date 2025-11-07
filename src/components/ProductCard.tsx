@@ -47,7 +47,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
   return (
     <div className={`group cursor-pointer h-full flex flex-col ${className}`}>
       <Link href={`/products/${product.id}`} className="block">
-        <div className="relative aspect-[4/5] overflow-hidden bg-white">
+        <div className="relative aspect-[4/5] overflow-hidden bg-card">
           <Image
             src={currentImage}
             alt={product.name || 'Product'}
@@ -56,19 +56,18 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
             loading="lazy"
           />
 
-          
           {images.length > 1 && (
             <>
               <button
                 onClick={prevImage}
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 hover:text-gray-900 rounded-full p-2 opacity-70 hover:opacity-100 transition-all duration-200 shadow-lg z-10"
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-card/90 hover:bg-card text-gray-700 hover:text-gray-900 rounded-full p-2 opacity-70 hover:opacity-100 transition-all duration-200 shadow-lg z-10"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={nextImage}
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 hover:text-gray-900 rounded-full p-2 opacity-70 hover:opacity-100 transition-all duration-200 shadow-lg z-10"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-card/90 hover:bg-card text-gray-700 hover:text-gray-900 rounded-full p-2 opacity-70 hover:opacity-100 transition-all duration-200 shadow-lg z-10"
                 aria-label="Next image"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -76,21 +75,19 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
             </>
           )}
 
-          
           {images.length > 1 && (
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
               {images.map((_, index) => (
                 <div
                   key={index}
                   className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                    index === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                    index === currentImageIndex ? 'bg-card' : 'bg-card/50'
                   }`}
                 />
               ))}
             </div>
           )}
 
-          
           <div className="absolute top-4 left-4">
             <span className="bg-background/90 text-primary px-3 py-1 text-xs uppercase tracking-wider font-semibold">
               {product.category === 'ayurvedic' ? 'Ayurvedic' : 'Nutraceutical'}
