@@ -3,11 +3,22 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Search } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import { trackEvent } from '@/components/GoogleAnalytics';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  // Track navigation clicks
+  const handleLogoClick = () => {
+    if (pathname !== '/') {
+      trackEvent('navigation_home_click', {
+        click_source: 'header_logo',
+        from_page: pathname
+      });
+    }
+  };
 
   const navigation = [
     { name: 'Products', href: '/products' },
@@ -22,7 +33,7 @@ export function Header() {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" onClick={handleLogoClick} className="flex-shrink-0">
             <span
               className="text-xl font-light text-gray-900 tracking-wide drop-shadow-lg"
               style={{ textShadow: '0 0 8px rgba(255,255,255,0.8)' }}
@@ -51,12 +62,6 @@ export function Header() {
 
           
           <div className="flex items-center space-x-6">
-            
-            <button className="text-gray-800 hover:text-blue-600 transition-colors duration-300 drop-shadow-lg">
-              <Search className="w-5 h-5" />
-              <span className="sr-only">Search</span>
-            </button>
-
             
             <Link
               href="/contact"

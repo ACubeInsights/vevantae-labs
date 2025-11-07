@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Product } from '@/lib/supabase';
 import { Button } from '@/components/ui/Button';
+import { trackEvent } from './GoogleAnalytics';
 
 const ChevronLeft = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -27,6 +28,17 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
   const images = product.images || [];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Track product click
+  const handleProductClick = () => {
+    trackEvent('product_click', {
+      product_id: product.id,
+      product_name: product.name || 'Unknown Product',
+      product_category: product.category || 'Unknown',
+      product_price: product.selling_price || 0,
+      click_source: 'product_card'
+    });
+  };
+
   const nextImage = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -46,7 +58,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
 
   return (
     <div className={`group cursor-pointer h-full flex flex-col ${className}`}>
-      <Link href={`/products/${product.id}`} className="block">
+      <Link href={`/products/${product.id}`} onClick={handleProductClick} className="block">
         <div className="relative aspect-[4/5] overflow-hidden bg-white">
           <Image
             src={currentImage}

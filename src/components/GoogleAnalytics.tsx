@@ -35,6 +35,7 @@ export function GoogleAnalytics() {
   // Track page views when route changes
   useEffect(() => {
     if (!measurementId || !isScriptLoaded) return
+    if (pathname.startsWith('/products/')) return
 
     const query = searchParams.size ? `?${searchParams.toString()}` : ''
     const origin = typeof window !== 'undefined' ? window.location.origin : ''

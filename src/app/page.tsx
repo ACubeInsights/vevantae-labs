@@ -1,18 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
-// Force dynamic rendering to avoid build-time issues
-export const dynamic = 'force-dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-
 import { ArrowRight, Plus } from 'lucide-react';
 import { InfiniteSlider } from '@/components/ui/infinite-slider';
 import { getProducts, Product, getBlogPosts, BlogPost } from '@/lib/supabase';
 import { BlogCard } from '@/components/BlogCard';
 import { CertificatesCarousel } from '@/components/CertificatesCarousel';
+import { trackEvent } from '@/components/GoogleAnalytics';
 
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
@@ -51,6 +48,30 @@ export default function Home() {
 
     fetchData();
   }, []);
+
+  // Track home page visit
+  useEffect(() => {
+    // Update document title for GA4 page_view tracking
+    const pageTitle = 'Home page: Vevantae Labs';
+    document.title = pageTitle;
+    
+    // Send manual page_view event with updated title
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', {
+        page_title: pageTitle,
+        page_location: window.location.href,
+        send_to: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+      });
+    }
+    
+    trackEvent('home_page_visit', {
+      page_title: pageTitle,
+      page_location: typeof window !== 'undefined' ? window.location.href : '',
+      featured_products_count: featuredProducts.length,
+      blog_posts_count: blogPosts.length,
+      user_type: 'visitor'
+    });
+  }, [featuredProducts.length, blogPosts.length]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -380,7 +401,8 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <Link href="/products?category=ayurvedic" className="group block">
+              <Link href="/products?category=ayurvedic" 
+                className="group block">
                 <div className="relative aspect-square overflow-hidden bg-accent transition-all duration-700 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] group-hover:scale-[1.02]">
                   
                   <div className="absolute inset-0 bg-gradient-to-br from-accent via-accent/80 to-accent/60" />
@@ -458,7 +480,8 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <Link href="/products?category=nutraceuticals" className="group block">
+              <Link href="/products?category=nutraceuticals" 
+                className="group block">
                 <div className="relative aspect-square overflow-hidden bg-background transition-all duration-700 group-hover:shadow-[0_25px_50px_-12px_rgba(139,69,19,0.2)] group-hover:scale-[1.02]">
                   
                   <div className="absolute inset-0 bg-gradient-to-br from-background via-muted to-muted/80" />
@@ -1309,7 +1332,8 @@ export default function Home() {
                   viewport={{ once: true }}
                   className="group cursor-pointer h-full"
                 >
-                  <Link href={`/products/${product.id}`} className="block h-full">
+                  <Link href={`/products/${product.id}`} 
+                    className="block h-full">
                     <div className="space-y-6 h-full flex flex-col bg-card border border-border overflow-hidden transition-all duration-500 hover:border-[#333333] group-hover:-translate-y-1">
                       <div className="relative aspect-[4/5] bg-muted overflow-hidden">
                         <Image
@@ -1537,11 +1561,17 @@ export default function Home() {
               </p>
             </div>
 
-            <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+            <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto" 
+              onSubmit={(e) => {
+                e.preventDefault();
+                // Newsletter submission logic here
+              }}>
               <input
+                name="email"
                 type="email"
                 placeholder="Enter your email address"
                 className="flex-1 px-6 py-4 bg-transparent border border-primary-foreground/30 text-primary-foreground placeholder-primary-foreground/60 focus:outline-none focus:border-primary-foreground transition-colors duration-300 text-sm font-light tracking-wide rounded-sm"
+                required
               />
               <button
                 type="submit"

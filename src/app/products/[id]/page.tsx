@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Product, getProduct } from '@/lib/supabase';
+import { trackEvent } from '@/components/GoogleAnalytics';
 
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
@@ -76,6 +77,77 @@ export default function ProductDetailPage() {
     fetchProduct();
   }, [id]);
 
+  // Track page visit when product loads
+  useEffect(() => {
+    if (product) {
+      // Update document title for GA4 page_view tracking
+      const pageTitle = `Vevantae Lab: ${product.name || 'Unknown Product'}`;
+      document.title = pageTitle;
+      
+      // Wait a bit to ensure title is updated before sending GA events
+      setTimeout(() => {
+        // Send manual page_view event with updated title
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+          window.gtag('event', 'page_view', {
+            page_title: pageTitle,
+            page_location: window.location.href,
+            send_to: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+          });
+        }
+        
+        // Track custom page visit event
+        trackEvent('product_detail_page_visit', {
+          page_title: pageTitle,
+          page_location: typeof window !== 'undefined' ? window.location.href : '',
+          product_name: product.name || 'Unknown Product',
+          product_id: product.id,
+          product_category: product.category || 'Unknown',
+          price: product.selling_price || 0,
+          has_images: (product.images && product.images.length > 0) ? true : false
+        });
+        
+        // Track product view event (for e-commerce tracking)
+        trackEvent('view_item', {
+          currency: 'INR',
+          value: product.selling_price || 0,
+          items: [{
+            item_id: product.id,
+            item_name: product.name || 'Unknown Product',
+            item_category: product.category || 'Unknown',
+            price: product.selling_price || 0,
+            quantity: 1
+          }]
+        });
+      }, 100); // Small delay to ensure title is updated
+    }
+  }, [product]);
+
+  // Track user interactions
+  const handleImageClick = (imageIndex: number) => {
+    trackEvent('product_image_click', {
+      product_id: product?.id,
+      product_name: product?.name || 'Unknown Product',
+      image_index: imageIndex
+    });
+  };
+
+  const handleTabClick = (tabName: string) => {
+    trackEvent('product_tab_click', {
+      tab_name: tabName,
+      product_id: product?.id,
+      product_name: product?.name || 'Unknown Product'
+    });
+  };
+
+  const handleInquireClick = () => {
+    trackEvent('product_inquiry_click', {
+      product_id: product?.id,
+      product_name: product?.name || 'Unknown Product',
+      product_category: product?.category || 'Unknown',
+      price: product?.selling_price || 0
+    });
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background pt-20 flex items-center justify-center">
@@ -143,18 +215,23 @@ export default function ProductDetailPage() {
               {product.images && product.images.length > 1 && (
                 <>
                   <button
-                    onClick={() =>
+                    onClick={() => {
                       setSelectedImage(
                         (prev) => (prev - 1 + product.images!.length) % product.images!.length
-                      )
-                    }
+                      );
+                      handleImageClick(selectedImage - 1);
+                    }}
                     className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 hover:text-gray-900 rounded-full p-3 opacity-70 hover:opacity-100 transition-all duration-200 shadow-lg z-10"
                     aria-label="Previous image"
                   >
                     <ChevronLeft className="w-6 h-6" />
                   </button>
                   <button
-                    onClick={() => setSelectedImage((prev) => (prev + 1) % product.images!.length)}
+                    onClick={() => {
+                      const nextIndex = (selectedImage + 1) % product.images!.length;
+                      setSelectedImage(nextIndex);
+                      handleImageClick(nextIndex);
+                    }}
                     className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 hover:text-gray-900 rounded-full p-3 opacity-70 hover:opacity-100 transition-all duration-200 shadow-lg z-10"
                     aria-label="Next image"
                   >
@@ -170,7 +247,10 @@ export default function ProductDetailPage() {
                 {product.images.slice(0, 4).map((image, index) => (
                   <button
                     key={index}
-                    onClick={() => setSelectedImage(index)}
+                    onClick={() => {
+                      setSelectedImage(index);
+                      handleImageClick(index);
+                    }}
                     className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
                       selectedImage === index ? 'border-foreground' : 'border-transparent'
                     }`}
@@ -268,6 +348,7 @@ export default function ProductDetailPage() {
               <div className="flex gap-3">
                 <Link
                   href="/contact"
+                  onClick={handleInquireClick}
                   className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-lg font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                   Learn More & Inquire
@@ -281,7 +362,10 @@ export default function ProductDetailPage() {
                 {['description', 'benefits', 'ingredients', 'usage'].map((tab) => (
                   <button
                     key={tab}
-                    onClick={() => setActiveTab(tab)}
+                    onClick={() => {
+                      setActiveTab(tab);
+                      handleTabClick(tab);
+                    }}
                     className={`text-sm font-medium capitalize transition-colors ${
                       activeTab === tab
                         ? 'text-foreground border-b-2 border-foreground pb-2'
