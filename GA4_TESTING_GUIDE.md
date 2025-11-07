@@ -3,17 +3,21 @@
 ## 🎯 **Quick Test (5 minutes)**
 
 ### 1. Start Your Website
+
 ```bash
 cd /Users/aryannijhawan/vevantae-labs
 npm run dev
 ```
+
 Website will be available at: `http://localhost:3007`
 
 ### 2. Open Google Analytics
+
 - Go to [analytics.google.com](https://analytics.google.com)
 - Select your property with ID: `G-VDMQ3FND7S`
 
 ### 3. Check Real-time Data
+
 - Navigate to **Reports** → **Realtime**
 - Visit your website in another tab
 - Within 30 seconds, you should see:
@@ -35,7 +39,7 @@ Website will be available at: `http://localhost:3007`
    - Visit: `http://localhost:3007/about`
    - Visit: `http://localhost:3007/products`
    - Visit: `http://localhost:3007/contact`
-   
+
    **Expected Result:** You should see page views appearing in real-time
 
 3. **Test Custom Events**
@@ -65,22 +69,27 @@ Website will be available at: `http://localhost:3007`
 Visit these pages and perform these actions:
 
 #### ✅ **Homepage** (`http://localhost:3007`)
+
 - **Expected Events:** `page_view`
 
 #### ✅ **Contact Page** (`http://localhost:3007/contact`)
+
 - Fill out and submit the contact form
 - **Expected Events:** `page_view`, `form_submit`
 
 #### ✅ **Products Page** (`http://localhost:3007/products`)
+
 - Click on any product
 - **Expected Events:** `page_view`, `view_item` (when viewing product detail)
 
 #### ✅ **Newsletter Signup**
+
 - Find newsletter form (usually in footer)
 - Submit email
 - **Expected Events:** `newsletter_signup`
 
 #### ✅ **GA4 Test Page** (`http://localhost:3007/ga4-test`)
+
 - Click all test buttons
 - **Expected Events:** `test_button_click`, `view_item`, `form_submit`
 
@@ -89,11 +98,13 @@ Visit these pages and perform these actions:
 ## 📈 **What You Should See in GA4**
 
 ### **Real-time Reports:**
+
 - **Users**: 1 (you)
 - **Page views**: Multiple as you navigate
 - **Events**: Various events as you interact
 
 ### **Event Types You Should See:**
+
 - `page_view` - Automatic page tracking
 - `form_submit` - Contact form submissions
 - `newsletter_signup` - Newsletter form submissions
@@ -101,6 +112,7 @@ Visit these pages and perform these actions:
 - `test_button_click` - Test page interactions
 
 ### **User Properties:**
+
 - Country, City (your location)
 - Device type (Desktop/Mobile)
 - Browser information
@@ -130,6 +142,7 @@ Visit these pages and perform these actions:
    - Regular reports: 24-48 hours
 
 ### **Browser Blockers**
+
 - Disable ad blockers temporarily
 - Try incognito/private browsing mode
 - Try different browser
@@ -161,6 +174,7 @@ Once you deploy to production:
 ## 📱 **Mobile Testing**
 
 Don't forget to test on mobile devices:
+
 - Visit site on your phone
 - Check if mobile events appear in GA4
 - Test touch interactions
@@ -180,6 +194,7 @@ Don't forget to test on mobile devices:
 ## 📞 **Need Help?**
 
 If you don't see data after following these steps:
+
 1. Check the troubleshooting section above
 2. Verify all code changes were saved
 3. Restart the development server

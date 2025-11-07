@@ -32,24 +32,29 @@ Replace `G-XXXXXXXXXX` with your actual Measurement ID from step 1.
 ## 3. Features Implemented
 
 ### Automatic Page View Tracking
+
 - Tracks all page views automatically
 - Includes page location and title
 - Works with Next.js App Router navigation
 
 ### Event Tracking
+
 The following events are automatically tracked:
 
 #### Contact Form Submissions
+
 - Event: `form_submit`
 - Triggered when contact form is submitted
 - Parameters: `form_name: 'contact_page'`
 
 #### Newsletter Signups
+
 - Event: `newsletter_signup`
 - Triggered when newsletter form is submitted
 - Parameters: `method: 'newsletter_widget'`
 
 #### Product Views
+
 - Event: `view_item`
 - Triggered when a product detail page is viewed
 - Parameters: item details, price, category
@@ -59,17 +64,22 @@ The following events are automatically tracked:
 You can use these functions throughout your app to track custom events:
 
 ```typescript
-import { trackEvent, trackPurchase, trackAddToCart, trackSearch } from '@/components/GoogleAnalytics'
+import {
+  trackEvent,
+  trackPurchase,
+  trackAddToCart,
+  trackSearch,
+} from '@/components/GoogleAnalytics';
 
 // Custom event
-trackEvent('button_click', { button_name: 'header_cta' })
+trackEvent('button_click', { button_name: 'header_cta' });
 
 // E-commerce events
-trackPurchase('12345', 899, 'INR', [{ item_id: 'prod_1', item_name: 'Ashwagandha', price: 899 }])
-trackAddToCart('INR', 899, [{ item_id: 'prod_1', item_name: 'Ashwagandha', price: 899 }])
+trackPurchase('12345', 899, 'INR', [{ item_id: 'prod_1', item_name: 'Ashwagandha', price: 899 }]);
+trackAddToCart('INR', 899, [{ item_id: 'prod_1', item_name: 'Ashwagandha', price: 899 }]);
 
 // Search tracking
-trackSearch('ashwagandha benefits')
+trackSearch('ashwagandha benefits');
 ```
 
 ## 4. Verify Installation
@@ -93,6 +103,7 @@ For advanced e-commerce tracking:
 ## 6. Privacy Considerations
 
 ### Cookie Consent (Recommended)
+
 Consider implementing a cookie consent banner to comply with GDPR/privacy laws:
 
 ```typescript
@@ -103,6 +114,7 @@ if (userConsent) {
 ```
 
 ### Data Retention
+
 - Set appropriate data retention periods in GA4 settings
 - Review and configure data sharing settings
 - Consider implementing IP anonymization if needed
@@ -120,6 +132,7 @@ Consider adding tracking for these user interactions:
 ## 8. Monitoring and Optimization
 
 ### Key Metrics to Monitor
+
 - Page views and user sessions
 - Conversion rates (contact form submissions, newsletter signups)
 - Product page engagement
@@ -127,6 +140,7 @@ Consider adding tracking for these user interactions:
 - Mobile vs desktop usage
 
 ### Regular Tasks
+
 - Review GA4 reports weekly
 - Set up automated reports for key metrics
 - Monitor for any tracking issues
@@ -135,30 +149,36 @@ Consider adding tracking for these user interactions:
 ## 9. Troubleshooting
 
 ### Common Issues
+
 - **No data appearing**: Check that the Measurement ID is correct in .env.local
 - **Events not firing**: Check browser console for JavaScript errors
 - **Development vs Production**: GA4 data only appears in production/deployed sites
 
 ### Debug Mode
+
 Add this to enable debug mode in development:
 
 ```typescript
 gtag('config', GA_MEASUREMENT_ID, {
-  debug_mode: true
+  debug_mode: true,
 });
 ```
 
 ## 10. Advanced Features
 
 ### Custom Dimensions
+
 Set up custom dimensions in GA4 for:
+
 - User type (new vs returning)
 - Product category preferences
 - Geographic region
 - Device type
 
 ### Audiences
+
 Create audiences for:
+
 - Users interested in specific product categories
 - High-value potential customers
 - Users who viewed products but didn't convert
