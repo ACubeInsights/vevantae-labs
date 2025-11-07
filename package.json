@@ -13,7 +13,9 @@
     "verify:ga": "./scripts/testing/verify-ga-production.sh",
     "db:migrate": "node scripts/database/apply-rls-policy.js",
     "db:seed": "node scripts/database/insert-sample-products.js",
-    "db:check": "node scripts/database/check-all-products.js"
+    "db:check": "node scripts/database/check-all-products.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
@@ -41,6 +43,13 @@
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.17",
     "@tailwindcss/typography": "^0.5.15",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^15.0.7",
+    "@testing-library/user-event": "^14.5.2",
+    "@vitejs/plugin-react": "^4.3.2",
+    "jsdom": "^25.0.1",
+    "vitest": "^2.1.4",
+    "patch-package": "^8.0.0"
   }
 }
