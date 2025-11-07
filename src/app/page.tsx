@@ -532,7 +532,7 @@ export default function Home() {
       </section>
 
       
-      <section className="py-32 lg:py-40 relative overflow-hidden">
+      <section className="pt-4 lg:pt-8 pb-8 lg:pb-12 relative overflow-hidden">
         
         <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/30 to-card/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-muted/20 via-transparent to-background/30" />
@@ -1237,7 +1237,7 @@ export default function Home() {
       </section>
 
       
-      <section className="py-24 lg:py-32 bg-background">
+      <section className="pt-6 lg:pt-12 pb-24 lg:pb-32 bg-background">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
