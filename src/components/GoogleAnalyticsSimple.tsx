@@ -12,7 +12,7 @@ declare global {
 // Simple tracking functions that can be called from any component
 export const trackEvent = (action: string, category: string, label?: string, value?: number) => {
   console.log('📊 GA Event:', { action, category, label, value });
-  
+
   try {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', action, {
@@ -31,7 +31,7 @@ export const trackEvent = (action: string, category: string, label?: string, val
           action,
           category,
           label,
-          value
+          value,
         });
       }
     }
@@ -42,7 +42,7 @@ export const trackEvent = (action: string, category: string, label?: string, val
 
 export const trackPageVisit = (path: string) => {
   console.log('📄 GA Page Visit:', path);
-  
+
   try {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('config', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!, {
@@ -57,15 +57,18 @@ export const trackPageVisit = (path: string) => {
   }
 };
 
-export const trackFormSubmission = (formName: string, additionalData?: Record<string, string | number | boolean>) => {
+export const trackFormSubmission = (
+  formName: string,
+  additionalData?: Record<string, string | number | boolean>
+) => {
   const eventName = `${formName.toLowerCase()}_form_submission`;
-  
+
   trackEvent(eventName, 'form_interaction', formName, additionalData?.value as number);
 };
 
 export default function GoogleAnalyticsSimple() {
   const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-  
+
   if (!measurementId) {
     console.warn('⚠️ GA Measurement ID not found');
     return null;
@@ -79,10 +82,7 @@ export default function GoogleAnalyticsSimple() {
         src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
         strategy="afterInteractive"
       />
-      <Script
-        id="google-analytics"
-        strategy="afterInteractive"
-      >
+      <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
