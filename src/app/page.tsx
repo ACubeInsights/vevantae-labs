@@ -55,7 +55,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       
-      <section className="relative overflow-hidden bg-background min-h-screen">
+      <section className="relative overflow-hidden bg-background min-h-screen hero-offset">
         
         <div className="absolute inset-0 overflow-hidden">
           
@@ -326,7 +326,6 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 2 }}
         >
-          <span className="text-xs text-accent uppercase tracking-[0.2em] mb-2">Scroll</span>
           <motion.div
             className="w-px h-8 bg-accent/50"
             animate={{ scaleY: [1, 0.5, 1] }}
@@ -336,7 +335,7 @@ export default function Home() {
       </section>
 
       
-      <section className="bg-background py-20 lg:py-24">
+      <section className="bg-background pt-8 lg:pt-10 pb-16">
         <div className="container mx-auto px-6 lg:px-8">
           <CertificatesCarousel />
         </div>
