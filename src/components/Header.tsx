@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Search } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,7 +33,9 @@ export function Header() {
 
           
           <nav className="hidden lg:flex items-center space-x-12">
-            {navigation.map((item) => {
+            {navigation
+              .filter((item) => item.name !== 'Contact')
+              .map((item) => {
               const isActive = pathname === item.href;
               return (
                 <Link
@@ -51,20 +53,12 @@ export function Header() {
 
           
           <div className="flex items-center space-x-6">
-            
-            <button className="text-gray-800 hover:text-blue-600 transition-colors duration-300 drop-shadow-lg">
-              <Search className="w-5 h-5" />
-              <span className="sr-only">Search</span>
-            </button>
-
-            
             <Link
               href="/contact"
-              className="text-sm font-normal text-gray-800 hover:text-blue-600 transition-colors duration-300 uppercase tracking-wider drop-shadow-lg"
+              className="hidden lg:block text-sm font-normal text-gray-800 hover:text-blue-600 transition-colors duration-300 uppercase tracking-wider drop-shadow-lg"
             >
-              Inquire
+              Contact
             </Link>
-
             
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
