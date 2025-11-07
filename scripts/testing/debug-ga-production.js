@@ -9,7 +9,10 @@ console.log('🔍 Google Analytics Production Debug\n');
 
 // Check environment variables
 console.log('📊 Environment Variables:');
-console.log('NEXT_PUBLIC_GA_MEASUREMENT_ID:', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '❌ NOT SET');
+console.log(
+  'NEXT_PUBLIC_GA_MEASUREMENT_ID:',
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '❌ NOT SET'
+);
 console.log('NODE_ENV:', process.env.NODE_ENV || 'development');
 console.log('VERCEL_ENV:', process.env.VERCEL_ENV || '❌ NOT SET (local)');
 console.log();
@@ -55,6 +58,8 @@ if (!isProduction) {
 }
 
 console.log('\n🔗 Useful Links:');
-console.log('- Vercel Environment Variables: https://vercel.com/dashboard/[project]/settings/environment-variables');
+console.log(
+  '- Vercel Environment Variables: https://vercel.com/dashboard/[project]/settings/environment-variables'
+);
 console.log('- Google Analytics Dashboard: https://analytics.google.com/');
 console.log('- GA4 Measurement ID: Should start with G- (not UA-)');
