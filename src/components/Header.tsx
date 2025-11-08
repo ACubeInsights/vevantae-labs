@@ -20,7 +20,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-white/40 backdrop-blur-3xl backdrop-saturate-200">
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16">
           
           <Link href="/" className="flex-shrink-0">
             <span
@@ -73,7 +73,7 @@ export function Header() {
         
         {isMenuOpen && (
           <div className="lg:hidden bg-white/30 backdrop-blur-3xl backdrop-saturate-200">
-            <nav className="py-6 space-y-1">
+            <nav className="py-4 space-y-1">
               {navigation.map((item) => {
                 const isActive = pathname === item.href;
                 return (

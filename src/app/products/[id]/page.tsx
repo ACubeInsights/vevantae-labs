@@ -98,9 +98,9 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-background pt-16">
       
-      <div className="container mx-auto px-6 py-6">
+      <div className="container mx-auto px-6 py-3">
         <div className="flex items-center gap-2 text-sm text-secondary">
           <Link href="/" className="hover:text-foreground transition-colors">
             Home
@@ -123,7 +123,7 @@ export default function ProductDetailPage() {
             transition={{ duration: 0.6 }}
           >
             
-            <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg group">
+            <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg group w-[90%] mx-auto">
               <Image
                 key={`main-${selectedImage}`}
                 src={
@@ -210,13 +210,13 @@ export default function ProductDetailPage() {
                 {product.name || 'Untitled Product'}
               </h1>
 
-              <p className="text-lg text-secondary mb-6">
+              <p className="text-lg text-secondary mb-4">
                 {product.description || 'No description available'}
               </p>
             </div>
 
             
-            <div className="space-y-3">
+            <div className="space-y-2">
               {product.net_quantity && (
                 <div className="flex items-center gap-3">
                   <span className="text-sm text-secondary w-24">Net Quantity:</span>
@@ -233,27 +233,15 @@ export default function ProductDetailPage() {
                   </span>
                 </div>
               )}
-              {product.mrp && product.selling_price && (
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-secondary w-24">Price:</span>
-                  <div className="flex items-center gap-2">
-                    {product.mrp > product.selling_price && (
-                      <span className="text-sm text-secondary line-through">₹{product.mrp}</span>
-                    )}
-                    <span className="text-xl font-semibold text-primary">
-                      ₹{product.selling_price}
-                    </span>
-                  </div>
-                </div>
-              )}
-              {product.average_rating && product.average_rating > 0 && (
+              {/* Price section removed as requested */}
+              {(product.average_rating ?? 0) > 0 && (
                 <div className="flex items-center gap-3">
                   <span className="text-sm text-secondary w-24">Rating:</span>
                   <div className="flex items-center gap-1">
                     <span className="text-lg font-medium text-foreground">
                       ★ {product.average_rating}
                     </span>
-                    {product.total_reviews && product.total_reviews > 0 && (
+                    {(product.total_reviews ?? 0) > 0 && (
                       <span className="text-sm text-secondary">
                         ({product.total_reviews} reviews)
                       </span>
@@ -413,25 +401,7 @@ export default function ProductDetailPage() {
         </div>
 
         
-        <section className="mt-20">
-          <h2 className="text-2xl font-light text-foreground mb-8">You might also like</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="bg-card rounded-lg p-6 text-center">
-                <div className="aspect-[4/5] bg-muted rounded-lg mb-4"></div>
-                <h3 className="font-medium text-foreground mb-2">Related Product {item}</h3>
-                <p className="text-secondary text-sm mb-3">Luxury wellness product</p>
-                <Link
-                  href="/contact"
-                  className="text-sm text-primary hover:text-primary/80 transition-colors"
-                >
-                  Learn More
-                </Link>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* Similar products section removed as requested */}
       </div>
     </div>
   );
