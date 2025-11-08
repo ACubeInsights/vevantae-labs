@@ -71,7 +71,7 @@ export function CertificatesCarousel({ className = '' }: CertificatesCarouselPro
           duration={25}
           durationOnHover={100}
           paused={hoveredCert !== null}
-          className="w-full py-16 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [mask-size:100%_100%] [-webkit-mask-size:100%_100%]"
+      className="w-full py-px lg:py-px [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [mask-size:100%_100%] [-webkit-mask-size:100%_100%]"
         >
           {certificates.map((cert) => (
             <div

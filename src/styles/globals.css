@@ -65,4 +65,32 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Spacing utilities for consistent vertical rhythm */
+  .section-y {
+    @apply py-16 lg:py-20;
+  }
+  .section-y-tight {
+    @apply py-12 lg:py-16;
+  }
+  .hero-y {
+    @apply py-10 sm:py-12 lg:py-16;
+  }
+  .heading-y {
+    @apply mb-12 lg:mb-16;
+  }
+  .heading-y-tight {
+    @apply mb-10 lg:mb-12;
+  }
+  .grid-gap {
+    @apply gap-12 lg:gap-16;
+  }
+  .grid-gap-tight {
+    @apply gap-10 lg:gap-12;
+  }
+
+  /* Offset utility to reduce header→hero spacing without changing hero internals */
+  .hero-offset {
+    @apply -mt-6 sm:-mt-8 lg:-mt-12;
+  }
 }

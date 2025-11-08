@@ -55,7 +55,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       
-      <section className="relative overflow-hidden bg-background min-h-screen">
+      <section className="relative overflow-hidden bg-background min-h-screen hero-offset">
         
         <div className="absolute inset-0 overflow-hidden">
           
@@ -326,7 +326,6 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 2 }}
         >
-          <span className="text-xs text-accent uppercase tracking-[0.2em] mb-2">Scroll</span>
           <motion.div
             className="w-px h-8 bg-accent/50"
             animate={{ scaleY: [1, 0.5, 1] }}
@@ -336,14 +335,14 @@ export default function Home() {
       </section>
 
       
-      <section className="bg-background py-20 lg:py-24">
+<section className="bg-background pt-px lg:pt-px pb-0 lg:pb-0 lg:-mt-2">
         <div className="container mx-auto px-6 lg:px-8">
           <CertificatesCarousel />
         </div>
       </section>
 
       
-      <section className="py-24 lg:py-32 bg-background">
+      <section className="pt-6 lg:pt-8 pb-24 lg:pb-32 bg-background">
         <div className="w-full px-0">
           
           <motion.div
@@ -533,7 +532,7 @@ export default function Home() {
       </section>
 
       
-      <section className="py-32 lg:py-40 relative overflow-hidden">
+      <section className="pt-4 lg:pt-8 pb-8 lg:pb-12 relative overflow-hidden">
         
         <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/30 to-card/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-muted/20 via-transparent to-background/30" />
@@ -569,52 +568,29 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: 'easeOut' }}
             viewport={{ once: true }}
-            className="text-center mb-20 lg:mb-24"
+            className="text-center mb-16 lg:mb-20"
           >
-            <div className="space-y-6">
+            <div className="space-y-4">
               
-              <div className="flex items-center justify-center gap-6 mb-8">
-                <div className="w-16 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-accent/20 via-accent/30 to-accent/20 rounded-full blur-sm" />
-                  <p className="relative text-xs font-semibold text-accent uppercase tracking-[0.4em] px-6 py-3 border border-accent/40 rounded-full bg-background/60 backdrop-blur-sm shadow-lg">
-                    Targeted Solutions
-                  </p>
-                </div>
-                <div className="w-16 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
-              </div>
-
-              
-              <div className="relative">
-                <h2 className="text-5xl lg:text-7xl font-extralight text-foreground tracking-tight leading-tight">
-                  Shop by
-                  <span className="block italic font-light text-accent/90 mt-3 relative">
-                    Lifestyle
-                    
-                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
-                  </span>
-                </h2>
-
-                
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-1 h-1 bg-accent/60 rounded-full" />
-              </div>
-
-              
-              <div className="relative max-w-3xl mx-auto">
-                <p className="text-xl font-light text-secondary leading-relaxed tracking-wide">
-                  Discover curated wellness solutions tailored to your unique lifestyle needs and
-                  health aspirations.
+              <div className="flex items-center justify-center gap-4 mb-6">
+                <div className="w-8 h-px bg-accent" />
+                <p className="text-xs font-medium text-accent uppercase tracking-[0.3em]">
+                  Targeted Solutions
                 </p>
-
-                
-                <div className="flex items-center justify-center space-x-3 mt-6">
-                  <div className="w-2 h-2 bg-accent/40 rounded-full" />
-                  <div className="w-8 h-px bg-accent/30" />
-                  <div className="w-1 h-1 bg-accent/60 rounded-full" />
-                  <div className="w-8 h-px bg-accent/30" />
-                  <div className="w-2 h-2 bg-accent/40 rounded-full" />
-                </div>
+                <div className="w-8 h-px bg-accent" />
               </div>
+
+              
+              <h2 className="text-4xl lg:text-5xl font-extralight text-foreground tracking-tight">
+                Shop by
+                <span className="block italic font-light text-accent/80 mt-2">Lifestyle</span>
+              </h2>
+
+              
+              <p className="text-lg font-light text-secondary max-w-2xl mx-auto leading-relaxed">
+                Discover curated wellness solutions tailored to your unique lifestyle needs and
+                health aspirations.
+              </p>
             </div>
           </motion.div>
         </div>
@@ -1240,8 +1216,7 @@ export default function Home() {
           </div>
 
           <style jsx>{`
-            @keyframes 
-             {
+            @keyframes scroll {
               from {
                 transform: translateX(0);
               }
@@ -1262,7 +1237,7 @@ export default function Home() {
       </section>
 
       
-      <section className="py-24 lg:py-32 bg-background">
+      <section className="pt-6 lg:pt-12 pb-24 lg:pb-32 bg-background">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1437,17 +1412,19 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center space-y-6 mb-16"
+            className="text-center space-y-4 mb-16"
           >
-            <p className="text-xs font-medium text-accent uppercase tracking-[0.2em]">
-              Latest Insights
-            </p>
-            <h2 className="text-4xl lg:text-5xl font-extralight text-foreground leading-tight tracking-tight">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="w-8 h-px bg-accent" />
+              <p className="text-xs font-medium text-accent uppercase tracking-[0.3em]">
+                Latest Insights
+              </p>
+              <div className="w-8 h-px bg-accent" />
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-extralight text-foreground tracking-tight">
               From our
-              <br />
-              <span className="italic font-light">knowledge hub</span>
+              <span className="block italic font-light text-accent/80 mt-2">knowledge hub</span>
             </h2>
-            <div className="w-16 h-px bg-accent mx-auto" />
           </motion.div>
 
           {loading ? (
