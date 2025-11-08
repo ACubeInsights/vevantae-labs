@@ -32,6 +32,20 @@ function getValidImageUrl(imageUrl: string | undefined): string | null {
   }
 }
 
+// Decide whether to display 1 or 2 tags based on text length to avoid layout issues
+function getTagDisplayCount(benefits: string[] | undefined): number {
+  if (!benefits || benefits.length === 0) return 0;
+  if (benefits.length === 1) return 1;
+  const [t1, t2] = benefits;
+  const len1 = (t1 || '').length;
+  const len2 = (t2 || '').length;
+  // If either tag is very long, or combined length is large, show only one
+  if (len1 >= 20 || len2 >= 20 || len1 + len2 >= 36) {
+    return 1;
+  }
+  return 2;
+}
+
 function ProductsContent() {
   const searchParams = useSearchParams();
   usePageTracking({
@@ -204,7 +218,7 @@ function ProductsContent() {
 
   const ProductSkeleton = () => (
     <div className="bg-white border border-[#E5E5E0] overflow-hidden animate-pulse">
-      <div className="aspect-[4/5] bg-gray-200"></div>
+      <div className="aspect-[16/17] bg-gray-200"></div>
       <div className="p-6">
         <div className="h-4 bg-gray-200 rounded mb-2"></div>
         <div className="h-3 bg-gray-200 rounded mb-4 w-3/4"></div>
@@ -514,7 +528,7 @@ function ProductsContent() {
                       {viewMode === 'grid' ? (
                         <div className="bg-white border border-[#E5E5E0] overflow-hidden hover:border-[#333333] transition-all duration-500 group-hover:-translate-y-1 h-full flex flex-col">
                           
-                          <div className="relative aspect-[4/5] overflow-hidden">
+                          <div className="relative aspect-[16/17] overflow-hidden">
                             <Image
                               src={
                                 getValidImageUrl(product.images?.[0]) ||
@@ -544,41 +558,37 @@ function ProductsContent() {
                           </div>
 
                           
-                          <div className="p-6 flex-1 flex flex-col">
+                          <div className="p-4 flex-1 flex flex-col">
                             <div className="flex-1 min-h-0">
-                              <h3 className="text-lg font-bold text-[#111111] mb-2 group-hover:text-[#A36F40] transition-colors duration-300 line-clamp-2 h-14">
+                              <h3 className="text-lg font-bold text-[#111111] leading-tight mb-1 group-hover:text-[#A36F40] transition-colors duration-300 line-clamp-2 h-12">
                                 {product.name}
                               </h3>
-                              <p className="text-sm text-[#333333] mb-4 line-clamp-3 leading-relaxed h-16">
+                              <p className="text-sm text-[#333333] mb-4 line-clamp-3 leading-relaxed">
                                 {product.description}
                               </p>
 
                               
-                              <div className="h-16 mb-4">
+                              <div className="product-tags mb-3">
                                 {product.health_benefits && product.health_benefits.length > 0 && (
-                                  <div className="flex flex-wrap gap-1.5">
+                                  <div className="flex flex-nowrap gap-1.5 overflow-hidden w-full">
                                     {product.health_benefits
-                                      .slice(0, 3)
+                                      .slice(0, getTagDisplayCount(product.health_benefits))
                                       .map((benefit: string, idx: number) => (
                                         <span
                                           key={idx}
-                                          className="text-xs bg-[#A36F40]/10 text-[#A36F40] px-2.5 py-1 font-bold border border-[#A36F40]/20"
+                                          className="tag-pill text-xs bg-[#A36F40]/10 text-[#A36F40] px-2.5 py-1 font-bold border border-[#A36F40]/20"
                                         >
                                           {benefit}
                                         </span>
                                       ))}
-                                    {product.health_benefits.length > 3 && (
-                                      <span className="text-xs text-[#333333] px-2.5 py-1 font-medium">
-                                        +{product.health_benefits.length - 3} more
-                                      </span>
-                                    )}
+                                    {/* Removed '+N more' indicator as per request */}
                                   </div>
                                 )}
                               </div>
                             </div>
 
                             
-                            <div className="mt-auto pt-4 border-t border-border/50 h-8">
+                            <div className="mt-auto pt-2 border-t border-[#E8E6E0] h-6">
                               {product.age_group && (
                                 <span className="text-xs text-[#333333] uppercase tracking-wider font-medium">
                                   For {product.age_group}
@@ -591,7 +601,7 @@ function ProductsContent() {
                         <div className="bg-white border border-[#E5E5E0] overflow-hidden hover:border-[#333333] transition-all duration-300">
                           <div className="flex flex-col md:flex-row">
                             
-                            <div className="relative w-full md:w-48 h-48 md:h-auto overflow-hidden">
+                            <div className="relative w-full md:w-48 h-[164px] md:h-[164px] overflow-hidden">
                               <Image
                                 src={
                                   getValidImageUrl(product.images?.[0]) ||
@@ -627,29 +637,29 @@ function ProductsContent() {
 
                               
                               {product.health_benefits && product.health_benefits.length > 0 && (
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                  {product.health_benefits
-                                    .slice(0, 4)
-                                    .map((benefit: string, idx: number) => (
-                                      <span
-                                        key={idx}
-                                        className="text-xs bg-[#A36F40]/10 text-[#A36F40] px-3 py-1.5 font-bold border border-[#A36F40]/20"
-                                      >
-                                        {benefit}
-                                      </span>
-                                    ))}
-                                  {product.health_benefits.length > 4 && (
-                                    <span className="text-xs text-[#333333] px-3 py-1.5 font-medium">
-                                      +{product.health_benefits.length - 4} more benefits
-                                    </span>
-                                  )}
+                                <div className="product-tags mb-3">
+                                  <div className="flex flex-nowrap gap-2 overflow-hidden w-full">
+                                    {product.health_benefits
+                                      .slice(0, getTagDisplayCount(product.health_benefits))
+                                      .map((benefit: string, idx: number) => (
+                                        <span
+                                          key={idx}
+                                          className="tag-pill text-xs bg-[#A36F40]/10 text-[#A36F40] px-3 py-1.5 font-bold border border-[#A36F40]/20"
+                                        >
+                                          {benefit}
+                                        </span>
+                                      ))}
+                                    {/* Removed '+N more' indicator in list view */}
+                                  </div>
                                 </div>
                               )}
 
                               
                               {product.age_group && (
-                                <div className="text-xs text-[#333333] uppercase tracking-wider font-medium">
-                                  Suitable for {product.age_group}
+                                <div className="mt-2 pt-2 border-t border-[#E8E6E0]">
+                                  <span className="text-xs text-[#333333] uppercase tracking-wider font-medium">
+                                    Suitable for {product.age_group}
+                                  </span>
                                 </div>
                               )}
                             </div>

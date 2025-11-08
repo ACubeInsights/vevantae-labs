@@ -93,4 +93,37 @@
   .hero-offset {
     @apply -mt-6 sm:-mt-8 lg:-mt-12;
   }
+
+  /* Product tags: fixed-height, single-line with safe overflow */
+  .product-tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;              /* approx Tailwind gap-1.5 */
+    height: 48px;          /* fixed to prevent overlap with age group */
+    overflow: hidden;      /* hide overflow cleanly */
+    flex-wrap: nowrap;     /* keep tags on one line */
+  }
+  .tag-pill {
+    display: inline-flex;
+    align-items: center;     /* vertically center tag text */
+    vertical-align: middle;  /* align nicely within the row */
+    line-height: 1;          /* avoid extra top/bottom leading */
+    max-width: calc(50% - 6px); /* ensure two tags fit side-by-side */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;    /* truncate long tag text */
+  }
+
+  /* When only one tag is shown, allow full width without truncation */
+  .product-tags .tag-pill:only-child {
+    max-width: 100%;
+    overflow: visible;
+    text-overflow: clip;
+  }
+  @media (min-width: 640px) { /* sm */
+    .product-tags { height: 44px; }
+  }
+  @media (min-width: 1024px) { /* lg */
+    .product-tags { height: 44px; }
+  }
 }
