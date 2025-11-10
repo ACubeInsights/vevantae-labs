@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 
@@ -20,15 +21,24 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-white/40 backdrop-blur-3xl backdrop-saturate-200">
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-24">
           
           <Link href="/" className="flex-shrink-0">
-            <span
-              className="text-xl font-light text-gray-900 tracking-wide drop-shadow-lg"
-              style={{ textShadow: '0 0 8px rgba(255,255,255,0.8)' }}
-            >
-              Vevantae Labs
-            </span>
+            <div className="flex items-center gap-4">
+              <Image
+                src="/Vevantae_logo_cropped.svg"
+                alt="Vevantae Labs Logo"
+                width={64}
+                height={64}
+                className="drop-shadow-lg"
+              />
+              <span
+                className="text-2xl font-light text-gray-900 tracking-wide drop-shadow-lg"
+                style={{ textShadow: '0 0 8px rgba(255,255,255,0.8)' }}
+              >
+                Vevantae Labs
+              </span>
+            </div>
           </Link>
 
           
