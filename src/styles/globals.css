@@ -126,4 +126,15 @@
   @media (min-width: 1024px) { /* lg */
     .product-tags { height: 44px; }
   }
+
+  /* Card tag–separator spacing helpers using rem for responsiveness */
+  .card-tags-spacing {
+    margin-top: 0.5rem;   /* 8px at base */
+    margin-bottom: 0.5rem;/* equal spacing above and below tags */
+  }
+  .card-separator-spacing {
+    margin-top: 0;        /* prevent variable gaps */
+    padding-top: 0.5rem;  /* equal space above separator content */
+    padding-bottom: 0;    /* keep bottom tight under Read More */
+  }
 }
