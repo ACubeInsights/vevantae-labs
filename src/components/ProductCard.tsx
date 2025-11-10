@@ -118,28 +118,15 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
           )}
 
           <div className="pt-4 mt-auto">
-            <div className="flex items-center justify-between mb-2">
-              {product.mrp && product.selling_price && product.mrp > product.selling_price && (
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-secondary line-through">₹{product.mrp}</span>
-                  <span className="text-lg font-semibold text-primary">
-                    ₹{product.selling_price}
-                  </span>
-                </div>
-              )}
-              {(!product.mrp || product.mrp <= product.selling_price) && (
-                <span className="text-lg font-semibold text-primary">₹{product.selling_price}</span>
-              )}
-              {product.average_rating && product.average_rating > 0 && (
-                <div className="flex items-center gap-1">
-                  <span className="text-sm text-secondary">★</span>
-                  <span className="text-sm text-secondary">{product.average_rating}</span>
-                  {product.total_reviews && product.total_reviews > 0 && (
-                    <span className="text-xs text-secondary">({product.total_reviews})</span>
-                  )}
-                </div>
-              )}
-            </div>
+            {product.average_rating && product.average_rating > 0 && (
+              <div className="flex items-center gap-1 mb-2">
+                <span className="text-sm text-secondary">★</span>
+                <span className="text-sm text-secondary">{product.average_rating}</span>
+                {product.total_reviews && product.total_reviews > 0 && (
+                  <span className="text-xs text-secondary">({product.total_reviews})</span>
+                )}
+              </div>
+            )}
 
             <Button
               variant="outline"

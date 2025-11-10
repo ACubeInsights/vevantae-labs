@@ -14,8 +14,6 @@ export interface Product {
   product_type: string | null;
   net_quantity: string | null;
   serving_info: string | null;
-  mrp: number | null;
-  selling_price: number;
   age_group: string | null;
   gender: string | null;
   health_benefits: string[] | null;

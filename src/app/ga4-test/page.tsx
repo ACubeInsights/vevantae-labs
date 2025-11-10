@@ -18,13 +18,14 @@ export default function GoogleAnalyticsTestPage() {
   }
 
   const handleTestProductView = () => {
-    trackViewItem('INR', 899, [{
-      item_id: 'test_product_123',
-      item_name: 'Test Ashwagandha',
-      item_category: 'ayurvedic',
-      price: 899,
-      quantity: 1
-    }])
+    trackViewItem([
+      {
+        item_id: 'test_product_123',
+        item_name: 'Test Ashwagandha',
+        item_category: 'ayurvedic',
+        quantity: 1
+      }
+    ])
     alert('Product view event sent to Google Analytics!')
   }
 

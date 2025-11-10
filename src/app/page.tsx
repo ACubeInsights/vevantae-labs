@@ -1274,7 +1274,7 @@ export default function Home() {
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 lg:px-12">
               {featuredProducts.map((product, index) => (
                 <motion.div
                   key={product.id}
@@ -1282,10 +1282,10 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   viewport={{ once: true }}
-                  className="group cursor-pointer h-full"
+                  className="group cursor-pointer h-full transform scale-[0.8] origin-top"
                 >
                   <Link href={`/products/${product.id}`} className="block h-full">
-                    <div className="space-y-6 h-full flex flex-col bg-card border border-border overflow-hidden transition-all duration-500 hover:border-[#333333] group-hover:-translate-y-1">
+                    <div className="space-y-4 h-full flex flex-col bg-card border border-border overflow-hidden transition-all duration-500 hover:border-[#333333] group-hover:-translate-y-1">
                       <div className="relative aspect-[4/5] bg-muted overflow-hidden">
                         <Image
                           src={
@@ -1308,17 +1308,21 @@ export default function Home() {
                         )}
                       </div>
 
-                      <div className="space-y-3 flex-1 pl-6 pr-6 pb-6">
-                        <h3 className="text-xl font-light text-foreground group-hover:text-accent transition-colors duration-300 leading-tight">
+                      <div className="space-y-3 flex-1 pl-5 pr-5 pb-5">
+                        <h3 className="text-lg font-light text-foreground group-hover:text-accent transition-colors duration-300 leading-tight">
                           {product.name || 'Untitled Product'}
                         </h3>
-                        <p className="text-sm font-light text-muted-foreground leading-relaxed">
+                        <p className="text-sm font-light text-muted-foreground line-clamp-2">
                           {product.description || 'No description available'}
                         </p>
-                        {product.net_quantity && (
-                          <p className="text-lg font-medium text-foreground">
-                            {product.net_quantity}
-                          </p>
+                        {(product.average_rating ?? 0) > 0 && (
+                          <div className="pt-2 flex items-center gap-1 text-secondary">
+                            <span className="text-sm">★</span>
+                            <span className="text-sm">{product.average_rating}</span>
+                            {(product.total_reviews ?? 0) > 0 && (
+                              <span className="text-xs">({product.total_reviews})</span>
+                            )}
+                          </div>
                         )}
                       </div>
                     </div>

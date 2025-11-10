@@ -191,32 +191,25 @@ type GAItem = {
   item_brand?: string
   item_category?: string
   item_variant?: string
-  price?: number
   quantity?: number
   [key: string]: string | number | boolean | null | undefined
 }
 
-export const trackPurchase = (transactionId: string, value: number, currency: string = 'INR', items: GAItem[]) => {
+export const trackPurchase = (transactionId: string, items: GAItem[]) => {
   trackEvent('purchase', {
     transaction_id: transactionId,
-    value,
-    currency,
     items
   })
 }
 
-export const trackAddToCart = (currency: string = 'INR', value: number, items: GAItem[]) => {
+export const trackAddToCart = (items: GAItem[]) => {
   trackEvent('add_to_cart', {
-    currency,
-    value,
     items
   })
 }
 
-export const trackViewItem = (currency: string = 'INR', value: number, items: GAItem[]) => {
+export const trackViewItem = (items: GAItem[]) => {
   trackEvent('view_item', {
-    currency,
-    value,
     items
   })
 }
