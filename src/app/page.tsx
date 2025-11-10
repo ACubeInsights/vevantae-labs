@@ -1237,14 +1237,14 @@ export default function Home() {
       </section>
 
       
-      <section className="pt-6 lg:pt-12 pb-24 lg:pb-32 bg-background">
+      <section className="pt-6 lg:pt-12 pb-12 lg:pb-16 bg-background">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="mb-20 px-6 lg:px-12"
+            className="mb-8 px-6 lg:px-12"
           >
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
               <div className="space-y-4">
@@ -1335,7 +1335,7 @@ export default function Home() {
       </section>
 
       
-      <section className="py-24 lg:py-32 bg-background">
+      <section className="pt-8 lg:pt-12 pb-24 lg:pb-32 bg-background">
         <div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center px-6 lg:px-12">
             
