@@ -54,15 +54,15 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      
+
       <section className="relative overflow-hidden bg-background min-h-screen hero-offset">
-        
+
         <div className="absolute inset-0 overflow-hidden">
-          
+
           <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/20 to-accent/5" />
           <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-accent/3 to-muted/10" />
 
-          
+
           {[...Array(12)].map((_, i) => {
             const positions = [
               { left: 15, top: 20 },
@@ -104,7 +104,7 @@ export default function Home() {
             );
           })}
 
-          
+
           <motion.div
             className="absolute top-1/4 right-1/4 w-32 h-32 border border-accent/10 rotate-45"
             animate={{ rotate: [45, 135, 45] }}
@@ -119,7 +119,7 @@ export default function Home() {
 
         <div className="relative z-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 min-h-screen max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-            
+
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -228,7 +228,7 @@ export default function Home() {
               </div>
             </motion.div>
 
-            
+
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -236,7 +236,7 @@ export default function Home() {
               className="lg:col-span-6 xl:col-span-7 relative flex items-center justify-center z-5 order-1 lg:order-2 lg:absolute lg:inset-0 lg:w-full lg:h-full"
             >
               <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-full lg:w-3/5 lg:ml-auto aspect-[4/5] lg:aspect-[3/4] lg:h-4/5 lg:self-center">
-                
+
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-muted/20 to-accent/5 rounded-sm lg:opacity-60"
                   animate={{
@@ -249,7 +249,7 @@ export default function Home() {
                   transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
                 />
 
-                
+
                 <div className="absolute inset-0 p-2 sm:p-4">
                   <motion.div
                     className="relative w-full h-full group border-2 border-accent/20 rounded-sm overflow-hidden"
@@ -269,7 +269,7 @@ export default function Home() {
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
                     />
 
-                    
+
                     <motion.div
                       className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-all duration-700"
                       whileHover={{
@@ -277,7 +277,7 @@ export default function Home() {
                       }}
                     />
 
-                    
+
                     <motion.div
                       className="absolute top-8 right-8 w-3 h-3 bg-accent rounded-full shadow-lg z-20"
                       animate={{
@@ -297,7 +297,7 @@ export default function Home() {
                   </motion.div>
                 </div>
 
-                
+
                 <motion.div
                   className="absolute top-1/4 -right-4 w-16 h-16 border border-accent/20 rounded-full"
                   animate={{
@@ -319,7 +319,7 @@ export default function Home() {
           </div>
         </div>
 
-        
+
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
           initial={{ opacity: 0, y: 20 }}
@@ -341,10 +341,10 @@ export default function Home() {
         </div>
       </section>
 
-      
+
       <section className="pt-6 lg:pt-8 pb-24 lg:pb-32 bg-background">
         <div className="w-full px-0">
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -372,7 +372,7 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-            
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -381,57 +381,63 @@ export default function Home() {
             >
               <Link href="/products?category=ayurvedic" className="group block">
                 <div className="relative aspect-square overflow-hidden bg-accent transition-all duration-700 group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] group-hover:scale-[1.02]">
-                  
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent via-accent/80 to-accent/60" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 via-transparent to-transparent" />
 
-                  
+                  {/* Background Image */}
+                  <Image
+                    src="/images/ayurvedic-bg.jpg"
+                    alt="Ayurvedic Solutions"
+                    fill
+                    className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+
+                  {/* Overlays for readability and mood */}
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-70 transition-opacity duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-transparent opacity-40" />
+
+                  {/* Decorative elements */}
                   <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]" />
 
-                  
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-card/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-
-                  
+                  {/* Border frame effect */}
                   <div className="absolute inset-0 bottom-2/3">
-                    <div className="absolute inset-4 border border-card/20 rounded-sm" />
-                    <div className="absolute top-6 left-6 w-8 h-8 border-l-2 border-t-2 border-card/30" />
-                    <div className="absolute top-6 right-6 w-8 h-8 border-r-2 border-t-2 border-card/30" />
+                    <div className="absolute inset-4 border border-white/20 rounded-sm" />
+                    <div className="absolute top-6 left-6 w-8 h-8 border-l-2 border-t-2 border-white/40" />
+                    <div className="absolute top-6 right-6 w-8 h-8 border-r-2 border-t-2 border-white/40" />
                   </div>
 
-                  
+                  {/* Content */}
                   <div className="relative h-full flex flex-col justify-end items-center text-center p-8 lg:p-10">
                     <div className="space-y-6 pb-20">
                       <div className="space-y-3">
-                        
-                        <div className="w-16 h-px bg-gradient-to-r from-transparent via-card/60 to-transparent mx-auto" />
 
-                        <h3 className="text-3xl lg:text-4xl font-thin text-card tracking-[0.02em] leading-tight">
-                          <span className="bg-gradient-to-r from-card via-card/95 to-card/90 bg-clip-text text-transparent">
-                            Ayurvedic Solutions
-                          </span>
+                        <div className="w-16 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent mx-auto" />
+
+                        <h3 className="text-3xl lg:text-4xl font-thin text-white tracking-[0.02em] leading-tight drop-shadow-sm">
+                          Ayurvedic Solutions
                         </h3>
-                        <p className="text-card/75 font-light leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide">
+                        <p className="text-white/80 font-light leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide drop-shadow-sm">
                           Ancient wisdom meets modern science in our traditional formulations.
                         </p>
 
-                        
+
                         <div className="flex items-center justify-center space-x-2 pt-2">
-                          <div className="w-1 h-1 bg-card/40 rounded-full" />
-                          <div className="w-2 h-px bg-card/30" />
-                          <div className="w-1 h-1 bg-card/40 rounded-full" />
+                          <div className="w-1 h-1 bg-white/60 rounded-full" />
+                          <div className="w-2 h-px bg-white/50" />
+                          <div className="w-1 h-1 bg-white/60 rounded-full" />
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  
+                  {/* Button */}
                   <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
                     <div className="relative group/btn">
-                      
-                      <div className="absolute inset-0 bg-card/10 backdrop-blur-sm border border-card/30 rounded-sm shadow-lg" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-card/5 via-card/10 to-card/5 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
 
-                      <div className="relative flex items-center justify-center px-10 py-4 text-card group-hover/btn:text-card/90 transition-all duration-300">
+                      <div className="absolute inset-0 bg-white/10 backdrop-blur-md border border-white/30 rounded-sm shadow-lg" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+
+                      <div className="relative flex items-center justify-center px-10 py-4 text-white group-hover/btn:text-white transition-all duration-300">
                         <span className="text-xs font-medium uppercase tracking-[0.2em] mr-3">
                           Explore Collection
                         </span>
@@ -439,18 +445,11 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-
-                  
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-t from-card/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ duration: 0.4 }}
-                  />
                 </div>
               </Link>
             </motion.div>
 
-            
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -459,57 +458,63 @@ export default function Home() {
             >
               <Link href="/products?category=nutraceuticals" className="group block">
                 <div className="relative aspect-square overflow-hidden bg-background transition-all duration-700 group-hover:shadow-[0_25px_50px_-12px_rgba(139,69,19,0.2)] group-hover:scale-[1.02]">
-                  
-                  <div className="absolute inset-0 bg-gradient-to-br from-background via-muted to-muted/80" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-accent/10 via-transparent to-transparent" />
 
-                  
-                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,rgba(139,69,19,0.1)_1px,transparent_1px)] bg-[length:20px_20px]" />
+                  {/* Background Image */}
+                  <Image
+                    src="/images/nutraceuticals-bg-v3.jpg"
+                    alt="Nutraceuticals"
+                    fill
+                    className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
 
-                  
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                  {/* Overlays for readability and mood */}
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-70 transition-opacity duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-transparent opacity-40" />
 
-                  
+                  {/* Decorative elements */}
+                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]" />
+
+                  {/* Border frame effect */}
                   <div className="absolute inset-0 bottom-2/3">
-                    <div className="absolute inset-4 border border-accent/40 rounded-sm" />
-                    <div className="absolute top-6 left-6 w-8 h-8 border-l-2 border-t-2 border-accent/50" />
-                    <div className="absolute top-6 right-6 w-8 h-8 border-r-2 border-t-2 border-accent/50" />
+                    <div className="absolute inset-4 border border-white/20 rounded-sm" />
+                    <div className="absolute top-6 left-6 w-8 h-8 border-l-2 border-t-2 border-white/40" />
+                    <div className="absolute top-6 right-6 w-8 h-8 border-r-2 border-t-2 border-white/40" />
                   </div>
 
-                  
+                  {/* Content */}
                   <div className="relative h-full flex flex-col justify-end items-center text-center p-8 lg:p-10">
                     <div className="space-y-6 pb-20">
                       <div className="space-y-3">
-                        
-                        <div className="w-16 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent mx-auto" />
 
-                        <h3 className="text-3xl lg:text-4xl font-thin text-foreground tracking-[0.02em] leading-tight">
-                          <span className="bg-gradient-to-r from-accent via-accent/90 to-accent/80 bg-clip-text text-transparent">
-                            Nutraceuticals
-                          </span>
+                        <div className="w-16 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent mx-auto" />
+
+                        <h3 className="text-3xl lg:text-4xl font-thin text-white tracking-[0.02em] leading-tight drop-shadow-sm">
+                          Nutraceuticals
                         </h3>
-                        <p className="text-secondary font-light leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide">
+                        <p className="text-white/80 font-light leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide drop-shadow-sm">
                           Scientifically-backed supplements for optimal health and vitality.
                         </p>
 
-                        
+
                         <div className="flex items-center justify-center space-x-2 pt-2">
-                          <div className="w-1 h-1 bg-accent/60 rounded-full" />
-                          <div className="w-2 h-px bg-accent/50" />
-                          <div className="w-1 h-1 bg-accent/60 rounded-full" />
+                          <div className="w-1 h-1 bg-white/60 rounded-full" />
+                          <div className="w-2 h-px bg-white/50" />
+                          <div className="w-1 h-1 bg-white/60 rounded-full" />
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  
+                  {/* Button */}
                   <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
                     <div className="relative group/btn">
-                      
-                      <div className="absolute inset-0 bg-accent/30 backdrop-blur-sm border border-accent/40 rounded-sm shadow-lg" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-accent/20 via-accent/30 to-accent/20 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
 
-                      <div className="relative flex items-center justify-center px-10 py-4 text-foreground group-hover/btn:text-accent transition-all duration-300">
+                      <div className="absolute inset-0 bg-white/10 backdrop-blur-md border border-white/30 rounded-sm shadow-lg" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+
+                      <div className="relative flex items-center justify-center px-10 py-4 text-white group-hover/btn:text-white transition-all duration-300">
                         <span className="text-xs font-medium uppercase tracking-[0.2em] mr-3">
                           Explore Collection
                         </span>
@@ -517,13 +522,6 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-
-                  
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ duration: 0.4 }}
-                  />
                 </div>
               </Link>
             </motion.div>
@@ -534,7 +532,7 @@ export default function Home() {
       
       <LifestyleCategoriesCarousel />
 
-      
+
       <section className="pt-6 lg:pt-12 pb-12 lg:pb-16 bg-background">
         <div className="container mx-auto px-4">
           <motion.div
@@ -596,7 +594,7 @@ export default function Home() {
                         />
                         <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-300" />
 
-                        
+
                         {product.category && (
                           <div className="absolute top-4 left-4">
                             <span className="bg-[#111111] text-[#FAF9F6] px-3 py-1.5 text-xs uppercase tracking-wider font-bold">
@@ -632,11 +630,11 @@ export default function Home() {
         </div>
       </section>
 
-      
+
       <section className="pt-8 lg:pt-12 pb-24 lg:pb-32 bg-background">
         <div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center px-6 lg:px-12">
-            
+
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -673,7 +671,7 @@ export default function Home() {
               </Link>
             </motion.div>
 
-            
+
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -690,7 +688,7 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-primary/10" />
 
-                
+
                 <div className="absolute bottom-8 left-8 right-8">
                   <div className="bg-black/70 backdrop-blur-sm p-6 space-y-3 rounded-sm shadow-lg">
                     <h4 className="text-lg font-medium text-white">Sustainable Practices</h4>
@@ -706,7 +704,7 @@ export default function Home() {
         </div>
       </section>
 
-      
+
       <section className="py-24 lg:py-32 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
@@ -770,7 +768,7 @@ export default function Home() {
         </div>
       </section>
 
-      
+
       <section className="py-24 lg:py-32 bg-[#FAF9F6]">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
@@ -791,14 +789,14 @@ export default function Home() {
             <div className="w-16 h-px bg-accent mx-auto" />
           </motion.div>
 
-          
+
           <div className="text-center text-muted-foreground">
             <p>Customer testimonials coming soon...</p>
           </div>
         </div>
       </section>
 
-      
+
       <section className="py-24 lg:py-32 bg-primary text-primary-foreground">
         <div>
           <motion.div
