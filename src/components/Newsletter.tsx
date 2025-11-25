@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
+import { trackNewsletterSignup, trackEvent } from '@/components/GoogleAnalytics';
 
 export function Newsletter() {
   const [email, setEmail] = useState('');
@@ -16,10 +17,13 @@ export function Newsletter() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
+      // Simulate success path
+      trackNewsletterSignup('newsletter_component');
       setMessage('Thank you for subscribing!');
       setEmail('');
     } catch {
       setMessage('Something went wrong. Please try again.');
+      trackEvent('newsletter_error', { component: 'newsletter_component' });
     } finally {
       setIsSubmitting(false);
     }
@@ -51,15 +55,19 @@ export function Newsletter() {
           </Button>
         </form>
 
-        {message && (
-          <p
-            className={`text-sm ${
-              message.includes('Thank you') ? 'text-olive' : 'text-terracotta'
-            }`}
-          >
-            {message}
-          </p>
-        )}
+        <p
+          aria-live="polite"
+          aria-atomic="true"
+          className={`min-h-[1.25rem] text-sm transition-colors ${
+            message
+              ? message.includes('Thank you')
+                ? 'text-olive'
+                : 'text-terracotta'
+              : 'text-secondary/60'
+          }`}
+        >
+          {message || 'Enter your email to subscribe.'}
+        </p>
       </div>
     </div>
   );
