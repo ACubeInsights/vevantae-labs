@@ -408,10 +408,10 @@ export default function Home() {
 
                         <div className="w-16 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent mx-auto" />
 
-                        <h3 className="text-3xl lg:text-4xl font-medium text-white tracking-[0.02em] leading-tight drop-shadow-lg">
+                        <h3 className="font-sans text-3xl lg:text-4xl font-medium text-white tracking-tight leading-tight drop-shadow-lg">
                           Ayurvedic Solutions
                         </h3>
-                        <p className="text-white font-normal leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide drop-shadow-md">
+                        <p className="font-sans text-white font-normal leading-relaxed max-w-sm mx-auto text-sm lg:text-base drop-shadow-md">
                           Ancient wisdom meets modern science in our traditional formulations.
                         </p>
 
@@ -479,10 +479,10 @@ export default function Home() {
 
                         <div className="w-16 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent mx-auto" />
 
-                        <h3 className="text-3xl lg:text-4xl font-medium text-white tracking-[0.02em] leading-tight drop-shadow-lg">
+                        <h3 className="font-sans text-3xl lg:text-4xl font-medium text-white tracking-tight leading-tight drop-shadow-lg">
                           Nutraceuticals
                         </h3>
-                        <p className="text-white font-normal leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide drop-shadow-md">
+                        <p className="font-sans text-white font-normal leading-relaxed max-w-sm mx-auto text-sm lg:text-base drop-shadow-md">
                           Scientifically-backed supplements for optimal health and vitality.
                         </p>
 
