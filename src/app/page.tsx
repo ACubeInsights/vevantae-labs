@@ -399,32 +399,27 @@ export default function Home() {
                   {/* Decorative elements */}
                   <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]" />
 
-                  {/* Border frame effect */}
-                  <div className="absolute inset-0 bottom-2/3">
-                    <div className="absolute inset-4 border border-white/20 rounded-sm" />
-                    <div className="absolute top-6 left-6 w-8 h-8 border-l-2 border-t-2 border-white/40" />
-                    <div className="absolute top-6 right-6 w-8 h-8 border-r-2 border-t-2 border-white/40" />
-                  </div>
+
 
                   {/* Content */}
                   <div className="relative h-full flex flex-col justify-end items-center text-center p-8 lg:p-10">
-                    <div className="space-y-6 pb-20">
+                    <div className="space-y-6 pb-24">
                       <div className="space-y-3">
 
                         <div className="w-16 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent mx-auto" />
 
-                        <h3 className="text-3xl lg:text-4xl font-thin text-white tracking-[0.02em] leading-tight drop-shadow-sm">
+                        <h3 className="text-3xl lg:text-4xl font-medium text-white tracking-[0.02em] leading-tight drop-shadow-lg">
                           Ayurvedic Solutions
                         </h3>
-                        <p className="text-white/80 font-light leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide drop-shadow-sm">
+                        <p className="text-white font-normal leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide drop-shadow-md">
                           Ancient wisdom meets modern science in our traditional formulations.
                         </p>
 
 
                         <div className="flex items-center justify-center space-x-2 pt-2">
-                          <div className="w-1 h-1 bg-white/60 rounded-full" />
-                          <div className="w-2 h-px bg-white/50" />
-                          <div className="w-1 h-1 bg-white/60 rounded-full" />
+                          <div className="w-1 h-1 bg-white/80 rounded-full" />
+                          <div className="w-2 h-px bg-white/70" />
+                          <div className="w-1 h-1 bg-white/80 rounded-full" />
                         </div>
                       </div>
                     </div>
@@ -476,32 +471,26 @@ export default function Home() {
                   {/* Decorative elements */}
                   <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]" />
 
-                  {/* Border frame effect */}
-                  <div className="absolute inset-0 bottom-2/3">
-                    <div className="absolute inset-4 border border-white/20 rounded-sm" />
-                    <div className="absolute top-6 left-6 w-8 h-8 border-l-2 border-t-2 border-white/40" />
-                    <div className="absolute top-6 right-6 w-8 h-8 border-r-2 border-t-2 border-white/40" />
-                  </div>
 
                   {/* Content */}
                   <div className="relative h-full flex flex-col justify-end items-center text-center p-8 lg:p-10">
-                    <div className="space-y-6 pb-20">
+                    <div className="space-y-6 pb-24">
                       <div className="space-y-3">
 
                         <div className="w-16 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent mx-auto" />
 
-                        <h3 className="text-3xl lg:text-4xl font-thin text-white tracking-[0.02em] leading-tight drop-shadow-sm">
+                        <h3 className="text-3xl lg:text-4xl font-medium text-white tracking-[0.02em] leading-tight drop-shadow-lg">
                           Nutraceuticals
                         </h3>
-                        <p className="text-white/80 font-light leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide drop-shadow-sm">
+                        <p className="text-white font-normal leading-relaxed max-w-sm mx-auto text-sm lg:text-base tracking-wide drop-shadow-md">
                           Scientifically-backed supplements for optimal health and vitality.
                         </p>
 
 
                         <div className="flex items-center justify-center space-x-2 pt-2">
-                          <div className="w-1 h-1 bg-white/60 rounded-full" />
-                          <div className="w-2 h-px bg-white/50" />
-                          <div className="w-1 h-1 bg-white/60 rounded-full" />
+                          <div className="w-1 h-1 bg-white/80 rounded-full" />
+                          <div className="w-2 h-px bg-white/70" />
+                          <div className="w-1 h-1 bg-white/80 rounded-full" />
                         </div>
                       </div>
                     </div>
