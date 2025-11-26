@@ -9,10 +9,10 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 import { ArrowRight, Plus } from 'lucide-react';
+import { InfiniteSlider } from '@/components/ui/infinite-slider';
 import { getProducts, Product, getBlogPosts, BlogPost } from '@/lib/supabase';
 import { BlogCard } from '@/components/BlogCard';
 import { CertificatesCarousel } from '@/components/CertificatesCarousel';
-import { LifestyleCategoriesCarousel } from '@/components/LifestyleCategoriesCarousel';
 
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
@@ -127,72 +127,94 @@ export default function Home() {
               className="lg:col-span-12 xl:col-span-12 flex flex-col justify-center py-16 sm:py-20 lg:py-32 lg:pr-8 xl:pr-16 relative z-30 order-2 lg:order-1 lg:max-w-2xl"
             >
               <div className="space-y-16">
-                <div className="space-y-10">
-                  <div className="space-y-6">
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8, delay: 0.3 }}
-                      className="flex items-center gap-4"
-                    >
-                      <div className="w-8 h-px bg-accent" />
-                      <p className="text-xs font-medium text-accent uppercase tracking-[0.3em]">
-                        New Collection
-                      </p>
-                    </motion.div>
+                {/* Mobile Tile Wrapper / Desktop Text Container */}
+                <div className="relative min-h-[600px] sm:min-h-[700px] lg:min-h-0 lg:aspect-auto flex flex-col justify-center items-start text-left p-6 sm:p-10 lg:p-0 lg:block lg:text-left lg:bg-transparent">
 
-                    <motion.h1
-                      className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight text-foreground leading-[0.85] tracking-tight"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 1.5, delay: 0.5 }}
-                    >
-                      <motion.span
-                        initial={{ y: 30, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 0.7 }}
-                        className="block"
-                      >
-                        Formulations
-                      </motion.span>
-                      <motion.span
-                        initial={{ y: 30, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 0.9 }}
-                        className="block italic font-light text-accent/80"
-                      >
-                        for the
-                      </motion.span>
-                      <motion.span
-                        initial={{ y: 30, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 1.1 }}
-                        className="block relative"
-                      >
-                        curious
-                        <motion.div
-                          className="absolute -bottom-2 left-0 h-px bg-accent"
-                          initial={{ width: 0 }}
-                          animate={{ width: '60%' }}
-                          transition={{ duration: 1, delay: 1.5 }}
-                        />
-                      </motion.span>
-                    </motion.h1>
+                  {/* Mobile Background Image (Hidden on Desktop) */}
+                  <div className="absolute inset-0 lg:hidden z-0">
+                    <div className="relative w-full h-full border-2 border-accent/20 rounded-sm overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent z-10" />
+                      <div className="absolute inset-0 bg-[#F1E5D4]/50 mix-blend-screen z-10 pointer-events-none" />
+                      <div className="absolute inset-0 bg-[rgba(139,115,85,0.28)] mix-blend-soft-light z-10 pointer-events-none" />
+                      <div className="absolute inset-0 bg-[#F3E8D8]/35 mix-blend-screen z-20 pointer-events-none" />
+                      <Image
+                        src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Soft beige minimalist texture background"
+                        fill
+                        className="object-cover shadow-2xl opacity-100 brightness-110"
+                        priority
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                      />
+                    </div>
                   </div>
 
-                  <motion.p
-                    className="text-lg sm:text-xl font-light text-secondary leading-relaxed max-w-lg tracking-wide"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.3 }}
-                  >
-                    Explore our collection of meticulously crafted formulations, each designed to
-                    elevate the everyday ritual into something extraordinary.
-                  </motion.p>
+                  <div className="relative z-10 space-y-10 w-full">
+                    <div className="space-y-6">
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.3 }}
+                        className="flex items-center justify-start gap-4"
+                      >
+                        <div className="w-8 h-px bg-accent" />
+                        <p className="text-xs font-medium text-accent uppercase tracking-[0.3em]">
+                          New Collection
+                        </p>
+                      </motion.div>
+
+                      <motion.h1
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight text-foreground leading-[0.85] tracking-tight"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1.5, delay: 0.5 }}
+                      >
+                        <motion.span
+                          initial={{ y: 30, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ duration: 0.8, delay: 0.7 }}
+                          className="block"
+                        >
+                          Formulations
+                        </motion.span>
+                        <motion.span
+                          initial={{ y: 30, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ duration: 0.8, delay: 0.9 }}
+                          className="block italic font-light text-accent/80"
+                        >
+                          for the
+                        </motion.span>
+                        <motion.span
+                          initial={{ y: 30, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ duration: 0.8, delay: 1.1 }}
+                          className="block relative"
+                        >
+                          curious
+                          <motion.div
+                            className="absolute -bottom-2 left-0 h-px bg-accent"
+                            initial={{ width: 0 }}
+                            animate={{ width: '60%' }}
+                            transition={{ duration: 1, delay: 1.5 }}
+                          />
+                        </motion.span>
+                      </motion.h1>
+                    </div>
+
+                    <motion.p
+                      className="text-lg sm:text-xl font-light text-secondary leading-relaxed max-w-lg mr-auto lg:mx-0 tracking-wide"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 1.3 }}
+                    >
+                      Explore our collection of meticulously crafted formulations, each designed to
+                      elevate the everyday ritual into something extraordinary.
+                    </motion.p>
+                  </div>
                 </div>
 
                 <motion.div
-                  className="flex flex-col sm:flex-row gap-6"
+                  className="flex flex-col sm:flex-row gap-6 px-6 sm:px-10 lg:px-0 justify-start"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 1.6 }}
@@ -233,7 +255,7 @@ export default function Home() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.4, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="lg:col-span-6 xl:col-span-7 relative flex items-center justify-center z-5 order-1 lg:order-2 lg:absolute lg:inset-0 lg:w-full lg:h-full"
+              className="hidden lg:flex lg:col-span-6 xl:col-span-7 relative items-center justify-center z-5 order-1 lg:order-2 lg:absolute lg:inset-0 lg:w-full lg:h-full"
             >
               <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-full lg:w-3/5 lg:ml-auto aspect-[4/5] lg:aspect-[3/4] lg:h-4/5 lg:self-center">
 
@@ -332,9 +354,9 @@ export default function Home() {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
-  </section>
+      </section>
 
-      
+
       <section className="bg-background pt-px lg:pt-px pb-0 lg:pb-0 lg:-mt-2">
         <div className="container mx-auto px-6 lg:px-8">
           <CertificatesCarousel />
@@ -518,8 +540,710 @@ export default function Home() {
         </div>
       </section>
 
-      
-      <LifestyleCategoriesCarousel />
+
+      <section className="pt-4 lg:pt-8 pb-8 lg:pb-12 relative overflow-hidden">
+
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/30 to-card/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-muted/20 via-transparent to-background/30" />
+
+
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23111111' fill-opacity='0.4'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3Ccircle cx='53' cy='53' r='1'/%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
+
+
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/10 to-transparent animate-pulse" />
+        </div>
+
+
+        <div className="absolute inset-0 opacity-[0.02]">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 25% 25%, hsl(var(--accent)) 2px, transparent 2px), radial-gradient(circle at 75% 75%, hsl(var(--secondary)) 1px, transparent 1px)`,
+              backgroundSize: '80px 80px, 40px 40px',
+            }}
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+            viewport={{ once: true }}
+            className="text-center mb-16 lg:mb-20"
+          >
+            <div className="space-y-4">
+
+              <div className="flex items-center justify-center gap-4 mb-6">
+                <div className="w-8 h-px bg-accent" />
+                <p className="text-xs font-medium text-accent uppercase tracking-[0.3em]">
+                  Targeted Solutions
+                </p>
+                <div className="w-8 h-px bg-accent" />
+              </div>
+
+
+              <h2 className="text-4xl lg:text-5xl font-extralight text-foreground tracking-tight">
+                Shop by
+                <span className="block italic font-light text-accent/80 mt-2">Lifestyle</span>
+              </h2>
+
+
+              <p className="text-lg font-light text-secondary max-w-2xl mx-auto leading-relaxed">
+                Discover curated wellness solutions tailored to your unique lifestyle needs and
+                health aspirations.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+
+
+        <div className="relative overflow-hidden py-8">
+          <div className="flex animate-scroll hover:pause gap-8 lg:gap-10">
+
+            <Link href="/products?health_conditions=joint-pain" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C10.9 2 10 2.9 10 4V6C8.9 6 8 6.9 8 8V10C6.9 10 6 10.9 6 12C6 13.1 6.9 14 8 14V16C8 17.1 8.9 18 10 18V20C10 21.1 10.9 22 12 22C13.1 22 14 21.1 14 20V18C15.1 18 16 17.1 16 16V14C17.1 14 18 13.1 18 12C18 10.9 17.1 10 16 10V8C16 6.9 15.1 6 14 6V4C14 2.9 13.1 2 12 2Z"
+                          opacity="0.8"
+                        />
+                        <circle cx="12" cy="12" r="2" fill="currentColor" />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Joint Pain
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Natural relief & joint support
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=inflammation" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C11.2 2.8 10.5 3.7 10 4.8C9.2 6.4 9 8.1 9.5 9.7C10 11.3 11.1 12.6 12.5 13.3C13.9 14 15.6 14 17 13.3C18.4 12.6 19.5 11.3 20 9.7C20.5 8.1 20.3 6.4 19.5 4.8C19 3.7 18.3 2.8 17.5 2C18.8 3.5 19.5 5.4 19.5 7.5C19.5 11.6 16.1 15 12 15C7.9 15 4.5 11.6 4.5 7.5C4.5 5.4 5.2 3.5 6.5 2Z"
+                          opacity="0.9"
+                        />
+                        <path
+                          d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Inflammation
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Natural anti-inflammatory support
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=low-immunity" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"
+                          opacity="0.9"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Low Immunity
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Boost defense & immune system
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=stress" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z"
+                          opacity="0.8"
+                        />
+                        <path
+                          d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M12 14C10.9 14 10 14.9 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.9 13.1 14 12 14Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M12 20C10.9 20 10 20.9 10 22C10 23.1 10.9 24 12 24C13.1 24 14 23.1 14 22C14 20.9 13.1 20 12 20Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Stress
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Mental calm & stress management
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=fatigue" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                          opacity="0.3"
+                        />
+                        <path
+                          d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Fatigue
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Energy boost & vitality support
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=sleep-issues" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                          opacity="0.4"
+                        />
+                        <path
+                          d="M12 7C9.24 7 7 9.24 7 12C7 14.76 9.24 17 12 17C14.76 17 17 14.76 17 12C17 9.24 14.76 7 12 7ZM12 15C10.34 15 9 13.66 9 12C9 10.34 10.34 9 12 9C13.66 9 15 10.34 15 12C15 13.66 13.66 15 12 15Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Sleep Issues
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Better rest & sleep quality
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+
+            <Link href="/products?health_conditions=joint-pain" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C10.9 2 10 2.9 10 4V6C8.9 6 8 6.9 8 8V10C6.9 10 6 10.9 6 12C6 13.1 6.9 14 8 14V16C8 17.1 8.9 18 10 18V20C10 21.1 10.9 22 12 22C13.1 22 14 21.1 14 20V18C15.1 18 16 17.1 16 16V14C17.1 14 18 13.1 18 12C18 10.9 17.1 10 16 10V8C16 6.9 15.1 6 14 6V4C14 2.9 13.1 2 12 2ZM12 4V6H14V8H16V10H18V12H16V14H14V16H12V18H10V16H8V14H6V12H8V10H10V8H12V6H10V4H12Z"
+                          opacity="0.8"
+                        />
+                        <circle cx="12" cy="12" r="2" fill="currentColor" />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Joint Pain
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Natural relief & joint support
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=inflammation" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C11.2 2.8 10.5 3.7 10 4.8C9.2 6.4 9 8.1 9.5 9.7C10 11.3 11.1 12.6 12.5 13.3C13.9 14 15.6 14 17 13.3C18.4 12.6 19.5 11.3 20 9.7C20.5 8.1 20.3 6.4 19.5 4.8C19 3.7 18.3 2.8 17.5 2C18.8 3.5 19.5 5.4 19.5 7.5C19.5 11.6 16.1 15 12 15C7.9 15 4.5 11.6 4.5 7.5C4.5 5.4 5.2 3.5 6.5 2C5.7 2.8 5 3.7 4.5 4.8C3.7 6.4 3.5 8.1 4 9.7C4.5 11.3 5.6 12.6 7 13.3C8.4 14 10.1 14 11.5 13.3C10.1 12.6 9 11.3 8.5 9.7C8 8.1 8.2 6.4 9 4.8C9.5 3.7 10.2 2.8 11 2H12Z"
+                          opacity="0.9"
+                        />
+                        <path
+                          d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Inflammation
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Natural anti-inflammatory support
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=low-immunity" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"
+                          opacity="0.9"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Low Immunity
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Boost defense & immune system
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=stress" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z"
+                          opacity="0.8"
+                        />
+                        <path
+                          d="M12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M12 14C10.9 14 10 14.9 10 16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16C14 14.9 13.1 14 12 14Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M12 20C10.9 20 10 20.9 10 22C10 23.1 10.9 24 12 24C13.1 24 14 23.1 14 22C14 20.9 13.1 20 12 20Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Stress
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Mental calm & stress management
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=fatigue" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                          opacity="0.3"
+                        />
+                        <path
+                          d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Fatigue
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Energy boost & vitality support
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?health_conditions=sleep-issues" className="group flex-shrink-0">
+              <div className="w-64 h-64 lg:w-72 lg:h-72 relative overflow-hidden transition-all duration-700 group-hover:-translate-y-2 group-hover:scale-[1.03]">
+
+                <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-muted/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-card/30" />
+
+
+                <div className="absolute inset-0 border border-accent/20 group-hover:border-accent/40 transition-all duration-500 backdrop-blur-sm shadow-xl group-hover:shadow-2xl group-hover:shadow-accent/10" />
+
+
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent animate-pulse" />
+                </div>
+
+
+                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-10 text-center">
+
+                  <div className="relative mb-6 lg:mb-8">
+                    <div className="absolute inset-0 bg-accent/10 rounded-full blur-sm scale-110" />
+                    <div className="relative w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-accent/20 via-accent/15 to-accent/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-accent/30 group-hover:via-accent/25 group-hover:to-accent/15 transition-all duration-500 shadow-lg">
+                      <svg
+                        className="w-10 h-10 lg:w-12 lg:h-12 text-accent"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                          opacity="0.4"
+                        />
+                        <path
+                          d="M12 7C9.24 7 7 9.24 7 12C7 14.76 9.24 17 12 17C14.76 17 17 14.76 17 12C17 9.24 14.76 7 12 7ZM12 15C10.34 15 9 13.66 9 12C9 10.34 10.34 9 12 9C13.66 9 15 10.34 15 12C15 13.66 13.66 15 12 15Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl lg:text-3xl font-light text-foreground tracking-tight leading-tight">
+                      Sleep Issues
+                    </h3>
+                    <div className="w-12 h-px bg-accent/30 mx-auto" />
+                    <p className="text-base lg:text-lg text-secondary/80 font-light leading-relaxed tracking-wide">
+                      Better rest & sleep quality
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          <style jsx>{`
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(calc(-100% / 2));
+            }
+        }
+            .animate-scroll {
+            animation: scroll 30s linear infinite;
+            will-change: transform;
+            width: max-content;
+        }
+            .animate-scroll:hover {
+            animation-play-state: paused;
+        }
+        `}</style>
+        </div>
+      </section>
 
 
       <section className="pt-6 lg:pt-12 pb-12 lg:pb-16 bg-background">
