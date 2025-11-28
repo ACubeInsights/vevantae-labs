@@ -12,6 +12,7 @@ import { ArrowRight, Plus } from 'lucide-react';
 import { getProducts, Product, getBlogPosts, BlogPost } from '@/lib/supabase';
 import { BlogCard } from '@/components/BlogCard';
 import { CertificatesCarousel } from '@/components/CertificatesCarousel';
+import { TestimonialCarousel } from '@/components/ui/testimonial-carousel';
 
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
@@ -1473,7 +1474,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center space-y-6 mb-16"
+            className="text-center space-y-6 mb-8"
           >
             <p className="text-xs font-medium text-accent uppercase tracking-[0.2em]">
               Customer Stories
@@ -1486,10 +1487,35 @@ export default function Home() {
             <div className="w-16 h-px bg-accent mx-auto" />
           </motion.div>
 
-
-          <div className="text-center text-muted-foreground">
-            <p>Customer testimonials coming soon...</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <TestimonialCarousel
+              testimonials={[
+                {
+                  avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
+                  name: "Priya Sharma",
+                  role: "Wellness Enthusiast, Mumbai",
+                  review: "These formulations have genuinely transformed my daily wellness routine. The blend of ancient wisdom with modern science is remarkable.",
+                },
+                {
+                  avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
+                  name: "Rajesh Kumar",
+                  role: "Yoga Instructor, Bangalore",
+                  review: "I've been using Ayurvedic products for years, but nothing compares to the quality and effectiveness of these formulations.",
+                },
+                {
+                  avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop",
+                  name: "Anita Desai",
+                  role: "Holistic Health Practitioner, Delhi",
+                  review: "The natural ingredients and traditional formulas have made a noticeable difference in my overall well-being. Highly recommend!",
+                },
+              ]}
+            />
+          </motion.div>
         </div>
       </section>
 
