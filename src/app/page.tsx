@@ -9,7 +9,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 import { ArrowRight, Plus } from 'lucide-react';
-import { InfiniteSlider } from '@/components/ui/infinite-slider';
 import { getProducts, Product, getBlogPosts, BlogPost } from '@/lib/supabase';
 import { BlogCard } from '@/components/BlogCard';
 import { CertificatesCarousel } from '@/components/CertificatesCarousel';
@@ -473,7 +472,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <Link href="/products?category=nutraceuticals" className="group block">
+              <Link href="/products?category=nutraceutical" className="group block">
                 <div className="relative aspect-square overflow-hidden bg-background transition-all duration-700 group-hover:shadow-[0_25px_50px_-12px_rgba(139,69,19,0.2)] group-hover:scale-[1.02]">
 
                   {/* Background Image */}

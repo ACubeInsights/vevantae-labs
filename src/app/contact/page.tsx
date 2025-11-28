@@ -160,7 +160,7 @@ export default function ContactPage() {
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 Ready to explore B2B partnerships, bulk orders, or custom wellness solutions?
-                Let's discuss how we can support your business needs.
+                Let&apos;s discuss how we can support your business needs.
               </motion.p>
             </div>
           </div>

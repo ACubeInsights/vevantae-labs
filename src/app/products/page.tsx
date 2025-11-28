@@ -46,6 +46,19 @@ function getTagDisplayCount(benefits: string[] | undefined): number {
   return 2;
 }
 
+function normalizeCategoryParam(value: string | null): string {
+  if (!value) return 'All';
+  const c = value.toLowerCase();
+  if (['nutraceutical', 'nutraceuticals', 'neutraceutical', 'neutraceuticals'].includes(c)) {
+    return 'nutraceutical';
+  }
+  if (['ayurvedic', 'ayurveda'].includes(c)) {
+    return 'ayurvedic';
+  }
+  if (c === 'all') return 'All';
+  return 'All';
+}
+
 function ProductsContent() {
   const searchParams = useSearchParams();
   usePageTracking({
@@ -59,11 +72,15 @@ function ProductsContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'All');
+  const [selectedCategory, setSelectedCategory] = useState(
+    normalizeCategoryParam(searchParams.get('category'))
+  );
   const [selectedAgeGroup, setSelectedAgeGroup] = useState('All Ages');
   const [selectedBenefits, setSelectedBenefits] = useState<string[]>([]);
+  const initialHealthCondition =
+    searchParams.get('health_condition') || searchParams.get('health_conditions');
   const [selectedHealthConditions, setSelectedHealthConditions] = useState<string[]>(
-    searchParams.get('health_condition') ? [searchParams.get('health_condition')!] : []
+    initialHealthCondition ? [initialHealthCondition] : []
   );
   const [sortBy, setSortBy] = useState('name');
   const [currentPage, setCurrentPage] = useState(1);
