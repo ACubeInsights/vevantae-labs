@@ -1343,76 +1343,61 @@ export default function Home() {
       </section>
 
 
-      <section className="pt-8 lg:pt-12 pb-24 lg:pb-32 bg-background">
-        <div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center px-6 lg:px-12">
+      <section className="relative py-24 lg:py-32 overflow-hidden bg-background">
+        {/* Background Image - Watermark */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <Image
+            src="/images/philosophy-bg-v2.png"
+            alt="Philosophy background"
+            fill
+            className="object-cover opacity-50"
+            priority
+          />
+        </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="space-y-8"
-            >
-              <div className="space-y-6">
-                <p className="text-xs font-medium text-accent uppercase tracking-[0.2em]">
-                  Our Philosophy
-                </p>
-                <h2 className="text-4xl lg:text-5xl font-extralight text-foreground leading-tight tracking-tight">
-                  Formulations
-                  <br />
-                  <span className="italic font-light">rooted in</span>
-                  <br />
-                  tradition
-                </h2>
-                <div className="w-16 h-px bg-accent" />
-                <p className="text-lg font-light text-secondary leading-relaxed">
-                  Our approach combines ancient Ayurvedic wisdom with contemporary scientific
-                  understanding, creating formulations that honor both tradition and innovation.
-                </p>
-              </div>
+        <div className="relative z-20 container mx-auto px-6 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto text-center space-y-8"
+          >
+            <div className="space-y-6">
+              <p className="text-xs font-medium text-primary/80 uppercase tracking-[0.2em]">
+                Our Philosophy
+              </p>
+              <h2 className="text-4xl lg:text-5xl font-light text-primary/90 leading-tight tracking-tight">
+                Formulations
+                <br />
+                <span className="italic font-light text-accent">rooted in</span>
+                <br />
+                tradition
+              </h2>
+              <div className="w-16 h-px bg-primary/30 mx-auto" />
+              <p className="text-lg font-light text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                Our approach combines ancient Ayurvedic wisdom with contemporary scientific
+                understanding, creating formulations that honor both tradition and innovation.
+              </p>
+            </div>
 
+            <div className="relative inline-block group/btn">
+              {/* Glass background layers */}
+              <div className="absolute inset-0 bg-white/10 backdrop-blur-md border border-white/30 rounded-sm shadow-lg" />
+              <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+
+              {/* Button content */}
               <Link
                 href="/about"
-                className="group inline-flex items-center text-foreground hover:text-accent transition-colors duration-300"
+                className="relative flex items-center justify-center px-10 py-5 text-primary group-hover/btn:text-primary transition-all duration-300"
               >
-                <span className="text-sm font-medium uppercase tracking-[0.15em] mr-3">
+                <span className="text-xs font-medium uppercase tracking-[0.2em] mr-3">
                   Learn More
                 </span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
               </Link>
-            </motion.div>
-
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <div className="relative aspect-[4/5] bg-gradient-to-br from-muted/50 to-muted rounded-sm shadow-lg overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&h=750&fit=crop&auto=format&q=80&ixlib=rb-4.0.3"
-                  alt="Our philosophy"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-primary/10" />
-
-
-                <div className="absolute bottom-8 left-8 right-8">
-                  <div className="bg-black/70 backdrop-blur-sm p-6 space-y-3 rounded-sm shadow-lg">
-                    <h4 className="text-lg font-medium text-white">Sustainable Practices</h4>
-                    <p className="text-base font-normal text-white/90 leading-relaxed">
-                      Every formulation reflects our commitment to environmental responsibility and
-                      ethical sourcing.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
