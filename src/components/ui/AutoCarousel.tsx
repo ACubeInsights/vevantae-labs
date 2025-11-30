@@ -26,7 +26,7 @@ export function AutoCarousel({ children, duration = 40 }: AutoCarouselProps) {
           }
         }
         .animate-scroll {
-          animation: scroll ${duration}s linear infinite;
+          animation: scroll ${duration}s linear infinite reverse;
           will-change: transform;
           width: max-content;
         }
