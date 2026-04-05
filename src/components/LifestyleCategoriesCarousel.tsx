@@ -61,20 +61,18 @@ export function LifestyleCategoriesCarousel() {
                 <Link
                   href={`/products?category=${item.slug}`}
                   onClick={() => handleClick(item)}
-                  className="group block border border-border bg-card hover:border-accent transition-colors duration-300 rounded-2xl overflow-hidden h-full"
+                  className="group flex flex-col items-center text-center gap-4"
                 >
-                  <div className="p-8 flex flex-col items-center text-center gap-4 h-full">
-                    <div className="relative">
-                      <div className="absolute inset-0 rounded-full bg-accent/10 blur-sm" />
-                      <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-accent/20 via-accent/10 to-accent/5 flex items-center justify-center group-hover:from-accent/30 group-hover:via-accent/20 group-hover:to-accent/10 transition-all">
-                        <item.Icon className="w-10 h-10 text-accent" />
-                      </div>
+                  <div className="relative">
+                    <div className="absolute inset-0 rounded-full bg-accent/10 blur-md group-hover:bg-accent/20 transition-all" />
+                    <div className="relative w-32 h-32 rounded-full border-2 border-border bg-card group-hover:border-accent group-hover:shadow-lg flex items-center justify-center transition-all duration-300">
+                      <item.Icon className="w-12 h-12 text-accent" />
                     </div>
-                    <h3 className="text-xl font-medium text-foreground tracking-tight">{item.name}</h3>
-                    <p className="text-base font-light text-secondary/80 leading-relaxed flex-grow">
-                      {item.tagline}
-                    </p>
                   </div>
+                  <h3 className="text-lg font-medium text-foreground tracking-tight group-hover:text-accent transition-colors">{item.name}</h3>
+                  <p className="text-sm font-light text-secondary/80 leading-relaxed max-w-[180px]">
+                    {item.tagline}
+                  </p>
                 </Link>
               </motion.div>
             ))}

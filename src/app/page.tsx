@@ -14,6 +14,7 @@ import { BlogCard } from '@/components/BlogCard';
 import { CertificatesCarousel } from '@/components/CertificatesCarousel';
 import { TestimonialCarousel } from '@/components/ui/testimonial-carousel';
 import { LifestyleCategoriesCarousel } from '@/components/LifestyleCategoriesCarousel';
+import { ShopByCategories } from '@/components/ShopByCategories';
 
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
@@ -542,7 +543,9 @@ export default function Home() {
         </div>
       </section>
 
-      
+
+      <ShopByCategories />
+
       <LifestyleCategoriesCarousel />
 
 
