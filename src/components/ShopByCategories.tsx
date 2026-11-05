@@ -52,7 +52,7 @@ export function ShopByCategories() {
   };
 
   return (
-    <section className="py-12 lg:py-20 bg-background" aria-labelledby="shop-categories-heading">
+    <section id="shop-categories" className="py-12 lg:py-20 bg-background scroll-mt-24" aria-labelledby="shop-categories-heading">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-4 mb-6">
