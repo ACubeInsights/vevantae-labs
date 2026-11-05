@@ -7,6 +7,7 @@ export const dynamic = 'force-dynamic';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 import { usePageTracking } from '@/hooks/usePageTracking';
+import { submitContactForm } from '@/lib/supabase';
 
 interface FormData {
   name: string;
@@ -31,6 +32,7 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -45,8 +47,26 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError('');
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      await submitContactForm({
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        inquiry_type: formData.inquiryType,
+        subject: formData.subject,
+        message: formData.message,
+      });
+    } catch (err) {
+      console.error('Contact form submission failed:', err);
+      setSubmitError(
+        'Sorry, your message could not be sent. Please try again or email us directly.'
+      );
+      setIsSubmitting(false);
+      return;
+    }
+
     trackFormSubmission('Contact', {
       inquiry_type: formData.inquiryType,
       has_company: formData.company ? 'yes' : 'no'
@@ -333,6 +353,11 @@ export default function ContactPage() {
                         </>
                       )}
                     </button>
+                    {submitError && (
+                      <p role="alert" className="text-sm text-red-600 text-center">
+                        {submitError}
+                      </p>
+                    )}
                   </form>
                 )}
               </div>
