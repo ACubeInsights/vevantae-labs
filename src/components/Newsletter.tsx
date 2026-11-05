@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
+import { subscribeToNewsletter } from '@/lib/supabase';
 import { trackNewsletterSignup, trackEvent } from '@/components/GoogleAnalytics';
 
 export function Newsletter() {
@@ -15,9 +16,7 @@ export function Newsletter() {
     setMessage('');
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Simulate success path
+      await subscribeToNewsletter(email, 'newsletter_component');
       trackNewsletterSignup('newsletter_component');
       setMessage('Thank you for subscribing!');
       setEmail('');

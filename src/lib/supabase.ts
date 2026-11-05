@@ -227,14 +227,29 @@ export const getTestimonials = async (limit?: number) => {
 export const submitContactForm = async (formData: {
   name: string;
   email: string;
-  subject: string;
+  company?: string;
+  inquiry_type?: string;
+  subject?: string;
   message: string;
 }) => {
-  try {
-    const { data, error } = await getSupabase().from('contact_submissions').insert([formData]);
-    if (error) throw error;
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  // Insert-only table (RLS allows anon INSERT, no SELECT), so don't ask for the row back.
+  const { error } = await getSupabase().from('contact_submissions').insert([
+    {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      company: formData.company?.trim() || null,
+      inquiry_type: formData.inquiry_type || null,
+      subject: formData.subject?.trim() || null,
+      message: formData.message.trim(),
+    },
+  ]);
+  if (error) throw error;
+};
+
+export const subscribeToNewsletter = async (email: string, source: string) => {
+  const { error } = await getSupabase()
+    .from('newsletter_subscribers')
+    .insert([{ email: email.trim().toLowerCase(), source }]);
+  // 23505 = unique violation: already subscribed, treat as success.
+  if (error && (error as { code?: string }).code !== '23505') throw error;
 };

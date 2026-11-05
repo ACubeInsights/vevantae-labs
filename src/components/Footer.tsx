@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { NewsletterForm } from '@/components/NewsletterForm';
 
 export function Footer() {
   const footerLinks = {
@@ -85,16 +86,14 @@ export function Footer() {
             <p className="text-sm text-gray-400 mb-6">
               Subscribe to receive updates on new products and wellness insights.
             </p>
-            <div className="flex">
-              <input
-                type="email"
-                placeholder="Email address"
-                className="flex-1 px-4 py-3 bg-transparent border border-gray-700 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-white transition-colors"
-              />
-              <button className="px-6 py-3 bg-white text-black text-sm font-medium hover:bg-gray-100 transition-colors">
-                Subscribe
-              </button>
-            </div>
+            <NewsletterForm
+              source="footer"
+              placeholder="Email address"
+              formClassName="flex"
+              inputClassName="flex-1 px-4 py-3 bg-transparent border border-gray-700 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-white transition-colors"
+              buttonClassName="px-6 py-3 bg-white text-black text-sm font-medium hover:bg-gray-100 transition-colors disabled:opacity-60"
+              messageClassName="text-sm mt-3 text-gray-400"
+            />
           </div>
         </div>
 

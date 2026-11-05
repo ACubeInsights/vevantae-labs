@@ -10,10 +10,10 @@ export function Header() {
   const pathname = usePathname();
 
   const mainNav = [
-    { name: 'New Launches', href: '/new-launches' },
-    { name: 'Categories', href: '/categories' },
+    { name: 'New Launches', href: '/products?sort=newest' },
+    { name: 'Categories', href: '/#shop-categories' },
     { name: 'Products', href: '/products' },
-    { name: 'Lifestyle', href: '/lifestyle' },
+    { name: 'Lifestyle', href: '/#shop-by-lifestyle' },
     { name: 'Benefits', href: '/benefits' },
   ];
 

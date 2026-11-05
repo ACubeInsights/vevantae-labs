@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BlogCard } from '@/components/BlogCard';
 import { getBlogPosts, BlogPost } from '@/lib/supabase';
+import { NewsletterForm } from '@/components/NewsletterForm';
 import { usePageTracking } from '@/hooks/usePageTracking';
 
 const categories = ['All', 'Wellness', 'Skincare', 'Health', 'Lifestyle'];
@@ -190,19 +191,13 @@ export default function BlogPage() {
                 natural health.
               </p>
 
-              <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 bg-transparent border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="px-8 py-3 bg-white text-black text-sm font-medium hover:bg-gray-100 transition-colors uppercase tracking-wider"
-                >
-                  Subscribe
-                </button>
-              </form>
+              <NewsletterForm
+                source="blog"
+                formClassName="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
+                inputClassName="flex-1 px-4 py-3 bg-transparent border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors"
+                buttonClassName="px-8 py-3 bg-white text-black text-sm font-medium hover:bg-gray-100 transition-colors uppercase tracking-wider disabled:opacity-60"
+                messageClassName="text-sm mt-4 text-gray-300"
+              />
             </motion.div>
           </div>
         </section>
