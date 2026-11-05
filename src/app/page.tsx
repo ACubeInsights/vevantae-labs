@@ -15,6 +15,7 @@ import { CertificatesCarousel } from '@/components/CertificatesCarousel';
 import { TestimonialCarousel } from '@/components/ui/testimonial-carousel';
 import { LifestyleCategoriesCarousel } from '@/components/LifestyleCategoriesCarousel';
 import { ShopByCategories } from '@/components/ShopByCategories';
+import { NewsletterForm } from '@/components/NewsletterForm';
 
 function getValidImageUrl(imageUrl: string | undefined): string | null {
   if (!imageUrl) return null;
@@ -840,19 +841,14 @@ export default function Home() {
               </p>
             </div>
 
-            <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="flex-1 px-6 py-4 bg-transparent border border-primary-foreground/30 text-primary-foreground placeholder-primary-foreground/60 focus:outline-none focus:border-primary-foreground transition-colors duration-300 text-sm font-light tracking-wide rounded-sm"
-              />
-              <button
-                type="submit"
-                className="px-8 py-4 bg-primary-foreground text-primary text-sm font-medium hover:bg-primary-foreground/90 transition-colors duration-300 uppercase tracking-[0.15em] rounded-sm"
-              >
-                Subscribe
-              </button>
-            </form>
+            <NewsletterForm
+              source="home"
+              placeholder="Enter your email address"
+              formClassName="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"
+              inputClassName="flex-1 px-6 py-4 bg-transparent border border-primary-foreground/30 text-primary-foreground placeholder-primary-foreground/60 focus:outline-none focus:border-primary-foreground transition-colors duration-300 text-sm font-light tracking-wide rounded-sm"
+              buttonClassName="px-8 py-4 bg-primary-foreground text-primary text-sm font-medium hover:bg-primary-foreground/90 transition-colors duration-300 uppercase tracking-[0.15em] rounded-sm disabled:opacity-60"
+              messageClassName="text-sm mt-4 text-primary-foreground/80"
+            />
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-8 border-t border-primary-foreground/20">
               <div className="text-center">
