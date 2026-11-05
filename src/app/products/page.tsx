@@ -82,7 +82,10 @@ function ProductsContent() {
   const [selectedHealthConditions, setSelectedHealthConditions] = useState<string[]>(
     initialHealthCondition ? [initialHealthCondition] : []
   );
-  const [sortBy, setSortBy] = useState('name');
+  const initialSort = searchParams.get('sort');
+  const [sortBy, setSortBy] = useState(
+    sortOptions.some((o) => o.value === initialSort) ? (initialSort as string) : 'name'
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showFilters, setShowFilters] = useState(false);
@@ -131,7 +134,10 @@ function ProductsContent() {
 
   const filteredAndSortedProducts = useMemo(() => {
     const filtered = products.filter((product) => {
-      if (selectedCategory !== 'All' && product.category !== selectedCategory) {
+      if (
+        selectedCategory !== 'All' &&
+        (product.category || '').toLowerCase() !== selectedCategory.toLowerCase()
+      ) {
         return false;
       }
 
